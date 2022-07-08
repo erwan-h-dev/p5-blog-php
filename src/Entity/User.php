@@ -2,20 +2,22 @@
 
 namespace App\Entity;
 
+use DateTime;
 
 
-class User
+
+class User 
 {
-    protected $id;
-    protected $userName;
-    protected $createdAt;
-    protected $updatedAt;
-    protected $lastLogin;
-    protected $email;
-    protected $password;
-    protected $firstName;
-    protected $lastName;
-    protected $role;
+    private $id;
+    private $userName;
+    private $createdAt;
+    private $updatedAt;
+    private $lastLogin;
+    private $email;
+    private $password;
+    private $firstName;
+    private $lastName;
+    private $role;
 
     /**
      * Get the value of id
@@ -23,6 +25,14 @@ class User
     public function getId()
     {
         return $this->id;
+    }
+
+    /**
+     * Get the value of id
+     */
+    public function setId($id)
+    {
+        return $this->id = $id;
     }
 
     /**
@@ -58,7 +68,7 @@ class User
      *
      * @return  self
      */
-    public function setCreatedAt($createdAt)
+    public function setCreatedAt(String $createdAt)
     {
         $this->createdAt = $createdAt;
 
@@ -78,8 +88,9 @@ class User
      *
      * @return  self
      */
-    public function setUpdatedAt($updatedAt)
+    public function setUpdatedAt(String $updatedAt)
     {
+
         $this->updatedAt = $updatedAt;
 
         return $this;
