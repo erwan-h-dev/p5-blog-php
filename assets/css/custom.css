@@ -1,0 +1,38 @@
+.profile-title .media .media-body {
+    margin-left: 25px; 
+}
+
+.edit-profile .card .card-body h3 {
+    font-weight: 600;
+}
+
+.table-responsive::-webkit-scrollbar-thumb, .table-responsive::-webkit-scrollbar {
+    width: 6px;
+    border-radius: 13px; 
+}
+.table-responsive::-webkit-scrollbar-thumb {
+    background-color: rgba(58, 154, 168, 0.1); 
+}
+
+.video-responsive { 
+    width: 80%;
+    margin: auto;
+    overflow:hidden; 
+    padding-bottom:45%; 
+    position:relative; 
+}
+
+.video-responsive iframe {
+    left:0; 
+    top:0; 
+    height:100%;
+    width:100%;
+    position:absolute;
+}
+
+.vod,
+.vod tbody,
+.vod tr{
+    border: none !important;
+    background-color: #111727 !important;
+}
