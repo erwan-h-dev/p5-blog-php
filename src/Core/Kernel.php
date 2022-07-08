@@ -10,13 +10,14 @@ class Kernel
 
     public function __construct()
     {
+        session_start();
+
+        if (!isset($_SESSION['user'])) {
+            $_SESSION['role'] = "anonymous";
+        }
+
         $routing = new Routing();
-        $config = new Config();
 
         $controller = $routing->getController();
-
-        $controller->setConfig($config);
-
-        $routing->getAction($controller);
     }
 }

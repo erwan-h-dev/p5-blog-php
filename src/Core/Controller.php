@@ -3,6 +3,7 @@
 namespace App\Core;
 
 use App\Core\Config;
+use App\Core\EntityManager;
 use \Twig\Environment;
 use \Twig\Loader\FilesystemLoader;
 
@@ -11,13 +12,11 @@ class Controller
 
     private $twig;
     private $loader;
-    private $entityManager;
+    public $entityManager;
 
     public function setConfig(Config $config)
     {
-
         $this->setTwig($config);
-
         $this->setConnexion($config);
     }
 
@@ -31,13 +30,19 @@ class Controller
 
     public function setConnexion(Config $config)
     {
-        $this->entityManager = new EntityManager();
+        $entityRepository = new EntityRepository();
 
-        $this->entityManager->connexion($config->getParameter('database_dns'), $config->getParameter('database_user'), $config->getParameter('database_password'));
+        $entityRepository->setConnexion($config->getParameter('database_dns'), $config->getParameter('database_user'), $config->getParameter('database_password'));
+        $this->entityManager = new EntityManager($entityRepository);
     }
 
     public function render(String $template, array $params)
     {
+        if (isset($_SESSION['user'])) {
+            $user = $this->entityManager->getRepository(User::class)->findOneBy(['id' => $_SESSION['id']]);
+            $params['user'] = $user;
+        }
+
         echo $this->twig->render($template, $params);
     }
 }

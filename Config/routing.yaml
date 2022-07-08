@@ -1,0 +1,25 @@
+routing:
+    home:
+        path: /
+        controller: HomeController/index
+        roles: [anonymous, user, admin]
+    login:
+        path: /login
+        controller: SecurityController/login
+        roles: [anonymous, user, admin]
+    logout:
+        path: /logout
+        controller: SecurityController/logout
+        roles: [anonymous, user, admin]
+    register:
+        path: /register
+        controller: SecurityController/register
+        roles: [anonymous, user, admin]
+    posts:
+        path: /posts
+        controller: PostController/index
+        roles: [anonymous, user, admin]
+    post_edit:
+        path: /posts/edit/([0-9]+)
+        controller: PostController/edit
+        roles: [anonymous, user, admin]

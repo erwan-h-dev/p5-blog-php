@@ -2,41 +2,73 @@
 
 namespace App\Core;
 
+use App\Core\Route;
 use LogicException;
-use App\Controller\ErrorController;
+use App\Core\Config;
+use App\Core\RouteCollection;
 
+use ReflectionClass;
+use Symfony\Component\Yaml\Yaml;
+use App\Controller\ErrorController;
+ 
 class Routing
 {
-    private $namespace = '\\App\\Controller\\';
+    private $root;
     private $controller;
+    private $routeCollection;
 
-    public function __construct()
+    private function loadRoot()
     {
+
+        $parametersFile = __DIR__ . '/../../Config/routing.yaml';
+
+        $this->routeCollection = new RouteCollection();
+
+        if (!file_exists($parametersFile)) {
+            throw new LogicException();
+        }
+
+        $params = Yaml::parse(file_get_contents($parametersFile));
+
+        foreach ($params['routing'] as $key => $param) {
+            $root = "";
+            $route = new Route($param);
+            $this->routeCollection->addRoute($route);
+        }
+    }
+
+    public function matchRoute()
+    {
+        $path = $_GET['p'];
+
+        foreach ($this->routeCollection->getRoutes() as $route) {
+            if ($route->match($path)) {
+                return  $route;
+            }
+        }
+
+        return false;
     }
 
     public function getController()
     {
-        $params = explode('/', $_GET['p']);
+        $this->loadRoot();
 
-        $controllerName = !empty($params[0]) ? $params[0] . 'Controller' : "HomeController";
+        $route = $this->matchRoute();
 
-        $classController = $this->namespace . ucfirst($controllerName);
-
-        $this->controller = class_exists($classController) ? new $classController() : new ErrorController();
-
-        return $this->controller;
-    }
-
-    public function getAction($controller)
-    {
-        $params = explode('/', $_GET['p']);
-
-        if (!is_object($controller)) {
-            throw new LogicException();
+        if ($route === false) {
+            $controller = new ErrorController();
+            $controller->setConfig(new Config());
+            $controller->error404();
+            return;
         }
 
-        $action = isset($params[1]) ? $params[1] : "index";
+        $contoller = '\\App\\Controller\\' . $route->getController();
 
-        return $controller->$action();
+        $controllerClassName = new $contoller();
+
+        $controllerClassName->setConfig(new Config());
+
+        $controllerClassName->{$route->getAction()}($route->getParameters());
     }
 }
