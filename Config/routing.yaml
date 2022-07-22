@@ -1,4 +1,6 @@
 routing:
+
+# Front office [anonymous, user, admin]
     home:
         path: /
         controller: HomeController/index
@@ -19,7 +21,51 @@ routing:
         path: /posts
         controller: PostController/index
         roles: [anonymous, user, admin]
-    post_edit:
-        path: /posts/edit/([0-9]+)
-        controller: PostController/edit
+    post:
+        path: /post/[^0-9]
+        controller: PostController/index
         roles: [anonymous, user, admin]
+
+# Back office [users, admin]
+    user:
+        path: /user
+        controller: UserController/user
+        roles: [user, admin]
+    edit_user:
+        path: /user/edit
+        controller: UserController/edit
+        roles: [user, admin]
+    posts_user:
+        path: /user/posts
+        controller: PostController/posts
+        roles: [user, admin]
+    new_posts:
+        path: /user/post/new
+        controller: PostController/newPost
+        roles: [user, admin]
+    edit_post:
+        path: /user/post/edit/[^0-9]
+        controller: PostController/newPost
+        roles: [user, admin]
+    remove_posts:
+        path: /user/post/remove/[^0-9]
+        controller: PostController/newPost
+        roles: [user, admin]
+
+# Admin office [admin]
+    admin:
+        path: /admin
+        controller: AdminController/admin
+        roles: [admin]
+    users_admin:
+        path: /admin/users
+        controller: AdminController/usersAdmin
+        roles: [admin]
+    posts_admin:
+        path: /admin/posts
+        controller: AdminController/postsAdmin
+        roles: [admin]
+    edit_user_admin:
+        path: /admin/user/edit/[^0-9]
+        controller: AdminController/userEdit
+        roles: [admin]
