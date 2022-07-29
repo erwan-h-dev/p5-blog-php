@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Core;
+namespace App\Core\Routing;
 
-use App\Core\Route;
+use App\Core\Routing\Route;
 use LogicException;
 use App\Core\Config;
-use App\Core\RouteCollection;
+use App\Core\Routing\RouteCollection;
 
 use ReflectionClass;
 use Symfony\Component\Yaml\Yaml;
@@ -16,13 +16,18 @@ class Routing
     private $root;
     private $controller;
     private $routeCollection;
+    private $config;
+
+    public function __construct()
+    {
+        $this->config = new Config();
+        $this->routeCollection = new RouteCollection();
+    }
 
     private function loadRoot()
     {
 
-        $parametersFile = __DIR__ . '/../../Config/routing.yaml';
-
-        $this->routeCollection = new RouteCollection();
+        $parametersFile = __DIR__ . '/../../../Config/routing.yaml';
 
         if (!file_exists($parametersFile)) {
             throw new LogicException();
@@ -30,11 +35,13 @@ class Routing
 
         $params = Yaml::parse(file_get_contents($parametersFile));
 
-        foreach ($params['routing'] as $key => $param) {
+        foreach ($params['routing'] as $routeName => $param) {
             $root = "";
-            $route = new Route($param);
+            $route = new Route($routeName, $param);
             $this->routeCollection->addRoute($route);
         }
+
+        $this->config->setRouteCollection($this->routeCollection);
     }
 
     public function matchRoute()
@@ -58,7 +65,7 @@ class Routing
 
         if ($route === false) {
             $controller = new ErrorController();
-            $controller->setConfig(new Config());
+            $controller->setConfig($this->config);
             $controller->error404();
             return;
         }
@@ -67,7 +74,9 @@ class Routing
 
         $controllerClassName = new $contoller();
 
-        $controllerClassName->setConfig(new Config());
+
+
+        $controllerClassName->setConfig($this->config);
 
         $controllerClassName->{$route->getAction()}($route->getParameters());
     }

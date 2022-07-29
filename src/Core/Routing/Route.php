@@ -1,17 +1,19 @@
 <?php
 
-namespace App\Core;
+namespace App\Core\Routing;
 
 class Route
 {
+    private $name;
     private $path;
     private $controller;
     private $action;
     private $roles;
     private $parameters = [];
 
-    public function __construct(array $param)
+    public function __construct(string $routeName,array $param)
     {
+        $this->name = $routeName;
         $this->path = $param['path'];
         [$this->controller, $this->action] = explode('/', $param['controller']);
         $this->roles = $param['roles'];
@@ -50,5 +52,10 @@ class Route
         }
 
         return 0 !== $match;
+    }
+
+    public function getName(): string
+    {
+        return $this->name;
     }
 }
