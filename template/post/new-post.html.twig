@@ -1,0 +1,72 @@
+{% extends 'admin.html.twig' %}
+
+{% block ariane %}
+<div class="col-sm-6">
+    <h3>{{ location }}</h3>
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="/admin" data-bs-original-title="" title="">Admin</a> / <a href="/admin/posts-admin" data-bs-original-title="" title="">posts list</a> / <a href="/admin/post/new" data-bs-original-title="" title="">{{ location }}</a></li>
+    </ol>
+</div>
+<div>
+</div>
+{% endblock %}
+
+{% block base %}
+<div class="col-sm-12">
+    <form class="row needs-validation" action="" novalidate="">
+        <div class="card">
+            <div class="card-header">
+                 <div class="btn-showcase text-end">
+                    <button class="btn btn-square btn-primary" type="submit">Post</button>
+                    <a class="btn btn-square  btn-light" href="/admin/posts" type="reset" >Cancel</a>
+                </div>
+            </div>
+            <div class="card-body add-post">
+                <div class="col-sm-12">
+                    <div class="form-group">
+                        <label for="title">Title :</label>
+                        <input class="form-control" id="title" name="title" type="text" placeholder="Post Title" required="">
+                        <div class="valid-feedback">Looks good!</div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="leadSentence">Lead Sentence :</label>
+                        <input class="form-control" id="leadSentence"  name="leadSentence" type="text" placeholder="Lead sentence..." required="">
+                        <div class="valid-feedback">Looks good!</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+                
+        <div class="card card-absolute">
+            <div class="card-header bg-secondary mb-3">
+                <h5>Content :</h5>
+            </div>
+            <div class="card-body  mb-3">
+                <div class="col-sm-12">
+                    <div id="content" contenteditable="true" style="border:1px #e6edef solid;border-radius:4px;padding:4px;min-height:150px;"></div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+{% endblock %}
+
+{% block javaScript %}
+<script>
+CKEDITOR.replace( 'text-box', {
+    on: {
+        contentDom: function( evt ) {
+            // Allow custom context menu only with table elemnts.
+            evt.editor.editable().on( 'contextmenu', function( contextEvent ) {
+                var path = evt.editor.elementPath();
+
+                if ( !path.contains( 'table' ) ) {
+                    contextEvent.cancel();
+                }
+            }, null, null, 5 );
+        }
+    }
+} );
+</script>
+{% endblock %}
