@@ -8,21 +8,21 @@ use DateTime;
 
 class User 
 {
-    private $id;
-    private $userName;
-    private $createdAt;
-    private $updatedAt;
-    private $lastLogin;
-    private $email;
-    private $password;
-    private $firstName;
-    private $lastName;
-    private $role;
+    private $id;        // int
+    private $userName;  // string
+    private $createdAt; // DateTime
+    private $updatedAt; // DateTime
+    private $lastLogin; // DateTime
+    private $email;     // string
+    private $password;  // string
+    private $firstName; // string
+    private $lastName;  // string
+    private $role;      // string
 
     /**
      * Get the value of id
      */
-    public function getId()
+    public function getId(): int
     {
         return $this->id;
     }
@@ -30,7 +30,7 @@ class User
     /**
      * Get the value of id
      */
-    public function setId($id)
+    public function setId(int $id)
     {
         return $this->id = $id;
     }
@@ -38,7 +38,7 @@ class User
     /**
      * Get the value of userName
      */
-    public function getUserName()
+    public function getUserName(): string
     {
         return $this->userName;
     }
@@ -48,7 +48,7 @@ class User
      *
      * @return  self
      */
-    public function setUserName($userName)
+    public function setUserName(string $userName)
     {
         $this->userName = $userName;
 
@@ -58,7 +58,7 @@ class User
     /**
      * Get the value of createdAt
      */
-    public function getCreatedAt()
+    public function getCreatedAt(): string
     {
         return $this->createdAt;
     }
@@ -68,7 +68,7 @@ class User
      *
      * @return  self
      */
-    public function setCreatedAt(String $createdAt)
+    public function setCreatedAt(string $createdAt)
     {
         $this->createdAt = $createdAt;
 
@@ -78,7 +78,7 @@ class User
     /**
      * Get the value of updatedAt
      */
-    public function getUpdatedAt()
+    public function getUpdatedAt(): string
     {
         return $this->updatedAt;
     }
@@ -88,7 +88,7 @@ class User
      *
      * @return  self
      */
-    public function setUpdatedAt(String $updatedAt)
+    public function setUpdatedAt(string $updatedAt)
     {
 
         $this->updatedAt = $updatedAt;
@@ -99,7 +99,7 @@ class User
     /**
      * Get the value of lastLogin
      */
-    public function getLastLogin()
+    public function getLastLogin(): string
     {
         return $this->lastLogin;
     }
@@ -109,7 +109,7 @@ class User
      *
      * @return  self
      */
-    public function setLastLogin($lastLogin)
+    public function setLastLogin(string $lastLogin)
     {
         $this->lastLogin = $lastLogin;
 
@@ -119,7 +119,7 @@ class User
     /**
      * Get the value of email
      */
-    public function getEmail()
+    public function getEmail(): string
     {
         return $this->email;
     }
@@ -129,7 +129,7 @@ class User
      *
      * @return  self
      */
-    public function setEmail($email)
+    public function setEmail(string $email)
     {
         $this->email = $email;
 
@@ -139,7 +139,7 @@ class User
     /**
      * Get the value of password
      */
-    public function getPassword()
+    public function getPassword(): string
     {
         return $this->password;
     }
@@ -149,7 +149,7 @@ class User
      *
      * @return  self
      */
-    public function setPassword($password)
+    public function setPassword(string $password)
     {
         $this->password = $password;
 
@@ -159,7 +159,7 @@ class User
     /**
      * Get the value of firstName
      */
-    public function getFirstName()
+    public function getFirstName(): string
     {
         return $this->firstName;
     }
@@ -169,7 +169,7 @@ class User
      *
      * @return  self
      */
-    public function setFirstName($firstName)
+    public function setFirstName(string $firstName)
     {
         $this->firstName = $firstName;
 
@@ -179,7 +179,7 @@ class User
     /**
      * Get the value of lastName
      */
-    public function getLastName()
+    public function getLastName(): string
     {
         return $this->lastName;
     }
@@ -189,7 +189,7 @@ class User
      *
      * @return  self
      */
-    public function setLastName($lastName)
+    public function setLastName(string $lastName)
     {
         $this->lastName = $lastName;
 
@@ -199,7 +199,7 @@ class User
     /**
      * Get the value of role
      */
-    public function getRole()
+    public function getRole(): string
     {
         return $this->role;
     }
@@ -209,7 +209,7 @@ class User
      *
      * @return  self
      */
-    public function setRole($role)
+    public function setRole(string $role)
     {
         $this->role = $role;
 
