@@ -8,7 +8,6 @@ use App\Core\Config;
 class EntityRepository
 {
     private $pdo;
-    private $class;
 
     public function __construct()
     {
