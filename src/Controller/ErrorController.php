@@ -11,7 +11,7 @@ class ErrorController extends Controller
     {
         $location = 'Error 404';
 
-        return $this->render('home.html.twig', [
+        return $this->render('404.html.twig', [
             'location' => $location
         ]);
     }
