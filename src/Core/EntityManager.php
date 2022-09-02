@@ -3,6 +3,7 @@
 namespace App\Core;
 
 use PDO;
+use App\Core\Hydratator;
 use LogicException;
 use App\Core\EntityRepository;
 
@@ -14,7 +15,6 @@ class EntityManager
 
     public function __construct(EntityRepository $entityRepository, $class = null)
     {
-
         $this->entityRepository = $entityRepository;
         $this->class = $class;
     }
@@ -30,7 +30,6 @@ class EntityManager
 
     private function persistEntity(String $sql, array $values): int
     {
-        
         $pdo = $this->entityRepository->getPdo();
     
         $statement = $pdo->prepare($sql);
@@ -68,7 +67,6 @@ class EntityManager
         }
 
         $sql .= ")" . $sql2 . ")";
-        var_dump($sql, $values);
         $this->persistEntity($sql, $values);
     }
 
@@ -106,12 +104,11 @@ class EntityManager
         return $properties;
     }
 
-    
-
-    public function findOneBy($params)
+    public function findOneBy(array $params)
     {
         $sql = "SELECT * FROM " . lcfirst(str_replace("App\\Entity\\", "", $this->class)) . " WHERE ";
         $values = [];
+
         foreach ($params as $key => $value) {
             $sql .= " " . $key . " = :" . $key;
             $values[$key] = $value;
@@ -126,11 +123,10 @@ class EntityManager
         $result = $statement->fetch(PDO::FETCH_ASSOC);
 
         if($result){
-            return $this->hydrate($result);
+            return Hydratator::hydrate($result, $this->class);
         }else{
             return null;
         }
-        
     }
 
     public function findAll()
@@ -142,24 +138,12 @@ class EntityManager
         try {
             $results = $statement->fetchAll(PDO::FETCH_ASSOC);
             foreach ($results as $key => $result) {
-                $entities[] = $this->hydrate($result);
+                $entities[] =
+                Hydratator::hydrate($result, $this->class);
             }
             return $entities;
         } catch (\Exception $e) {
             echo $e->getMessage();
         }
     }
-
-    private function hydrate($entityArray)
-    {
-        $entity = new $this->class();
-        foreach ($entityArray as $key => $value) {
-            $methode = 'set' . ucfirst($key);
-            $entity->$methode($value);
-        }
-
-        return $entity;
-    }
-
-
 }
