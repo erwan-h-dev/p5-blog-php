@@ -2,6 +2,11 @@
     <div class="container-fluid">
         <div class="row">
         <div class="col-md-6 footer-copyright">
+            {% if currentUser %}
+                {# {% if currentUser %} #}
+                    <a href="{{ path('admin') }}" >Admin</a>
+                {# {% endif %} #}
+            {% endif %}
             <p class="mb-0">Copyright 2021-22 © viho All rights reserved.</p>
         </div>
         <div class="col-md-6">

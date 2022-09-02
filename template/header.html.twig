@@ -1,17 +1,16 @@
 <div class="page-main-header">
         <div class="main-header-right row m-0">
           <div class="main-header-left">
-            <div class="logo-wrapper"><a href="/" data-bs-original-title="" title=""><h4>BLOG PHP</h4></div>
-            <div class="dark-logo-wrapper"><a href="/" data-bs-original-title="" title=""><h4>BLOG PHP</h4></a></div>
+            <div class="logo-wrapper dark-logo-wrapper"><a href="/" data-bs-original-title="" title=""><h4>BLOG PHP</h4></a></div>
           </div>
           <div class="left-menu-header col">
-            <h5>{{ user.username }}</h5>
+            <h5>{{ currentUser.username }}</h5>
           </div>
           <div class="nav-right col pull-right right-menu p-0">
             <ul class="nav-menus">
               
               <li class="onhover-dropdown p-0">
-                {% if user %}
+                {% if currentUser %}
                   <button class="btn btn-primary-light" type="button" data-bs-original-title="" title=""><a href="/logout" data-bs-original-title="" title=""><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-log-out"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>Log Out</a></button>
                 {% else %}
                   <button class="btn btn-primary-light" type="button" data-bs-original-title="" title=""><a href="/login" data-bs-original-title="" title=""><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-log-out"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>Log In</a></button>
