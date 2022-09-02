@@ -39,7 +39,7 @@ routing:
         path: /user/posts
         controller: PostController/posts
         roles: [user, admin]
-    new_posts:
+    new_post:
         path: /user/post/new
         controller: PostController/newPost
         roles: [user, admin]
@@ -47,7 +47,7 @@ routing:
         path: /user/post/edit/[^0-9]
         controller: PostController/newPost
         roles: [user, admin]
-    remove_posts:
+    remove_post:
         path: /user/post/remove/[^0-9]
         controller: PostController/newPost
         roles: [user, admin]

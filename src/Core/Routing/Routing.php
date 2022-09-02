@@ -74,8 +74,6 @@ class Routing
 
         $controllerClassName = new $contoller();
 
-
-
         $controllerClassName->setConfig($this->config);
 
         $controllerClassName->{$route->getAction()}($route->getParameters());

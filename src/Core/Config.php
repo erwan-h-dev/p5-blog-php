@@ -3,6 +3,7 @@
 namespace App\Core;
 
 use LogicException;
+use App\Core\Routing\RouteCollection;
 use Symfony\Component\Yaml\Yaml;
 use Symfony\Component\Dotenv\Dotenv;
 
@@ -10,6 +11,7 @@ class Config
 {
 
     private $parameters;
+    private $routeCollection;
 
     public function __construct()
     {
@@ -57,5 +59,15 @@ class Config
         foreach ($params['global'] as $key => $param) {
             $this->setParameter($key, $param);
         }
+    }
+
+    public function setRouteCollection(RouteCollection $routeCollection)
+    {
+        $this->routeCollection = $routeCollection;
+    }
+
+    public function getRouteCollection(): RouteCollection
+    {
+        return $this->routeCollection;
     }
 }
