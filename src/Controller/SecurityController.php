@@ -8,29 +8,25 @@ use App\Repository\UserRepository;
 
 class SecurityController extends Controller
 {
-    public function __construct()
-    {
-    }
 
     public function login()
     {
-        if($_SESSION['role'] != 'anonymous'){
-            header('Location: /');
+        if($this->getUser()){
+            $this->redirectRoute('home');
         }
+
         $userRepository = $this->entityManager->getRepository(User::class);
-
         if (count($_POST) > 0) {
+
             $user = $userRepository->findOneBy(['email' => $_POST['login']['email']]);
-            if ($user != null) {
 
-                if (password_verify($_POST['login']['password'],  $user->getPassword())) {
+            if ($user && \password_verify($_POST['login']['password'], $user->getPassword())) {
 
-                    $_SESSION['user'] = $user->getUserName();
-                    $_SESSION['role'] = $user->getRole();
-                    $_SESSION['id'] = $user->getId();
-
-                    header('Location: /');
-                }
+                $date = new \DateTime();
+                $user->setLastLogin($date->format('Y-m-d H:i:s'));
+                $this->entityManager->update($user);
+                $this->setUser($user);
+                $this->redirectRoute('home');
             }
         }
 
@@ -66,7 +62,7 @@ class SecurityController extends Controller
                             ->setUpdatedAt($date->format('Y-m-d H:i:s'))
                             ->setRole('user');
             
-                        $this->entityManager->persist($user);
+                        $this->entityManager->insert($user);
                         
                         return $this->render('security/login.html.twig', []);
                     }else{
@@ -97,8 +93,8 @@ class SecurityController extends Controller
 
     public function logout()
     {
-        session_destroy();
+        $this->destroySession();
 
-        header('Location: /');
+        $this->redirectRoute('login');
     }
 }
