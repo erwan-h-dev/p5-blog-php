@@ -22,8 +22,8 @@ routing:
         controller: PostController/index
         roles: [anonymous, user, admin]
     post:
-        path: /post/[^0-9]
-        controller: PostController/index
+        path: /post/{id}
+        controller: PostController/post
         roles: [anonymous, user, admin]
 
 # Back office [users, admin]
@@ -44,12 +44,12 @@ routing:
         controller: PostController/newPost
         roles: [user, admin]
     edit_post:
-        path: /user/post/edit/[^0-9]
-        controller: PostController/newPost
+        path: /user/post/edit/{id}
+        controller: PostController/editPost
         roles: [user, admin]
     remove_post:
-        path: /user/post/remove/[^0-9]
-        controller: PostController/newPost
+        path: /user/post/remove/{id}
+        controller: PostController/removePost
         roles: [user, admin]
 
 # Admin office [admin]
@@ -66,6 +66,6 @@ routing:
         controller: AdminController/postsAdmin
         roles: [admin]
     edit_user_admin:
-        path: /admin/user/edit/[^0-9]
+        path: /admin/user/edit/{id}
         controller: AdminController/userEdit
         roles: [admin]

@@ -34,7 +34,7 @@ class RouteCollection
         if ($route) {
             $path = $route->getPath();
             if(count($parameters) > 0) {
-                $path = str_replace('[^0-9]', $parameters['id'], $path);
+                $path = str_replace('([0-9]+)', $parameters['id'], $path);
             }
             return $path;
         }

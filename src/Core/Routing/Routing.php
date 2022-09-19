@@ -46,7 +46,9 @@ class Routing
 
     public function matchRoute()
     {
-        $path = $_GET['p'];
+        $path = $_GET['RoutePath'];
+
+        unset($_GET['RoutePath']);
 
         foreach ($this->routeCollection->getRoutes() as $route) {
             if ($route->match($path)) {
@@ -63,6 +65,7 @@ class Routing
 
         $route = $this->matchRoute();
 
+        
         if ($route === false) {
             $controller = new ErrorController();
             $controller->setConfig($this->config);
