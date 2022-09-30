@@ -1,3 +1,4 @@
 .env
 /vendor
 /var
+/public/images
