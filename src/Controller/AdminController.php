@@ -9,8 +9,6 @@ class AdminController extends Controller
 
     public function admin()
     {
-        // $userRepository = $this->entityManager->getRepository(User::class);
-
         $location = 'admin';
 
         return $this->render('admin/index.html.twig', [

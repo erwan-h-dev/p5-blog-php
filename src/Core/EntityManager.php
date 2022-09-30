@@ -67,7 +67,7 @@ class EntityManager
         }
 
         $sql .= ")" . $sql2 . ")";
-        $this->persistEntity($sql, $values);
+        $entity->setId($this->persistEntity($sql, $values));
     }
 
     public function update($entity){
@@ -96,12 +96,71 @@ class EntityManager
 
     }
 
+    public function remove($entity){
+        $sql = "DELETE FROM " . lcfirst(str_replace("App\\Entity\\", "", get_class($entity))) . " WHERE id = :id";
+
+        $values = [
+            'id' => $entity->getId()
+        ];
+
+        $this->persistEntity($sql, $values);
+    }
+
     private function getParameters($entity)
     {
         $reflectionClass = new \ReflectionClass($entity);
         $properties = $reflectionClass->getProperties();
 
         return $properties;
+    }
+
+    public function find(int $id)
+    {
+        $sql = "SELECT * FROM " . lcfirst(str_replace("App\\Entity\\", "", $this->class)) . " WHERE id = :id";
+
+        $pdo = $this->entityRepository->getPdo();
+        $statement = $pdo->prepare($sql);
+        $statement->execute(['id' => $id]);
+
+        $result = $statement->fetch(PDO::FETCH_ASSOC);
+
+        if ($result) {
+            return Hydratator::hydrate($result, $this->class);
+        } else {
+            return null;
+        }
+    }
+
+    public function findBy(array $params)
+    {
+        $sql = "SELECT * FROM " . lcfirst(str_replace("App\\Entity\\", "", $this->class)) . " WHERE ";
+        $values = [];
+
+        foreach ($params as $key => $value) {
+            $sql .= " " . $key . " = :" . $key;
+            $values[$key] = $value;
+            if (end($params) != $value) {
+                $sql .= " AND ";
+            }
+        }
+
+        $pdo = $this->entityRepository->getPdo();
+        $statement = $pdo->prepare($sql);
+        $statement->execute($values);
+        $results = $statement->fetchAll(PDO::FETCH_ASSOC);
+        if ($results) {
+            try {
+                $entities = [];
+                foreach ($results as $key => $result) {
+                    $entities[] = Hydratator::hydrate($result, $this->class);
+                }
+                return $entities;
+            } catch (\Exception $e) {
+                echo $e->getMessage();
+            }
+        } else {
+            return null;
+        }
     }
 
     public function findOneBy(array $params)

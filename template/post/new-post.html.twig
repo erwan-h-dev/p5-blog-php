@@ -13,60 +13,143 @@
 
 {% block base %}
 <div class="col-sm-12">
-    <form class="row needs-validation" action="" novalidate="">
-        <div class="card">
-            <div class="card-header">
-                 <div class="btn-showcase text-end">
-                    <button class="btn btn-square btn-primary" type="submit">Post</button>
-                    <a class="btn btn-square  btn-light" href="/admin/posts" type="reset" >Cancel</a>
-                </div>
+
+    <div class="card">
+        <div class="card-header">
+                <div class="btn-showcase text-end">
+                <a class="btn btn-square  btn-warning" href="{{ path('admin_posts') }}" type="reset" >Cancel</a>
             </div>
-            <div class="card-body add-post">
-                <div class="col-sm-12">
+        </div>
+        <form class="row needs-validation" action="" method="post">
+            <div class="card-body add-post row">
+                <div class="col-md-4">
                     <div class="form-group">
                         <label for="title">Title :</label>
                         <input class="form-control" id="title" name="title" type="text" placeholder="Post Title" required="">
                         <div class="valid-feedback">Looks good!</div>
                     </div>
-
+                </div>
+                <div class="col-md-4">
                     <div class="form-group">
                         <label for="leadSentence">Lead Sentence :</label>
                         <input class="form-control" id="leadSentence"  name="leadSentence" type="text" placeholder="Lead sentence..." required="">
                         <div class="valid-feedback">Looks good!</div>
                     </div>
                 </div>
+                <div class="col-md-4">
+                    <div class="form-group m-t-15 m-checkbox-inline custom-radio-ml">
+                        <div class="radio radio-info">
+                            <input type="radio" name="status" id="radio-0" checked value="0">
+                            <label for="radio-0">Brouillon</label>
+                        </div>
+                        <div class="radio radio-success">
+                            <input type="radio" id="radio-1" name="status" value="1">
+                            <label for="radio-1">Publié</label>
+                        </div>
+                    </div>
+                </div>
             </div>
-        </div>
-                
-        <div class="card card-absolute">
-            <div class="card-header bg-secondary mb-3">
-                <h5>Content :</h5>
-            </div>
-            <div class="card-body  mb-3">
-                <div class="col-sm-12">
-                    <div id="content" contenteditable="true" style="border:1px #e6edef solid;border-radius:4px;padding:4px;min-height:150px;"></div>
+            <div class="card-footer">
+                <input type="hidden" id="content" name="content">
+                <input type="hidden" id="image" name="image">
+                <div class="btn-showcase text-end">
+                    <button class="btn btn-square btn-primary" type="submit">Save</button>
                 </div>
             </div>
         </div>
-    </form>
+        </form>
+    </div>
+    <div class="card">
+        <div class="card-header pb-0">
+            <h5>Single File Upload</h5>
+        </div>
+        <div class="card-body">
+            <form class="dropzone digits" id="singleFileUpload" action="{{ path('upload_image') }}">
+                <div class="dz-message needsclick"><i class="icon-cloud-up"></i>
+                    <h6>Drop files here or click to upload.</h6>
+                    <span class="note needsclick">
+                        (This is just a demo dropzone. Selected files are <strong>not</strong> actually uploaded.)
+                    </span>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="card">
+        <div class="card-body">
+            <div class="col-sm-12">
+                <div class="form-group">
+                    <label for="content">Content :</label>
+                    <div class="card">
+                        <div class="card-body">
+                            <div id="area1" contenteditable="true"></div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
 </div>
 {% endblock %}
 
 {% block javaScript %}
 <script>
-CKEDITOR.replace( 'text-box', {
-    on: {
-        contentDom: function( evt ) {
-            // Allow custom context menu only with table elemnts.
-            evt.editor.editable().on( 'contextmenu', function( contextEvent ) {
-                var path = evt.editor.elementPath();
+CKEDITOR.inline( 'area1', {
+    toolbar: [
+        {
+            name: 'basicstyles',
+            groups: ['basicstyles'],
+            items: [
+                'Format',
+                'Bold',
+                'Italic',
+                'Underline'
+            ]
+        },
+        {
+            name: 'paragraph',
+            groups: [
+                'list',
+                'indent',
+                'blocks',
+                'align',
+                'bidi'
+            ],
+            items: [
+                'NumberedList',
+                'BulletedList',
+                'JustifyLeft',
+                'JustifyCenter',
+                'JustifyRight',
+            ]
+        },
+        {
+            name: 'links',
+            items: [
+                'Link',
+                'Unlink'
+            ]
+        },
+    ],
+    fillEmptyBlocks: false,
+    autoParagraph: false
+});
 
-                if ( !path.contains( 'table' ) ) {
-                    contextEvent.cancel();
-                }
-            }, null, null, 5 );
-        }
-    }
-} );
+Dropzone.options.singleFileUpload = {
+    paramName: "file",
+    maxFiles: 1,
+    maxFilesize: 5,
+    complete: function(file) {
+       let pathFile = JSON.parse(file.xhr.response);
+        $('#image').val(pathFile.pathFile);
+    },
+};
+
+$(document).ready(function() {
+    $('#area1').on('input', function() {
+        console.log($(this).html());
+        $('#content').val($(this).html());
+    });
+});
 </script>
 {% endblock %}

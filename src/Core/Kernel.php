@@ -11,6 +11,7 @@ class Kernel
 
     public function __construct()
     {
+        ob_start();
         $routing = new Routing();
 
         $controller = $routing->getController();

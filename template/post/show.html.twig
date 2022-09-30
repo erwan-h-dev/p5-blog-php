@@ -1,0 +1,218 @@
+{% extends 'base.html.twig' %}
+
+{% block ariane %}
+<div class="col-sm-6">
+    <h3>{{ location }}</h3>
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="{{ path('home') }}" data-bs-original-title="" title="">Home</a></li>
+        <li class="breadcrumb-item"><a href="{{ path('posts') }}" data-bs-original-title="" title="">posts</a></li>
+        <li class="breadcrumb-item">post</li>
+    </ol>   
+</div>
+<div>
+</div>
+{% endblock %}
+
+{% block base %}
+
+<div class="blog-single">
+    <div class="blog-box blog-details">
+        <div class="banner-wrraper"><img class="img-fluid w-100 bg-img-cover" src="{% if post.image %}{{ makePath(post.image) }}{% else %}../assets/images/blog/blog-5.jpg{% endif %}" alt="blog-main"></div>
+        <div class="card">
+            <div class="card-body">
+                <div class="blog-details">
+                    <ul class="blog-social">
+                        <li>{{ post.updatedAt }}</li>
+                        <li><i class="icofont icofont-user"></i>{{ getEntity("user", post.authorId).userName }}</li>
+                        <li><i class="icofont icofont-ui-chat"></i>{{ comments|length }} Comments</li>
+                    </ul>
+                    <h4>
+                        {{ post.title }}
+                    </h4>
+                    <input type="hidden" id="content" value="{{ post.content|raw }}">
+                    <div id="content-post" class="single-blog-content-top"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="card comment-box">
+        <div class="card-body">
+            <h4>Comment</h4>
+            <ul>
+                {% for comment in comments %}
+                {% if not comment.commentId %}
+                {% set subComments = [] %}
+                {% for subComment in comments %}
+                    {% if subComment.commentId == comment.id %}
+                        {% set subComments = subComments|merge([subComment]) %}
+                    {% endif %}
+                {% endfor %}
+                <li class="comment">
+                    <div class="media align-self-center">
+                        <div class="media-body">
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <a href="#"> 
+                                        <h6 class="mt-0">{{ getEntity("user", comment.authorId).userName }}</h6>
+                                    </a> 
+                                </div>
+                                <div class="col-md-8">
+                                    <ul class="comment-social">
+                                        <li><i class="icofont icofont-ui-chat"></i>{{ subComments|length }} Responses</li>
+                                        <li><a class="btn btn-primary btn-xs answer" data-id="{{ comment.id}}"><i class="icofont icofont-ui-chat"></i> Answer</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <p>{{ comment.content|raw }}</p>
+                        </div>
+                    </div>
+                </li>
+                
+                <li class="">
+                    <ul>
+                        {% for subComment in subComments %}
+                        <li>
+                            <div class="media">
+                                <div class="media-body">
+                                    <div class="row">
+                                    <div class="col-xl-12">
+                                    <a href="#">
+                                        <h6 class="mt-0">{{ getEntity("user", comment.authorId).userName }}</h6>
+                                    </a>
+                                    </div>
+                                </div>
+                                <p>{{ subComment.content|raw }}</p>
+                            </div>
+                            </div>
+                        </li>
+                        {% endfor %}
+                        <li class="d-none sub-comment-{{ comment.id}}">
+                            <div class="media align-self-center ">
+                                <div class="media-body">
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <h6 class="mt-0">Response :</h6>
+                                        </div>
+                                    </div>
+                                    <div class="card">
+                                        <textarea  class="commentResponse" id="response-{{ comment.id }}" data-id="{{ comment.id }}"></textarea>
+                                        <input type="hidden" id="comment-value-{{ comment.id }}" value="">
+                                        <div class="card-footer">
+                                            <div class="btn-showcase text-end">
+                                                <button class="btn btn-primary btn-xs send-comment" data-id="{{ comment.id }}">Send</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </li>
+                {% endif %}
+                {% endfor %}
+                <li>
+                    <div class="media align-self-center">
+                        <div class="media-body">
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <h6 class="mt-0">Comment :</h6>
+                                </div>
+                            </div>
+                            <div class="card">
+                                    <textarea id="comment"></textarea>
+                                    <input type="hidden" id="comment-value-0" value="">
+                                <div class="card-footer">
+                                    <div class="btn-showcase text-end">
+                                        <button class="btn btn-primary btn-xs send-comment" data-id="0">Send</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block javaScript %}
+<script>
+
+var STANDAR_CONFIG = {
+    toolbar: [
+        {
+            name: 'basicstyles',
+            groups: ['basicstyles'],
+            items: [ 'Bold', 'Italic', 'Underline']
+        },
+        {
+            name: 'paragraph',
+            groups: ['list', 'indent', 'blocks', 'align', 'bidi'],
+            items: ['NumberedList', 'BulletedList']
+        },
+        {
+            name: 'links',
+            items: ['Link', 'Unlink']
+        },
+    ],
+    fillEmptyBlocks: false,
+    autoParagraph: false,
+    
+}
+
+var editor = CKEDITOR.replace( 'comment', STANDAR_CONFIG).on('change', function() {
+    var comment = CKEDITOR.instances.comment.getData();
+    $('#comment-value-0').val(comment);
+});
+
+var commentResponse = [];
+$(document).ready(function() {
+
+    // instanciation de tous les ckeditor des formulaires
+    $('.commentResponse').each(function(){
+        commentResponse.push(CKEDITOR.replace($(this).attr('id'), STANDAR_CONFIG).on('change', function() {
+            var comment = CKEDITOR.instances[$(this)[0].name].getData();
+            $('#comment-value-'+$("#"+$(this)[0].name).data('id')).val(comment);
+        }));
+    })
+
+    $('.commentResponse').on('change', function(){
+        var id = $(this).attr('id').split('-')[1];
+        $('#comment-value-'+id).val(commentResponse[id].getData());
+    })
+    console.log($('#content').val());
+    $("#content-post").html($("#content").val());
+
+    $(document).on("click", ".answer", function(){
+        console.log($(".sub-comment-"+$(this).data('id')))
+        $(".sub-comment-"+$(this).data('id')).removeClass("d-none");
+    })
+
+    $(document).on("click", ".send-comment", function(){
+
+        var content = $("#comment-value-"+$(this).data('id')).val();
+        var commentId = null;
+
+        if($(this).data('id') != 0){
+            commentId = $(this).data('id');
+        }
+
+        $.ajax({
+            url: "{{ path('new_comment') }}",
+            type: "POST",
+            data: {
+                content: content,
+                commentId: commentId,
+                postId: {{ post.id }}
+            },
+            success: function(data){
+                console.log(data);
+                location.reload();
+            }
+        })
+    })
+});
+</script>
+{% endblock %}

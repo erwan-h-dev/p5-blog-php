@@ -1,59 +1,51 @@
 routing:
 
 # Front office [anonymous, user, admin]
-    home:
+    home: # Page d'accueil
         path: /
         controller: HomeController/index
         roles: [anonymous, user, admin]
-    login:
+    login: # Page de connexion
         path: /login
         controller: SecurityController/login
         roles: [anonymous, user, admin]
-    logout:
+    logout: # Page de déconnexion
         path: /logout
         controller: SecurityController/logout
         roles: [anonymous, user, admin]
-    register:
+    register: # Page des création de comte
         path: /register
         controller: SecurityController/register
         roles: [anonymous, user, admin]
-    posts:
+    posts: # liste des articles publiée
         path: /posts
         controller: PostController/index
         roles: [anonymous, user, admin]
-    post:
+    post: # page d'un article 
         path: /post/{id}
         controller: PostController/post
         roles: [anonymous, user, admin]
-
-# Back office [users, admin]
-    user:
-        path: /user
+    user: # affiche l'utilisateur
+        path: /user/{id}
         controller: UserController/user
-        roles: [user, admin]
-    edit_user:
+        roles: [anonymous, user, admin]
+
+# Front office [users, admin]
+    edit_user: # modifie l'utilisateur courrant
         path: /user/edit
         controller: UserController/edit
         roles: [user, admin]
-    posts_user:
-        path: /user/posts
-        controller: PostController/posts
-        roles: [user, admin]
-    new_post:
-        path: /user/post/new
-        controller: PostController/newPost
-        roles: [user, admin]
-    edit_post:
-        path: /user/post/edit/{id}
-        controller: PostController/editPost
-        roles: [user, admin]
-    remove_post:
-        path: /user/post/remove/{id}
-        controller: PostController/removePost
+    # posts_user: # liste les articles de l'utilisateur courrant
+    #     path: /user/posts
+    #     controller: PostController/posts
+    #     roles: [user, admin]
+    new_comment: # créer un commentaire
+        path: /user/comment/new
+        controller: CommentController/newComment
         roles: [user, admin]
 
 # Admin office [admin]
-    admin:
+    admin: 
         path: /admin
         controller: AdminController/admin
         roles: [admin]
@@ -64,6 +56,22 @@ routing:
     posts_admin:
         path: /admin/posts
         controller: AdminController/postsAdmin
+        roles: [admin]
+    new_post: # création d'un nouvelle article
+        path: /user/post/new
+        controller: PostController/newPost
+        roles: [admin]
+    edit_post: # modification d'un article
+        path: /user/post/edit/{id}
+        controller: PostController/editPost
+        roles: [admin]
+    remove_post: # suppréssion d'un article
+        path: /user/post/remove/{id}
+        controller: PostController/removePost
+        roles: [admin]
+    upload_image: # ajoute une image a l'article
+        path: /user/post/upload/
+        controller: PostController/uploadImage
         roles: [admin]
     edit_user_admin:
         path: /admin/user/edit/{id}

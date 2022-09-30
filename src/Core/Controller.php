@@ -4,7 +4,6 @@ namespace App\Core;
 
 use App\Core\Twig;
 use App\Core\Config;
-use App\Core\Request;
 use App\Core\Session;
 use App\Core\EntityManager;
 
@@ -16,11 +15,9 @@ class Controller
     private $twig;
     public $entityManager;
     private $config;
-    private $request;
 
     public function __construct()
     {
-        $this->request = new Request();
         $this->session = new Session();
     }
 
@@ -40,7 +37,6 @@ class Controller
         $entityRepository = new EntityRepository();
         $entityRepository->setConnexion($this->config->getParameter('database_dns'), $this->config->getParameter('database_user'), $this->config->getParameter('database_password'));
         $this->entityManager = new EntityManager($entityRepository);
-        
     }
 
     public function render(String $template, array $params)
@@ -50,7 +46,8 @@ class Controller
 
     public function redirectRoute(string $routeName, array $params = [])
     {
-        header('Location: ' . $this->config->getRouteCollection()->generate($routeName));
+        header('Location: ' . $this->config->getRouteCollection()->generate($routeName, $params));
+        exit();
     }
 
     public function setUser($user)

@@ -2,10 +2,6 @@
 
 namespace App\Entity;
 
-use DateTime;
-
-
-
 class Post 
 {
 
@@ -15,7 +11,9 @@ class Post
     private string $title;
     private string $leadSentence;
     private string $content;
+    private int $authorId;
     private int $status;
+    private string $image;
 
     /**
      * Get the value of id
@@ -30,7 +28,7 @@ class Post
      *
      * @return  self
      */ 
-    public function setId(int $id)
+    public function setId(int $id): self
     {
         $this->id = $id;
 
@@ -50,7 +48,7 @@ class Post
      *
      * @return  self
      */ 
-    public function setCreatedAt(string $createdAt)
+    public function setCreatedAt(string $createdAt): self
     {
         $this->createdAt = $createdAt;
 
@@ -70,7 +68,7 @@ class Post
      *
      * @return  self
      */ 
-    public function setUpdatedAt(string $updatedAt)
+    public function setUpdatedAt(string $updatedAt): self
     {
         $this->updatedAt = $updatedAt;
 
@@ -90,7 +88,7 @@ class Post
      *
      * @return  self
      */ 
-    public function setTitle(string $title)
+    public function setTitle(string $title): self
     {
         $this->title = $title;
 
@@ -110,7 +108,7 @@ class Post
      *
      * @return  self
      */ 
-    public function setLeadSentence(string $leadSentence)
+    public function setLeadSentence(string $leadSentence): self
     {
         $this->leadSentence = $leadSentence;
 
@@ -130,15 +128,16 @@ class Post
      *
      * @return  self
      */ 
-    public function setContent(string $content)
+    public function setContent(string $content): self
     {
         $this->content = $content;
 
         return $this;
     }
+    
     /**
      * Get the value of status
-     */ 
+     */
     public function getStatus(): int
     {
         return $this->status;
@@ -148,11 +147,51 @@ class Post
      * Set the value of status
      *
      * @return  self
-     */ 
-    public function setStatus(int $status)
+     */
+    public function setStatus(int $status): self
     {
         $this->status = $status;
 
         return $this;
-    }   
+    }
+
+    /**
+     * Get the value of status
+     */
+    public function getAuthorId(): int
+    {
+        return $this->authorId;
+    }
+
+    /**
+     * Set the value of status
+     *
+     * @return  self
+     */
+    public function setAuthorId(int $authorId): self
+    {
+        $this->authorId = $authorId;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of image
+     */
+    public function getImage(): string
+    {
+        return $this->image;
+    }
+
+    /**
+     * Set the value of image
+     *
+     * @return  self
+     */
+    public function setImage(string $image): self
+    {
+        $this->image = $image;
+
+        return $this;
+    }
 }

@@ -16,7 +16,7 @@
     <div class="card">
         <div class="card-header ">
             <div class="setting-list">
-                <a href="/admin/posts/new" class="btn btn-secondary btn-sm mx-2">new post</a>
+                <a href="{{ path('new_post') }}" class="btn btn-secondary btn-sm mx-2">new post</a>
             </div>
         </div>
         <div class="card-body">
@@ -26,7 +26,8 @@
                         <th>id</th>
                         <th>Titre</th>
                         <th>Auteur</th>
-                        <th>Date</th>
+                        <th>Date de creation</th>
+                        <th>Date de modification</th>
                         <th>Comments</th>
                         <th>Actions</th>
                     </tr>
@@ -36,9 +37,10 @@
                     <tr>
                         <td>{{ post.id }}</td>
                         <td>{{ post.title }}</td>
-                        <td>{{ post.author }}</td>
-                        <td>{{ post.date }}</td>
-                        <td>{{user.userName}}</td>
+                        <td>{{ getEntity("user", post.authorId).userName }}</td>
+                        <td>{{ post.createdAt|date('d/m/Y H:i:s') }}</td>
+                        <td>{{ post.updatedAt|date('d/m/Y H:i:s') }}</td>
+                        <td>{{ getComments(post.id)|length }}</td>
                         <td class="text-end">
                             <a href="{{ path('edit_post',{id: post.id}) }}" class="btn btn-primary btn-sm">Editer</a>
                             <a href="{{ path('remove_post',{id: post.id}) }}" class="btn btn-danger btn-sm">Supprimer</a>
