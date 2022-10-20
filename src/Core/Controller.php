@@ -6,6 +6,7 @@ use App\Core\Twig;
 use App\Core\Config;
 use App\Core\Session;
 use App\Core\EntityManager;
+use App\Core\Routing\Route;
 
 
 class Controller
@@ -15,14 +16,16 @@ class Controller
     private $twig;
     public $entityManager;
     private $config;
+    private $route;
 
     public function __construct()
     {
         $this->session = new Session();
     }
 
-    public function setConfig(Config $config)
+    public function setConfig(Config $config, Route $route)
     {
+        $this->route = $route;
         $this->config = $config;
         $this->setConnexion();
         $this->twig = new Twig($config);
@@ -30,6 +33,8 @@ class Controller
         if($this->getUser()){
             $this->twig->addGlobal('currentUser', $this->getUser());
         }
+
+        $this->twig->addGlobal('currentRoute', $this->route->getName());
     }
 
     public function setConnexion()
@@ -60,7 +65,7 @@ class Controller
     {
         return $this->session->getSession('user');
     }
-    
+
     public function destroySession()
     {
         $this->session->destroySession();

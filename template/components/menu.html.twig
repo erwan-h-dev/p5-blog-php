@@ -5,7 +5,7 @@
             <div id="mainnav">
                 {% if currentUser %}
                     <div class="sidebar-user text-center">
-                        <a class="setting-primary" href="{{ path('edit_user') }}" data-bs-original-title="" title="">
+                        <a class="setting-primary" href="{{ path('edit_user', {id: currentUser.id}) }}" data-bs-original-title="" title="">
                             <i class="fa fa-spin fa-gear"></i>
                         </a>
                         <a href="{{ path('user', {id: currentUser.id}) }}" data-bs-original-title="" title="">
@@ -15,7 +15,7 @@
                         <ul>
                             <li>
                                 <p>comments :</p>
-                                <span class="counter">{{ getComments(currentUser.id)|length }}</span>
+                                <span class="counter">{{ getCollection('comment', 'authorId', currentUser.id)|length }}</span>
                             </li>
                             <li>
                                 <p>Created at :</p>
@@ -26,13 +26,15 @@
                 {% endif %}
                 <ul class="nav-menu custom-scrollbar" style="display: block;">
                     <li class="dropdown mb-3"></li>
-                    <li class="dropdown mb-3"><a class="nav-link menu-title " href="{{ path("home") }}">
+                    <li class="dropdown mb-3"><a class="nav-link menu-title {% if currentRoute == "home" %}active{% endif %}" href="{{ path("home") }}">
                         <span>Home</span></a>
                     </li>
-                    <li class="dropdown mb-3"><a class="nav-link menu-title " href="{{ path("posts") }}">
+                        
+                    <li class="dropdown mb-3"><a class="nav-link menu-title {% if currentRoute == "posts" %}active{% endif %}" href="{{ path("posts") }}">
                         <span>Posts</span></a>
                     </li>
-                    <li class="dropdown mb-3"><a class="nav-link menu-title " href="/">
+                        
+                    <li class="dropdown mb-3"><a class="nav-link menu-title {% if currentRoute == "contact" %}active{% endif %}" href="{{ path("contact") }}">
                         <span>Contact</span></a>
                     </li>
                 </ul>

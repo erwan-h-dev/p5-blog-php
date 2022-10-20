@@ -60,11 +60,11 @@
         
         <div class="page-wrapper compact-wrapper modern-sidebar" id="pageWrapper">
 
-            {{ include('header.html.twig')}}
+            {{ include('components/header.html.twig')}}
 
             <div class="page-body-wrapper horizontal-menu">
 
-                {{ include('menu.html.twig')}}
+                {{ include('components/menu.html.twig')}}
 
                 <div class="page-body">
                     <div class="container-fluid">
@@ -83,7 +83,7 @@
                     </div>
                 </div>
 
-                {{ include('footer.html.twig')}}
+                {{ include('components/footer.html.twig')}}
                 
             </div>
         </div>
@@ -133,7 +133,11 @@
 
         <script src="{{ '/assets/js/chart/apex-chart/apex-chart.js' }}"></script>
         <script src="{{ '/assets/js/chart/apex-chart/stock-prices.js' }}"></script>
-        
+        <script src="{{ '/assets/js/isotope.pkgd.js' }}"></script>
+        <script src="{{ '/assets/js/photoswipe/photoswipe.min.js' }}"></script>
+        <script src="{{ '/assets/js/photoswipe/photoswipe-ui-default.min.js' }}"></script>
+        <script src="{{ '/assets/js/photoswipe/photoswipe.js' }}"></script>
+        <script src="{{ '/assets/js/masonry-gallery.js' }}"></script>
         
         {# <script src="{{ '/assets/js/chart/morris-chart/raphael.js' }}"></script>
         <script src="{{ '/assets/js/chart/morris-chart/morris.js' }}"> </script>

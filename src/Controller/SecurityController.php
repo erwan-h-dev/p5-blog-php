@@ -60,6 +60,7 @@ class SecurityController extends Controller
                             ->setPassword(password_hash($_POST['register']['password'], PASSWORD_BCRYPT))
                             ->setCreatedAt($date->format('Y-m-d H:i:s'))
                             ->setUpdatedAt($date->format('Y-m-d H:i:s'))
+                            ->setLastLogin($date->format('Y-m-d H:i:s'))
                             ->setRole('user');
             
                         $this->entityManager->insert($user);

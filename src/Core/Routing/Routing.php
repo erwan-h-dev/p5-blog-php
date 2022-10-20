@@ -65,10 +65,9 @@ class Routing
 
         $route = $this->matchRoute();
 
-        
         if ($route === false) {
             $controller = new ErrorController();
-            $controller->setConfig($this->config);
+            $controller->setConfig($this->config, $this->routeCollection->getRouteByName('error'));
             $controller->error404();
             return;
         }
@@ -77,7 +76,7 @@ class Routing
 
         $controllerClassName = new $contoller();
 
-        $controllerClassName->setConfig($this->config);
+        $controllerClassName->setConfig($this->config, $route);
 
         $controllerClassName->{$route->getAction()}($route->getParameters());
     }

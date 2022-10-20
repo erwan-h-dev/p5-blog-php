@@ -14,27 +14,25 @@
 
 {% block base %}
 <div class="col-sm-12">
-    <div class="row">
+    <div class="row grid">
         {% for post in posts|sort((a, b) => b.updatedAt <=> a.updatedAt) %}
-        <div class="col-sm-6 col-xl-3 box-col-6 des-xl-50">
+        <div class="post-item col-sm-6 col-xl-3 box-col-6 des-xl-50" data-href="{{ path('post', {id: post.id}) }}">
             <div class="card">
                 <div class="blog-box blog-grid">
                     <div class="blog-wrraper">
-                        <a href="{{ path('post', {id: post.id}) }}">
-                            <img class="img-fluid top-radius-blog" src="{% if post.image %}{{ makePath(post.image) }}{% else %}../assets/images/blog/blog-5.jpg{% endif %}" alt="">
-                        </a>
+                        <img class="img-fluid top-radius-blog" src="{% if post.image %}{{ makePath(post.image) }}{% else %}../assets/images/blog/blog-5.jpg{% endif %}" alt="">
                     </div>
                     <div class="blog-details-second">
                         <div class="blog-post-date">
                             <span class="blg-month">{{ post.updatedAt|date('F')|slice(0, 4) }}</span>
                             <span class="blg-date">{{ post.updatedAt|date('d') }}</span>
                         </div>
-                        <a href="{{ path('post', {id: post.id}) }}"><h6 class="blog-bottom-details">{{ post.title }}</h6></a>
+                        <h6 class="blog-bottom-details">{{ post.title }}</h6>
                         <p>{{ post.leadSentence }}</p>
                         <div class="detail-footer"> 
                             <ul class="sociyal-list">
                                 <li><i class="fa fa-user-o"></i>{{ getEntity("user", post.authorId).userName }}</li>
-                                <li><i class="fa fa-comments-o"></i>5</li>
+                                <li><i class="fa fa-comments-o"></i>{{ getCollection('comment','postId', post.id)|length }}</li>
                                 {# <li><i class="fa fa-thumbs-o-up"></i>2 like</li> #}
                             </ul>
                         </div>
@@ -46,8 +44,15 @@
     </div>
 </div>
 <script>
+
     $(document).ready(function() {
-        $('.datatable').DataTable();
+        $('.grid').isotope({
+            itemSelector: '.post-item',
+        });
+
+        $('.post-item').click(function() {
+           window.location = $(this).data("href");
+        });
     });
 </script>
 {% endblock %}
