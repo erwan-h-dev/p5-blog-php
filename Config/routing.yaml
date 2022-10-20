@@ -25,6 +25,10 @@ routing:
         path: /post/{id}
         controller: PostController/post
         roles: [anonymous, user, admin]
+    contact: # Page d'accueil
+        path: /contact
+        controller: HomeController/contact
+        roles: [anonymous, user, admin]
     user: # affiche l'utilisateur
         path: /user/{id}
         controller: UserController/user
@@ -32,18 +36,22 @@ routing:
 
 # Front office [users, admin]
     edit_user: # modifie l'utilisateur courrant
-        path: /user/edit
-        controller: UserController/edit
+        path: /user/edit/{id}
+        controller: UserController/editUser
         roles: [user, admin]
-    # posts_user: # liste les articles de l'utilisateur courrant
-    #     path: /user/posts
-    #     controller: PostController/posts
-    #     roles: [user, admin]
+    posts_user: # liste les articles de l'utilisateur courrant
+        path: /user/posts
+        controller: PostController/posts
+        roles: [user, admin]
     new_comment: # créer un commentaire
         path: /user/comment/new
         controller: CommentController/newComment
         roles: [user, admin]
-
+    follow_user:
+        path: /user/follow/{id}
+        controller: UserController/followUser
+        roles: [user, admin]
+        
 # Admin office [admin]
     admin: 
         path: /admin

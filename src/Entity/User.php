@@ -4,16 +4,22 @@ namespace App\Entity;
 
 class User 
 {
-    private $id;        // int
-    private $userName;  // string
-    private $createdAt; // DateTime
-    private $updatedAt; // DateTime
-    private $lastLogin; // DateTime
-    private $email;     // string
-    private $password;  // string
-    private $firstName; // string
-    private $lastName;  // string
-    private $role;      // string
+    private int $id;
+    private string $userName;
+    private string $createdAt;  // DateTime
+    private string $updatedAt;  // DateTime
+    private string $lastLogin;  // DateTime
+    private string $email;     
+    private string $password;  
+    private string $firstName; 
+    private string $lastName;  
+    private string $role;
+    private int $valid              = 0;
+    private ?string $profilePicture = null;
+    private ?string $twitter        = null;
+    private ?string $linkedin       = null;
+    private ?string $facebook       = null;
+    private ?string $instagram      = null;
 
     /**
      * Get the value of id
@@ -208,6 +214,126 @@ class User
     public function setRole(string $role)
     {
         $this->role = $role;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of profilePicture
+     */
+    public function getProfilePicture()
+    {
+        return $this->profilePicture;
+    }
+
+    /**
+     * Set the value of profilePicture
+     *
+     * @return  self
+     */
+    public function setProfilePicture($profilePicture)
+    {
+        $this->profilePicture = $profilePicture;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of twitter
+     */
+    public function getTwitter()
+    {
+        return $this->twitter;
+    }
+
+    /**
+     * Set the value of twitter
+     *
+     * @return  self
+     */
+    public function setTwitter($twitter)
+    {
+        $this->twitter = $twitter;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of linkedin
+     */
+    public function getLinkedin()
+    {
+        return $this->linkedin;
+    }
+
+    /**
+     * Set the value of linkedin
+     *
+     * @return  self
+     */
+    public function setLinkedin($linkedin)
+    {
+        $this->linkedin = $linkedin;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of facebook
+     */
+    public function getFacebook()
+    {
+        return $this->facebook;
+    }
+
+    /**
+     * Set the value of facebook
+     *
+     * @return  self
+     */
+    public function setFacebook($facebook)
+    {
+        $this->facebook = $facebook;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of instagram
+     */ 
+    public function getInstagram()
+    {
+        return $this->instagram;
+    }
+
+    /**
+     * Set the value of instagram
+     *
+     * @return  self
+     */ 
+    public function setInstagram($instagram)
+    {
+        $this->instagram = $instagram;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of valid
+     */ 
+    public function getValid(): int
+    {
+        return $this->valid;
+    }
+
+    /**
+     * Set the value of valid
+     *
+     * @return  self
+     */ 
+    public function setValid($valid)
+    {
+        $this->valid = $valid;
 
         return $this;
     }

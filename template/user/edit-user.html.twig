@@ -1,0 +1,24 @@
+{% extends 'base.html.twig' %}
+
+{% block ariane %}
+<div class="col-sm-6">
+    <h3>{{ location }}</h3>
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="/" data-bs-original-title="" title="">{{ location }}</a></li>
+    </ol>
+</div>
+{% endblock %}
+
+{% block base %}
+<div class="col-sm-12">
+    <div class="card">
+        <div class="card-header pb-0">
+            <h5>Sample Card</h5><span>lorem ipsum dolor sit amet, consectetur adipisicing elit</span>
+        </div>
+
+        <div class="card-body">
+            {{ dump(user) }}
+        </div>
+    </div>
+</div>
+{% endblock %}

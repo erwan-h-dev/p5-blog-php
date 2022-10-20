@@ -88,7 +88,6 @@ class EntityManager
                 $values[$parameter->getName()] = $entity->$methode();
             }
         }
-
         $sql.= " WHERE id = :id";
         $values['id'] = $entity->getId();
 
@@ -117,7 +116,6 @@ class EntityManager
     public function find(int $id)
     {
         $sql = "SELECT * FROM " . lcfirst(str_replace("App\\Entity\\", "", $this->class)) . " WHERE id = :id";
-
         $pdo = $this->entityRepository->getPdo();
         $statement = $pdo->prepare($sql);
         $statement->execute(['id' => $id]);
@@ -143,7 +141,6 @@ class EntityManager
                 $sql .= " AND ";
             }
         }
-
         $pdo = $this->entityRepository->getPdo();
         $statement = $pdo->prepare($sql);
         $statement->execute($values);
@@ -159,7 +156,7 @@ class EntityManager
                 echo $e->getMessage();
             }
         } else {
-            return null;
+            return [];
         }
     }
 

@@ -31,7 +31,8 @@ class Twig
         $this->twig->addFunction(new \Twig\TwigFunction('dump', [$this, 'dump']));
         $this->twig->addFunction(new \Twig\TwigFunction('getEntity', [$this, 'getEntity']));
         $this->twig->addFunction(new \Twig\TwigFunction('makePath', [$this, 'makePath']));
-        $this->twig->addFunction(new \Twig\TwigFunction('getComments', [$this, 'getComments']));
+        $this->twig->addFunction(new \Twig\TwigFunction('getCollection', [$this, 'getCollection']));
+        $this->twig->addFunction(new \Twig\TwigFunction('isFollowing', [$this, 'isFollowing']));
     }
 
     public function render(String $template, array $params)
@@ -62,13 +63,20 @@ class Twig
 
     public function makePath(string $path)
     {
-        return $_SERVER['REQUEST_SCHEME'].'://'.$_SERVER['HTTP_HOST'].$path;
+        return $_SERVER['REQUEST_SCHEME'] . '://' . $_SERVER['HTTP_HOST'].$path;
         // return $this->config->getParameter('root') . $path;
     }
 
-    public function getComments(int $id)
+    public function getCollection(String $entityName,String $relationProperty, int $id)
     {
-        $comments = $this->entityManager->getRepository("App\Entity\Comment")->findBy(['authorId' => $id]);
+        $comments = $this->entityManager->getRepository("App\Entity\\" . ucfirst($entityName))->findBy([$relationProperty => $id]);
+
         return $comments;
+    }
+
+    public function isFollowing(int $currentUserId, int $userId)
+    {
+        $isFollowing = $this->entityManager->getRepository("App\Entity\Follow")->findOneBy(['follower' => $currentUserId, 'following' => $userId]);
+        return !is_null($isFollowing);
     }
 }
