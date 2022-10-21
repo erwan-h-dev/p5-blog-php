@@ -61,10 +61,15 @@ routing:
         path: /admin/users
         controller: AdminController/usersAdmin
         roles: [admin]
+    comments_admin:
+        path: /admin/comments
+        controller: AdminController/postsAdmin
+        roles: [admin]
     posts_admin:
         path: /admin/posts
         controller: AdminController/postsAdmin
         roles: [admin]
+    
     new_post: # création d'un nouvelle article
         path: /user/post/new
         controller: PostController/newPost
