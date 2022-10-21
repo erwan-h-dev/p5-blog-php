@@ -55,15 +55,19 @@ class Controller
         exit();
     }
 
-    public function setUser($user)
+    public function setUser(int $userId)
     {
-        $this->session->setSession('user', $user);
-        
+        $this->session->setSession('user', $userId); 
     }
 
     public function getUser()
     {
-        return $this->session->getSession('user');
+        $userRepository = $this->entityManager->getRepository(User::class);
+        if($this->session->getSession('user')){
+            return $userRepository->find($this->session->getSession('user'));
+        }
+        
+        return null;
     }
 
     public function destroySession()

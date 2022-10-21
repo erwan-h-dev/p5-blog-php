@@ -66,8 +66,6 @@ abstract class FormType
         $this->entity = EntityPopulate::populate($cleanData, $this->entity);
     }
 
-    
-
     public function getData()
     {
         return $this->entity;

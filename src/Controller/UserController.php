@@ -7,6 +7,7 @@ use App\Entity\User;
 use App\Core\Request;
 use App\Entity\Follow;
 use App\Entity\Comment;
+use App\Forms\UserForm;
 use App\Core\Controller;
 use App\Core\JsonContent;
 
@@ -33,12 +34,12 @@ class UserController extends Controller
         $posts = $postRepository->findBy(['authorId' => $user->getId()]);
 
         return $this->render('user/user.html.twig', [
-            'location' => $location,
-            'user' => $user,
-            'posts' => $posts,
-            'comments' => $comments,
-            'followers' => $followers,
-            'followings' => $followings,
+            'location'      => $location,
+            'user'          => $user,
+            'posts'         => $posts,
+            'comments'      => $comments,
+            'followers'     => $followers,
+            'followings'    => $followings,
         ]);
     }
 
@@ -48,6 +49,16 @@ class UserController extends Controller
 
         $userRepository = $this->entityManager->getRepository(User::class);
         $user = $userRepository->find($params['id']);
+        
+        $form = new UserForm($user);
+
+        $form->handleRequest(new Request());
+
+        if ($form->isSubmited() && $form->isValid()) {
+            $user = $form->getData();
+
+           var_dump($user);
+        }
 
         return $this->render('user/edit-user.html.twig', [
             'location' => $location,

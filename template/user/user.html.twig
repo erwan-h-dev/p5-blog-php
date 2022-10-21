@@ -143,26 +143,23 @@
         <div class="col-xl-9 col-lg-12 col-md-7 xl-65">
             <div class="my-gallery row grid gallery-with-description" id="aniimated-thumbnials" itemscope="">
                 {% for post in posts|sort((a, b) => b.updatedAt <=> a.updatedAt) %}
-                    <div class="col-lg-6 col-xl-4 box-col-6 des-xl-50 post-item">
+                    <div class="col-lg-6 col-xl-4 box-col-6 des-xl-50 post-item" data-href="{{ path('post', {id: post.id}) }}">
                         <div class="card">
                             <div class="blog-box blog-grid">
                                 <div class="blog-wrraper">
-                                    <a href="{{ path('post', {id: post.id}) }}">
-                                        <img class="img-fluid top-radius-blog" src="{% if post.image %}{{ makePath(post.image) }}{% else %}../assets/images/blog/blog-5.jpg{% endif %}" alt="">
-                                    </a>
+                                    <img class="img-fluid top-radius-blog" src="{% if post.image %}{{ makePath(post.image) }}{% else %}../assets/images/blog/blog-5.jpg{% endif %}" alt="">
                                 </div>
                                 <div class="blog-details-second">
                                     <div class="blog-post-date">
                                         <span class="blg-month">{{ post.updatedAt|date('F')|slice(0, 4) }}</span>
                                         <span class="blg-date">{{ post.updatedAt|date('d') }}</span>
                                     </div>
-                                    <a href="{{ path('post', {id: post.id}) }}"><h6 class="blog-bottom-details">{{ post.title }}</h6></a>
+                                    <h6 class="blog-bottom-details">{{ post.title }}</h6>
                                     <p>{{ post.leadSentence }}</p>
                                     <div class="detail-footer"> 
                                         <ul class="sociyal-list">
                                             <li><i class="fa fa-user-o"></i>{{ getEntity("user", post.authorId).userName }}</li>
                                             <li><i class="fa fa-comments-o"></i>5</li>
-                                            {# <li><i class="fa fa-thumbs-o-up"></i>2 like</li> #}
                                         </ul>
                                     </div>
                                 </div>
@@ -190,16 +187,21 @@
 <script>
     $(document).ready(function() {
         $('.grid').isotope({
-            itemSelector: '.post-item',
-        });
-    });
-    $('.follow').click(function(e){
-        e.preventDefault();
-        console.log($(this).data('href'));
-        var url = $(this).data('href');
-        $.post(url, function(data){
-            window.location.reload();
-        });
+            itemSelector: '.post-item'
+        })
+
+        $('.follow').click(function(e){
+            e.preventDefault();
+            console.log($(this).data('href'))
+            var url = $(this).data('href')
+            $.post(url, function(data){
+                window.location.reload()
+            })
+        })
+
+        $('.post-item').click(function() {
+           window.location = $(this).data("href")
+        })
     })
 </script>
 {% endblock %}

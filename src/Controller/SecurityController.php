@@ -25,7 +25,7 @@ class SecurityController extends Controller
                 $date = new \DateTime();
                 $user->setLastLogin($date->format('Y-m-d H:i:s'));
                 $this->entityManager->update($user);
-                $this->setUser($user);
+                $this->setUser($user->getId());
                 $this->redirectRoute('home');
             }
         }

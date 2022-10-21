@@ -11,14 +11,153 @@
 
 {% block base %}
 <div class="col-sm-12">
-    <div class="card">
-        <div class="card-header pb-0">
-            <h5>Sample Card</h5><span>lorem ipsum dolor sit amet, consectetur adipisicing elit</span>
+    <dif class="row">
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-body">
+                    <div class="profile-pic">
+                        <label class="-label" for="file">
+                            <i class="fa fa-camera"></i>
+                            <span>Change Image</span>
+                        </label>
+                        <input id="file" type="file" onchange="loadFile(event)"/>
+                        <img src="{{ makePath(user.profilePicture) }}" id="output" width="200" />
+                    </div>
+                    <script>
+                        var loadFile = function (event) {
+                            var image = document.getElementById("output");
+                            image.src = URL.createObjectURL(event.target.files[0]);
+                        };
+                    </script>
+                    <style>
+                        .profile-pic {
+                            color: transparent;
+                            transition: all 0.3s ease;
+                            display: flex;
+                            justify-content: center;
+                            align-items: center;
+                            position: relative;
+                            transition: all 0.3s ease;
+                        }
+                        .profile-pic input {
+                            display: none;
+                        }
+                        .profile-pic img {
+                            position: absolute;
+                            object-fit: cover;
+                            width: 165px;
+                            height: 165px;
+                            box-shadow: 0 0 10px 0 rgba(255, 255, 255, .35);
+                            border-radius: 100px;
+                            z-index: 0;
+                        }
+                        .profile-pic .-label {
+                            cursor: pointer;
+                            height: 165px;
+                            width: 165px;
+                            margin-bottom: 0;
+                        }
+                        .profile-pic:hover .-label {
+                            display: flex;
+                            justify-content: center;
+                            align-items: center;
+                            background-color: rgba(0, 0, 0, .8);
+                            z-index: 10000;
+                            color: #fafafa;
+                            transition: background-color 0.2s ease-in-out;
+                            border-radius: 100px;
+                            margin-bottom: 0;
+                        }
+                        .profile-pic span {
+                            display: inline-flex;
+                            padding: 0.2em;
+                            height: 2em;
+                        }
+                    </style>   
+                </div>
+            </div>
+             <div class="card">
+                <div class="card-header">
+                    <h5>Change password</h5>
+                </div>
+                <div class="card-body">
+                    <form class="row needs-validation" action="" method="post">           
+                        <div class="form-group">
+                            <label for="oldPassword">Old password :</label>
+                            <input class="form-control" id="oldPassword" name="oldPassword" type="password" required>
+                            <div class="valid-feedback">Looks good!</div>
+                        </div>
+                        <div class="form-group">
+                            <label for="newPassword">New password :</label>
+                            <input class="form-control" id="newPassword"  name="newPassword" type="password" required>
+                            <div class="valid-feedback">Looks good!</div>
+                        </div>
+                        <div class="form-group">
+                            <label for="repNewPassword">repeat new password :</label>
+                            <input class="form-control" id="repNewPassword"  name="repNewPassword" type="password" required>
+                            <div class="valid-feedback">Looks good!</div>
+                        </div>
+                    </form>
+                </div>
+                <div class="card-footer">
+                    <div class="btn-showcase text-end">
+                        <button class="btn btn-square btn-primary" type="submit">Save</button>
+                    </div>
+                </div>
+            </div>
         </div>
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-header">
+                    <h5>Edit Profile</h5>
+                </div>
+                <div class="card-body">
 
-        <div class="card-body">
-            {{ dump(user) }}
+                    <form class="row needs-validation" action="" method="post">
+                        <div class="form-group">
+                            <label for="userName">UserName :</label>
+                            <input class="form-control" id="userName" name="userName" type="text" required value="{{user.userName}}">
+                            <div class="valid-feedback">Looks good!</div>
+                        </div>
+                        <div class="form-group">
+                            <label for="firstName">First Name :</label>
+                            <input class="form-control" id="firstName"  name="firstName" type="text" required value="{{user.firstName}}">
+                            <div class="valid-feedback">Looks good!</div>
+                        </div>
+                        <div class="form-group">
+                            <label for="lastName">Last Name :</label>
+                            <input class="form-control" id="lastName"  name="lastName" type="text" required value="{{user.lastName}}">
+                            <div class="valid-feedback">Looks good!</div>
+                        </div>
+                        <div class="form-group">
+                            <label for="twitter">Twitter :</label>
+                            <input class="form-control" id="twitter" name="twitter" type="text" required value="{{user.twitter}}">
+                            <div class="valid-feedback">Looks good!</div>
+                        </div>
+                        <div class="form-group">
+                            <label for="linkedin">linkedin :</label>
+                            <input class="form-control" id="linkedin" name="linkedin" type="text" required value="{{user.linkedin}}">
+                            <div class="valid-feedback">Looks good!</div>
+                        </div>
+                        <div class="form-group">
+                            <label for="facebook">facebook :</label>
+                            <input class="form-control" id="facebook" name="facebook" type="text" required value="{{user.facebook}}">
+                            <div class="valid-feedback">Looks good!</div>
+                        </div>
+                        <div class="form-group">
+                            <label for="instagram">instagram :</label>
+                            <input class="form-control" id="instagram" name="instagram" type="text" required value="{{user.instagram}}">
+                            <div class="valid-feedback">Looks good!</div>
+                        </div>
+                    </form>
+                </div>
+                <div class="card-footer">
+                    <div class="btn-showcase text-end">
+                        <button class="btn btn-square btn-primary" type="submit">Save</button>
+                    </div>
+                </div>
+            </div>
         </div>
-    </div>
+    </dif>
 </div>
 {% endblock %}

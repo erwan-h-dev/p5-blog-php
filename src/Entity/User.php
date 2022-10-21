@@ -15,7 +15,7 @@ class User
     private string $lastName;  
     private string $role;
     private int $valid              = 0;
-    private ?string $profilePicture = null;
+    private ?string $profilePicture = '/assets/images/dashboard/1.png';
     private ?string $twitter        = null;
     private ?string $linkedin       = null;
     private ?string $facebook       = null;

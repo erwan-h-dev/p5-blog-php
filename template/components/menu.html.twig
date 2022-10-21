@@ -9,7 +9,7 @@
                             <i class="fa fa-spin fa-gear"></i>
                         </a>
                         <a href="{{ path('user', {id: currentUser.id}) }}" data-bs-original-title="" title="">
-                            <img class="img-90 rounded-circle" src="../assets/images/dashboard/1.png" alt="">
+                            <img class="img-90 rounded-circle" src="{{ makePath(currentUser.profilePicture) }}" alt="">
                             <h6 class="mt-3 f-14 f-w-600">{{ currentUser.userName }}</h6>
                         </a>
                         <ul>
