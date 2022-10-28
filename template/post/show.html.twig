@@ -23,8 +23,7 @@
                 <div class="blog-details">
                     <ul class="blog-social">
                         <li>{{ post.updatedAt }}</li>
-
-                        <li><a href="{{ path('user', {id: post.authorId}) }}"><i class="icofont icofont-user"></i>{{ getEntity("user", post.authorId).userName }}</a></li>
+                        <li><a onclick="window.location.href = '{{ path('user', {id: post.authorId}) }}'"  href="{{ path('user', {id: post.authorId}) }}"><i class="icofont icofont-user"></i>{{ getEntity("user", post.authorId).userName }}</a></li>
                         <li><i class="icofont icofont-ui-chat"></i>{{ comments|length }} Comments</li>
                     </ul>
                     <h4>
