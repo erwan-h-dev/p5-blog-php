@@ -4,21 +4,21 @@
              <div id="mainnav">           
                <ul class="nav-menu custom-scrollbar">
                     <li></li>
-                    <li>
+                    <li class="mb-3">
                         <a href="{{ path('posts_admin') }}" class="nav-link {% if currentRoute == "posts_admin" %}active{% endif %}">
-                            <i class="fa fa-folder-open fa-2x py-2"></i> 
+                            <i class="fa fa-folder-open fa-2x me-2"></i> 
                             <span>Posts</span>
                         </a>
                     </li>
-                    <li>
-                        <a href="/admin/users" class="nav-link ">
-                            <i class="fa fa-comments-o fa-2x py-2"></i>
+                    <li class="mb-3">
+                        <a href="{{ path('comments_admin') }}" class="nav-link {% if currentRoute == "comments_admin" %}active{% endif %}">
+                            <i class="fa fa-comments-o fa-2x me-2"></i>
                             <span>Comments</span>
                         </a>
                     </li>
-                    <li>
-                        <a href="/admin/users" class="nav-link ">
-                            <i class="fa fa-users fa-2x py-2"></i> 
+                    <li class="mb-3">
+                        <a href="{{ path('users_admin') }}" class="nav-link {% if currentRoute == "users_admin" %}active{% endif %}">
+                            <i class="fa fa-users fa-2x me-2"></i> 
                             <span>Users</span>
                         </a>
                     </li>
