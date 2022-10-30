@@ -18,7 +18,9 @@ class PostController extends Controller
     {
         $location = 'posts list';
 
-        $posts = $this->entityManager->getRepository(Post::class)->findAll();
+        $posts = $this->entityManager->getRepository(Post::class)->findBy([
+            'status' => 1,
+        ]);
         // var_dump($posts);
         return $this->render('post/index.html.twig', [
             'location' => $location,
@@ -31,7 +33,10 @@ class PostController extends Controller
         $location = 'post';
 
         $post = $this->entityManager->getRepository(Post::class)->find($params['id']);
-        $comments = $this->entityManager->getRepository(Comment::class)->findBy(['postId' => $post->getId()]);
+        $comments = $this->entityManager->getRepository(Comment::class)->findBy([
+            'postId' => $post->getId(),
+            'status' => 1
+        ]);
         
         return $this->render('post/show.html.twig', [
             'location' => $location,
@@ -49,6 +54,31 @@ class PostController extends Controller
         return $this->render('post/posts-admin.html.twig', [
             'location' => $location,
             'posts' => $posts
+        ]);
+    }
+
+    public function newPost()
+    {
+        $location = 'posts new';
+
+        $form = new PostForm(new Post());
+
+        $form->handleRequest(new Request());
+        if ($form->isSubmited() && $form->isValid()) {
+
+            $post = $form->getData();
+            $dateNow = new DateTime();
+
+            $post->setCreatedAt($dateNow->format('Y-m-d H:i:s'))
+            ->setUpdatedAt($dateNow->format('Y-m-d H:i:s'))
+            ->setAuthorId($this->getUser()->getId());
+
+            $this->entityManager->insert($post);
+
+            return $this->redirectRoute('edit_post', ['id' => $post->getId()]);
+        }
+        return $this->render('post/new-post.html.twig', [
+            'location' => $location,
         ]);
     }
 
@@ -81,33 +111,6 @@ class PostController extends Controller
         return $this->render('post/edit-post.html.twig', [
             'location' => $location,
             'post' => $post,
-        ]);
-    }
-
-    public function newPost()
-    {
-        $location = 'posts new';
-
-        $form = new PostForm(new Post());
-
-        $form->handleRequest(new Request());
-        if($form->isSubmited() && $form->isValid())
-        {
-
-            $post = $form->getData();
-            $dateNow = new DateTime();
-
-            $post->setCreatedAt($dateNow->format('Y-m-d H:i:s'))
-                ->setUpdatedAt($dateNow->format('Y-m-d H:i:s'))
-                ->setAuthorId($this->getUser()->getId())
-            ;
-
-            $this->entityManager->insert($post);
-            
-            return $this->redirectRoute('edit_post', ['id' => $post->getId()]);
-        }
-        return $this->render('post/new-post.html.twig', [
-            'location' => $location,
         ]);
     }
 

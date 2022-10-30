@@ -36,7 +36,7 @@
                         <div class="detail-footer"> 
                             <ul class="sociyal-list">
                                 <li><a onclick="locationReload('{{ path('user', {id: post.authorId}) }}')"  href="{{ path('user', {id: post.authorId}) }}"><i class="fa fa-user-o"></i>{{ getEntity("user", post.authorId).userName }}</a></li>
-                                <li><i class="fa fa-comments-o"></i>{{ getCollection('comment','postId', post.id)|length }}</li>
+                                <li><i class="fa fa-comments-o"></i>{{ getCollection('comment',{'postId': post.id,'status': 1})|length }}</li>
                             </ul>
                         </div>
                     </div>

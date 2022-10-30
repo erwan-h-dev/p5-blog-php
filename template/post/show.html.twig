@@ -24,7 +24,7 @@
                     <ul class="blog-social">
                         <li>{{ post.updatedAt }}</li>
                         <li><a onclick="window.location.href = '{{ path('user', {id: post.authorId}) }}'"  href="{{ path('user', {id: post.authorId}) }}"><i class="icofont icofont-user"></i>{{ getEntity("user", post.authorId).userName }}</a></li>
-                        <li><i class="icofont icofont-ui-chat"></i>{{ comments|length }} Comments</li>
+                        <li><i class="fa fa-wechat"></i>{{ comments|length }} Comments</li>
                     </ul>
                     <h4>
                         {{ post.title }}
@@ -59,9 +59,10 @@
                                 </div>
                                 <div class="col-md-8">
                                     <ul class="comment-social">
-                                        <li><i class="icofont icofont-ui-chat"></i>{{ subComments|length }} Responses</li>
+                                        <li><i class="fa fa-calendar-o"></i>{{ comment.createdAt }}</li>
+                                        <li><i class="fa fa-wechat"></i>{{ subComments|length }} Responses</li>
                                         {% if currentUser is not null and currentUser.valid %}
-                                            <li><a class="btn btn-primary btn-xs answer" data-id="{{ comment.id}}"><i class="icofont icofont-ui-chat"></i> Answer</a></li>
+                                            <li><a class="btn btn-primary btn-xs answer" data-id="{{ comment.id}}"><i class="fa fa-wechat"></i> Answer</a></li>
                                         {% endif %}
                                     </ul>
                                 </div>

@@ -40,7 +40,7 @@
                         <td>{{ getEntity("user", post.authorId).userName }}</td>
                         <td>{{ post.createdAt|date('d/m/Y H:i:s') }}</td>
                         <td>{{ post.updatedAt|date('d/m/Y H:i:s') }}</td>
-                        <td>{{ getCollection('comment','post', post.id)|length }}</td>
+                        <td>{{ getCollection('comment', {'post': post.id, 'status': 1 })|length }}</td>
                         <td class="text-end">
                             <a href="{{ path('edit_post',{id: post.id}) }}" class="btn btn-primary btn-sm">Editer</a>
                             <a href="{{ path('remove_post',{id: post.id}) }}" class="btn btn-danger btn-sm">Supprimer</a>

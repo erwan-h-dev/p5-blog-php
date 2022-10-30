@@ -11,8 +11,8 @@ class Comment
     private     string  $createdAt;
     private     int     $postId;
     private     ?int    $commentId;
-
-    
+    private     int     $status = 0;
+    private     string  $validatedAt;
 
     /**
      * Get the value of id
@@ -130,6 +130,46 @@ class Comment
     public function setCommentId(?int $commentId): self
     {
         $this->commentId = $commentId;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of valid
+     */ 
+    public function getStatus(): int
+    {
+        return $this->status;
+    }
+
+    /**
+     * Set the value of valid
+     *
+     * @return  self
+     */ 
+    public function setStatus(int $status): self
+    {
+        $this->status = $status;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of validatedAt
+     */ 
+    public function getValidatedAt(): string
+    {
+        return $this->validatedAt;
+    }
+
+    /**
+     * Set the value of validatedAt
+     *
+     * @return  self
+     */ 
+    public function setValidatedAt(string $validatedAt): self
+    {
+        $this->validatedAt = $validatedAt;
 
         return $this;
     }

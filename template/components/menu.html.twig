@@ -15,7 +15,7 @@
                         <ul>
                             <li>
                                 <p>comments :</p>
-                                <span class="counter">{{ getCollection('comment', 'authorId', currentUser.id)|length }}</span>
+                                <span class="counter">{{ getCollection('comment', {'authorId': currentUser.id, 'status': 1})|length }}</span>
                             </li>
                             <li>
                                 <p>Created at :</p>
