@@ -67,9 +67,9 @@ class Twig
         // return $this->config->getParameter('root') . $path;
     }
 
-    public function getCollection(String $entityName,String $relationProperty, int $id)
+    public function getCollection(String $entityName,Array $relationProperty)
     {
-        $comments = $this->entityManager->getRepository("App\Entity\\" . ucfirst($entityName))->findBy([$relationProperty => $id]);
+        $comments = $this->entityManager->getRepository("App\Entity\\" . ucfirst($entityName))->findBy($relationProperty);
 
         return $comments;
     }
