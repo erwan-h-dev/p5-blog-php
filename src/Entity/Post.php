@@ -14,6 +14,7 @@ class Post
     private int $authorId;
     private int $status;
     private string $image;
+    private string $validatedAt;
 
     /**
      * Get the value of id
@@ -191,6 +192,26 @@ class Post
     public function setImage(string $image): self
     {
         $this->image = $image;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of validatedAt
+     */
+    public function getValidatedAt(): string
+    {
+        return $this->validatedAt;
+    }
+
+    /**
+     * Set the value of validatedAt
+     *
+     * @return  self
+     */
+    public function setValidatedAt(string $validatedAt): self
+    {
+        $this->validatedAt = $validatedAt;
 
         return $this;
     }

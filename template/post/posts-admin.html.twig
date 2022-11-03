@@ -29,7 +29,8 @@
                         <th>Date de creation</th>
                         <th>Date de modification</th>
                         <th>Comments</th>
-                        <th>Actions</th>
+                        <th>Status</th>
+                        <th><!-- Actions --></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -40,7 +41,15 @@
                         <td>{{ getEntity("user", post.authorId).userName }}</td>
                         <td>{{ post.createdAt|date('d/m/Y H:i:s') }}</td>
                         <td>{{ post.updatedAt|date('d/m/Y H:i:s') }}</td>
-                        <td>{{ getCollection('comment', {'post': post.id, 'status': 1 })|length }}</td>
+                        <td>{{ getCollection('comment', {'postId': post.id, 'status': 1 })|length }}</td>
+                        <td>
+                        {% if post.status == 0 %}
+                            <a href="{{ path('post_toggle_status',{id: post.id}) }}" 
+                            class="btn btn-square btn-warning" title="enabled comment"><i class="fa fa-minus-square"></i></a>
+                        {% else %}
+                            <a href="{{ path('post_toggle_status',{id: post.id}) }}" class="btn btn-square btn-primary" title="disable comment"><i class="fa fa-check-square"></i></a>
+                        {% endif %}
+                        </td>
                         <td class="text-end">
                             <a href="{{ path('edit_post',{id: post.id}) }}" class="btn btn-primary btn-sm">Editer</a>
                             <a href="{{ path('remove_post',{id: post.id}) }}" class="btn btn-danger btn-sm">Supprimer</a>
