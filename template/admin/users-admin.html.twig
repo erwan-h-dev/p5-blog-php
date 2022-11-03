@@ -4,7 +4,7 @@
 <div class="col-sm-6">
     <h3>{{ location }}</h3>
     <ol class="breadcrumb">
-        <li class="breadcrumb-item"><a href="/" data-bs-original-title="" title="">Home</a></li>
+        <li class="breadcrumb-item"><a href="/admin" data-bs-original-title="" title="">Admin</a> / <a href="/posts-admin" data-bs-original-title="" title="">{{ location }}</a></li>
     </ol>
 </div>
 <div>
@@ -14,13 +14,50 @@
 {% block base %}
 <div class="col-sm-12">
     <div class="card">
-        <div class="card-header pb-0">
-            <h5>Sample Card</h5><span>lorem ipsum dolor sit amet, consectetur adipisicing elit</span>
-        </div>
-
         <div class="card-body">
-            <p>"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."</p>
+            <table class="table datatable table-striped table-bordered table-hover table-sm">
+                <thead>
+                    <tr>
+                        <th>id</th>
+                        <th>Profile picture</th>
+                        <th>userName</th>
+                        <th>First name</th>
+                        <th>Last name</th>
+                        <th>Role</th>
+                        <th>Last Connexion</th>
+                        <th><!--Actions--></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for user in users %}
+                    <tr>
+                        <td>{{ user.id }}</td>
+                        <td>
+                            <img class="img-50 img-fluid rounded-circle update_img_0" src="{{ makePath(user.profilePicture) }}">
+                        </td>
+                        <td>{{ user.userName }}</td>
+                        <td>{{ user.firstName }}</td>
+                        <td>{{ user.lastName }}</td>
+                        <td>{{ user.role }}</td>
+                        <td>{{ user.lastConnexion|date('d/m/Y i:h:m') }}</td>
+                        <td class="text-end">
+                            <a href="{{ path('edit_post',{id: post.id}) }}" class="btn btn-square btn-primary"><i class="fa fa-edit"></i></a>
+                            <a href="{{ path('remove_post',{id: post.id}) }}" class="btn btn-square btn-danger"><i class="fa fa-trash-o"></i></a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
         </div>
     </div>
 </div>
+<script>
+    $(document).ready(function() {
+        $('.datatable').DataTable({
+            columnDefs: [
+                { orderable: false, targets: [7] }
+            ],
+        });
+    });
+</script>
 {% endblock %}

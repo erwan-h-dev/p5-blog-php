@@ -54,6 +54,4 @@ class AdminController extends Controller
             'comments' => $comments
         ]);
     }
-
-    
 }
