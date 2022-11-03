@@ -71,7 +71,12 @@ class PostController extends Controller
 
             $post->setCreatedAt($dateNow->format('Y-m-d H:i:s'))
             ->setUpdatedAt($dateNow->format('Y-m-d H:i:s'))
+            ->setValidatedAt('0000-00-00 00:00:00')
             ->setAuthorId($this->getUser()->getId());
+
+            if($post->getStatus() == 1) {
+                $post->setValidatedAt($dateNow->format('Y-m-d H:i:s'));
+            }
 
             $this->entityManager->insert($post);
 
@@ -131,13 +136,15 @@ class PostController extends Controller
     {
         $post = $this->entityManager->getRepository(Post::class)->find($params['id']);
 
-        if ($post->getStatus() == 0) {
-            $date = new DateTime();
+        $date = new DateTime();
 
+        if ($post->getStatus() == 0) {
             $post->setStatus(1);
-            $post->setValidatedAt($date->format('Y-m-d H:i:s'));
+            $post->setValidatedAt($date->format('Y-m-d H:i:s'))
+                ->setUpdatedAt($date->format('Y-m-d H:i:s'));
         } else {
             $post->setStatus(0);
+            $post->setUpdatedAt($date->format('Y-m-d H:i:s'));
         }
 
         $this->entityManager->update($post);
