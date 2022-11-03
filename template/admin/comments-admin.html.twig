@@ -1,0 +1,69 @@
+{% extends 'admin.html.twig' %}
+
+{% block ariane %}
+<div class="col-sm-6">
+    <h3>{{ location }}</h3>
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="/admin" data-bs-original-title="" title="">Admin</a> / <a href="/posts-admin" data-bs-original-title="" title="">{{ location }}</a></li>
+    </ol>
+</div>
+<div>
+</div>
+{% endblock %}
+
+{% block base %}
+<div class="col-sm-12">
+    <div class="card">
+        <div class="card-header ">
+        </div>
+        <div class="card-body">
+            <table class="table datatable table-striped table-bordered table-hover table-sm">
+                <thead>
+                    <tr>
+                        <th>id</th>
+                        <th>Auteur</th>
+                        <th>Date de creation</th>
+                        <th>Article</th>
+                        <th>Content</th>
+                        <th>Date de validation</th>
+                        <th>Status</th>
+                        <th><!--Actions--></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for comment in comments %}
+                    <tr>
+                        <td>{{ comment.id }}</td>
+                        <td>{{ getEntity("user", comment.authorId).userName }}</td>
+                        <td>{{ comment.createdAt|date('d/m/Y H:i:s') }}</td>
+                        <td><a href="{{ path('post', {id: comment.postId}) }}">{{ getEntity('post', comment.postId).title }}</a></td>
+                        <td>{{ comment.content|raw }}</td>
+                        <td>{{ comment.validatedAt|date('d/m/Y H:i:s') }}</td>
+                        <td>
+                        {% if comment.status == 0 %}
+                            <a href="{{ path('comment_toggle_status',{id: comment.id}) }}" 
+                            class="btn btn-square btn-warning" title="enabled comment"><i class="fa fa-minus-square"></i></a>
+                        {% else %}
+                            <a href="{{ path('comment_toggle_status',{id: comment.id}) }}" class="btn btn-square btn-primary" title="disable comment"><i class="fa fa-check-square"></i></a>
+                        {% endif %}
+                        </td>
+                        <td class="text-end">
+                            <a href="{{ path('comment_remove',{id: comment.id}) }}" class="btn btn-square btn-danger"><i class="fa fa-trash-o"></i></a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<script>
+    $(document).ready(function() {
+        $('.datatable').DataTable({
+            columnDefs: [
+                { orderable: false, targets: [7] }
+            ],
+        });
+    });
+</script>
+{% endblock %}

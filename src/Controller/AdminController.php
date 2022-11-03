@@ -2,6 +2,9 @@
 
 namespace App\Controller;
 
+use App\Entity\Post;
+use App\Entity\User;
+use App\Entity\Comment;
 use App\Core\Controller;
 
 class AdminController extends Controller
@@ -39,4 +42,18 @@ class AdminController extends Controller
             'posts' => $posts
         ]);
     }
+    
+    public function commentsAdmin()
+    {
+        $location = 'Comments admin';
+
+        $comments = $this->entityManager->getRepository(Comment::class)->findAll();
+
+        return $this->render('admin/comments-admin.html.twig', [
+            'location' => $location,
+            'comments' => $comments
+        ]);
+    }
+
+    
 }
