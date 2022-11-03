@@ -127,6 +127,24 @@ class PostController extends Controller
         }
     }
 
+    public function toggleStatus($params)
+    {
+        $post = $this->entityManager->getRepository(Post::class)->find($params['id']);
+
+        if ($post->getStatus() == 0) {
+            $date = new DateTime();
+
+            $post->setStatus(1);
+            $post->setValidatedAt($date->format('Y-m-d H:i:s'));
+        } else {
+            $post->setStatus(0);
+        }
+
+        $this->entityManager->update($post);
+
+        return $this->redirectRoute('posts_admin');
+    }
+
     public function uploadImage()
     {
         $file = new File();

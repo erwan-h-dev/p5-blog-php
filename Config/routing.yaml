@@ -77,6 +77,10 @@ routing:
         path: /admin/posts
         controller: AdminController/postsAdmin
         roles: [admin]
+    post_toggle_status:
+        path: /admin/AdminControlle/toggleStatus/{id}
+        controller: PostController/toggleStatus
+        roles: [admin]
     
     new_post: # création d'un nouvelle article
         path: /user/post/new
