@@ -63,7 +63,15 @@ routing:
         roles: [admin]
     comments_admin:
         path: /admin/comments
-        controller: AdminController/postsAdmin
+        controller: AdminController/commentsAdmin
+        roles: [admin]
+    comment_toggle_status:
+        path: /admin/comment/toggleStatus/{id}
+        controller: CommentController/toggleStatus
+        roles: [admin]
+    comment_remove:
+        path: /admin/comment/remove/{id}
+        controller: CommentController/removeComment
         roles: [admin]
     posts_admin:
         path: /admin/posts
