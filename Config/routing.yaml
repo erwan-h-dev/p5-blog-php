@@ -61,6 +61,18 @@ routing:
         path: /admin/users
         controller: AdminController/usersAdmin
         roles: [admin]
+    user_admin:
+        path: /admin/user/{id}
+        controller: AdminController/userAdmin
+        roles: [admin]
+    edit_admin_user:
+        path: /admin/user/edit/{id}
+        controller: AdminController/editUserAdmin
+        roles: [admin]
+    remove_admin_user:
+        path: /admin/user/remove/{id}
+        controller: AdminController/removeUserAdmin
+        roles: [admin]
     comments_admin:
         path: /admin/comments
         controller: AdminController/commentsAdmin

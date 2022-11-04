@@ -25,7 +25,7 @@ class Request
         return $this->query;
     }
 
-    public function getQuery(string $key): string
+    public function getQuery(string $key): ?string
     {
         if ($this->has($this->query, $key)) {
             return $this->query[$key];
@@ -39,7 +39,7 @@ class Request
         return $this->request;
     }
 
-    public function getRequest(string $key): string
+    public function getRequest(string $key): ?string
     {
         if ($this->has($this->request, $key)) {
             return $this->request[$key];

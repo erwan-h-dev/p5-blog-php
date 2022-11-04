@@ -14,12 +14,15 @@ class User
     private string $firstName; 
     private string $lastName;  
     private string $role;
-    private int $valid              = 0;
+    private int $status             = 0;
     private ?string $profilePicture = '/assets/images/dashboard/1.png';
     private ?string $twitter        = null;
     private ?string $linkedin       = null;
     private ?string $facebook       = null;
     private ?string $instagram      = null;
+
+    const ROLE_ADMIN = "admin";
+    const ROLE_USER = "user";
 
     /**
      * Get the value of id
@@ -319,21 +322,21 @@ class User
     }
 
     /**
-     * Get the value of valid
+     * Get the value of status
      */ 
-    public function getValid(): int
+    public function getStatus(): int
     {
-        return $this->valid;
+        return $this->status;
     }
 
     /**
-     * Set the value of valid
+     * Set the value of status
      *
      * @return  self
      */ 
-    public function setValid($valid)
+    public function setStatus($status)
     {
-        $this->valid = $valid;
+        $this->status = $status;
 
         return $this;
     }
