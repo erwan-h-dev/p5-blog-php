@@ -39,10 +39,10 @@
                         <td>{{ user.firstName }}</td>
                         <td>{{ user.lastName }}</td>
                         <td>{{ user.role }}</td>
-                        <td>{{ user.lastConnexion|date('d/m/Y i:h:m') }}</td>
+                        <td>{{ user.lastConnexion|date('d/m/Y H:i:s') }}</td>
                         <td class="text-end">
-                            <a href="{{ path('edit_post',{id: post.id}) }}" class="btn btn-square btn-primary"><i class="fa fa-edit"></i></a>
-                            <a href="{{ path('remove_post',{id: post.id}) }}" class="btn btn-square btn-danger"><i class="fa fa-trash-o"></i></a>
+                            <a href="{{ path('user_admin',{id: user.id}) }}" class="btn btn-square btn-primary"><i class="fa fa-edit"></i></a>
+                            <a href="#" class="btn btn-square btn-danger"><i class="fa fa-trash-o"></i></a>
                         </td>
                     </tr>
                     {% endfor %}

@@ -1,0 +1,155 @@
+{% extends 'admin.html.twig' %}
+
+{% block ariane %}
+<div class="col-sm-6">
+    <h3>{{ location }}</h3>
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="/admin" data-bs-original-title="" title="">Admin</a> /{{ location }}</li>
+    </ol>
+</div>
+<div>
+</div>
+{% endblock %}
+
+{% block base %}
+<div class="col-sm-3">
+    <div class="card">
+        
+        <div class="card-header">
+            <h5>{{ user.userName }}</h5>
+        </div>
+        <div class="card-body">
+            <form action="{{ path('edit_admin_user',{id: user.id}) }}" id="update-user" method="post">
+                <li class="list-group-item">
+                    <h6>Role : </h6>
+                    <select name="role" id="" class="form-select">
+                        <option value="{{ constant('App\\Entity\\User::ROLE_USER') }}" {% if user.role == constant('App\\Entity\\User::ROLE_USER') %}selected{% endif %}>User</option>
+                        <option value="{{ constant('App\\Entity\\User::ROLE_ADMIN') }}" {% if user.role == constant('App\\Entity\\User::ROLE_ADMIN') %}selected{% endif %}>Admin</option>
+                    </select>
+                </li>
+                <li class="list-group-item">
+                    <div class="checkbox checkbox-solid-primary">
+                        <input id="status" name="status" type="checkbox" value="status">
+                        <label for="status">Status</label>
+                    </div>
+                </li>
+            </form>
+        </div>
+        <div class="card-footer">
+            <div class="btn-showcase text-end">
+                <button type="submit" class="btn btn-square  btn-success" form="update-user"><i class='fa fa-floppy-o'></i></button>
+            </div>
+        </div>
+    </div>
+    <div class="card">
+        <div class="card-body">
+            <div class="user-profile">
+                <img class="mx-auto d-block img-100 rounded-circle mb-5" alt="" src="{{ makePath(user.profilePicture)}}">
+                <ul class="list-group mb-5">
+                    <li class="list-group-item">
+                        <h6>Name : </h6>
+                        <h6 class="h6 txt-secondary">{{ user.firstName }} {{ user.lastName }}</h6>
+                    </li>
+                    <li class="list-group-item">
+                        <h6>Email : </h6>
+                        <h6 class="h6 txt-secondary">{{ user.email }}</h6>
+                    </li>
+                    <li class="list-group-item">
+                        <h6>Created at : </h6>
+                        <h6 class="h6 txt-secondary">{{ user.createdAt|date('d/m/Y H:i:s') }}</h6>
+                    </li>
+                    <li class="list-group-item">
+                        <h6>Updated at : </h6>
+                        <h6 class="h6 txt-secondary">{{ user.updatedAt|date('d/m/Y H:i:s') }}</h6>
+                    </li>                    
+                    <li class="list-group-item">
+                        <h6>Last login : </h6>
+                        <h6 class="h6 txt-secondary">{{ user.lastLogin|date('d/m/Y H:i:s') }}</h6>
+                    </li>
+                </ul>
+                <div class="social-media">              
+                    <ul class="user-list-social">
+                        {% if user.twitter %}
+                            <li><a href="{{user.twitter}}" target="_blank"><i class="fa fa-twitter"></i></a><li>
+                        {% endif %}
+                        {% if user.linkedin %}
+                            <li><a href="{{user.linkedin}}" target="_blank"><i class="fa fa-twitter"></i></a><li>
+                        {% endif %}
+                        {% if user.facebook %}
+                            <li><a href="{{user.facebook}}" target="_blank"><i class="fa fa-twitter"></i></a><li>
+                        {% endif %}
+                        {% if user.instagram %}
+                            <li><a href="{{user.instagram}}" target="_blank"><i class="fa fa-twitter"></i></a><li>
+                        {% endif %}
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="col-sm-9">
+    <div class="card">
+        <div class="card-header">
+            <h5>User posts</h5>
+        </div>
+        <div class="card-body">
+            <table class="table datatable table-striped table-bordered table-hover table-sm">
+                <thead>
+                    <tr>
+                        <th>id</th>
+                        <th>Titre</th>
+                        <th>Date de creation</th>
+                        <th>Date de modification</th>
+                        <th>Comments</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for post in posts %}
+                    <tr>
+                        <td>{{ post.id }}</td>
+                        <td>{{ post.title }}</td>
+                        <td>{{ post.createdAt|date('d/m/Y H:i:s') }}</td>
+                        <td>{{ post.updatedAt|date('d/m/Y H:i:s') }}</td>
+                        <td>{{ getCollection('comment', {'postId': post.id, 'status': 1 })|length }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="card">
+        <div class="card-header">
+            <h5>User comments</h5>
+        </div>
+        <div class="card-body">
+            <table class="table datatable table-striped table-bordered table-hover table-sm">
+                <thead>
+                    <tr>
+                        <th>id</th>
+                        <th>Date de creation</th>
+                        <th>Article</th>
+                        <th>Content</th>
+                        <th>Date de validation</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for comment in comments %}
+                    <tr>
+                        <td>{{ comment.id }}</td>
+                        <td>{{ comment.createdAt|date('d/m/Y H:i:s') }}</td>
+                        <td><a href="{{ path('post', {id: comment.postId}) }}">{{ getEntity('post', comment.postId).title }}</a></td>
+                        <td>{{ comment.content|raw }}</td>
+                        <td>{{ comment.validatedAt|date('d/m/Y H:i:s') }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<script>
+$(document).ready(function() {
+    $('.datatable').DataTable();
+});
+</script>
+{% endblock %}

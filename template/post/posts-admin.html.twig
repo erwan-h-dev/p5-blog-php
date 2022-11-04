@@ -43,16 +43,16 @@
                         <td>{{ post.updatedAt|date('d/m/Y H:i:s') }}</td>
                         <td>{{ getCollection('comment', {'postId': post.id, 'status': 1 })|length }}</td>
                         <td>
-                        {% if post.status == 0 %}
-                            <a href="{{ path('post_toggle_status',{id: post.id}) }}" 
-                            class="btn btn-square btn-warning" title="enabled comment"><i class="fa fa-minus-square"></i></a>
-                        {% else %}
-                            <a href="{{ path('post_toggle_status',{id: post.id}) }}" class="btn btn-square btn-primary" title="disable comment"><i class="fa fa-check-square"></i></a>
-                        {% endif %}
+                            {% if post.status == 0 %}
+                                <a href="{{ path('post_toggle_status',{id: post.id}) }}" 
+                                class="btn btn-square btn-warning" title="enabled comment"><i class="fa fa-minus-square"></i></a>
+                            {% else %}
+                                <a href="{{ path('post_toggle_status',{id: post.id}) }}" class="btn btn-square btn-primary" title="disable comment"><i class="fa fa-check-square"></i></a>
+                            {% endif %}
                         </td>
                         <td class="text-end">
-                            <a href="{{ path('edit_post',{id: post.id}) }}" class="btn btn-primary btn-sm">Editer</a>
-                            <a href="{{ path('remove_post',{id: post.id}) }}" class="btn btn-danger btn-sm">Supprimer</a>
+                            <a href="{{ path('edit_post',{id: post.id}) }}" class="btn btn-square btn-primary"><i class="fa fa-edit"></i></a>
+                            <a href="{{ path('remove_post',{id: post.id}) }}" class="btn btn-square btn-danger"><i class="fa fa-trash-o"></i></a>
                         </td>
                     </tr>
                     {% endfor %}
