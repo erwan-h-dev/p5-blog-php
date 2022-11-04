@@ -42,7 +42,7 @@
                         <td>{{ user.lastConnexion|date('d/m/Y H:i:s') }}</td>
                         <td class="text-end">
                             <a href="{{ path('user_admin',{id: user.id}) }}" class="btn btn-square btn-primary"><i class="fa fa-edit"></i></a>
-                            <a href="#" class="btn btn-square btn-danger"><i class="fa fa-trash-o"></i></a>
+                            <a href="{{ path('remove_admin_user',{id: user.id}) }}" class="btn btn-square btn-danger"><i class="fa fa-trash-o"></i></a>
                         </td>
                     </tr>
                     {% endfor %}

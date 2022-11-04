@@ -66,7 +66,17 @@ class AdminController extends Controller
         $this->entityManager->update($user);
 
 
-        return $this->redirectRoute('users_admin', ['id' => $params['id']]);
+        return $this->redirectRoute('user_admin', ['id' => $params['id']]);
+    }
+
+    public function removeUserAdmin($params)
+    {
+
+        $user = $this->entityManager->getRepository(User::class)->find($params['id']);
+
+        $this->entityManager->remove($user);
+        
+        return $this->redirectRoute('users_admin');
     }
 
     public function postsAdmin()
