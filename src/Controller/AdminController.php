@@ -62,7 +62,8 @@ class AdminController extends Controller
         }else{
             $user->setStatus(0);
         }
-
+        $now = new \DateTime();
+        $user->setUpdatedAt($now->format('Y-m-d H:i:s'));
         $this->entityManager->update($user);
 
 
