@@ -37,17 +37,17 @@
                                 </div>
                                 <div class="user-designation">
                                     <div class="title">
-                                        <a target="_blank" href=""> 
+                                        <a href=""> 
                                             <h4>{{ user.username }}</h4>
                                             <h6>{{ user.firstName }} {{ user.lastName }}</h6>
                                         </a>
                                     </div>
                                     <div class="social-media">
                                         <ul class="user-list-social">
-                                            {% if user.facebook %}<li><a href="#"><i class="fa fa-facebook"></i></a></li>{% endif %}
-                                            {% if user.linkedin %}<li><a href="#"><i class="fa fa-linkedin"></i></a></li>{% endif %}
-                                            {% if user.twitter %}<li><a href="#"><i class="fa fa-twitter"></i></a></li>{% endif %}
-                                            {% if user.instagram %}<li><a href="#"><i class="fa fa-instagram"></i></a></li>{% endif %}
+                                            {% if user.facebook %}<li><a target="_blank" href="{{ user.facebook }}"><i class="fa fa-facebook"></i></a></li>{% endif %}
+                                            {% if user.linkedin %}<li><a target="_blank" href="{{ user.linkedin }}"><i class="fa fa-linkedin"></i></a></li>{% endif %}
+                                            {% if user.twitter %}<li><a target="_blank" href="{{ user.twitter }}"><i class="fa fa-twitter"></i></a></li>{% endif %}
+                                            {% if user.instagram %}<li><a target="_blank" href="{{ user.instagram }}"><i class="fa fa-instagram"></i></a></li>{% endif %}
                                         </ul>
                                             
                                     </div>
@@ -147,14 +147,18 @@
                         <div class="card">
                             <div class="blog-box blog-grid">
                                 <div class="blog-wrraper">
-                                    <img class="img-fluid top-radius-blog" src="{% if post.image %}{{ makePath(post.image) }}{% else %}../assets/images/blog/blog-5.jpg{% endif %}" alt="">
+                                    <a onclick="locationReload('{{ path('post', {id: post.id}) }}')" href="{{ path('post', {id: post.id}) }}">
+                                        <img class="img-fluid top-radius-blog"  src="{% if post.image %}{{ makePath(post.image) }}{% else %}../assets/images/blog/blog-5.jpg{% endif %}" alt="">
+                                    </a>
                                 </div>
                                 <div class="blog-details-second">
                                     <div class="blog-post-date">
                                         <span class="blg-month">{{ post.updatedAt|date('F')|slice(0, 4) }}</span>
                                         <span class="blg-date">{{ post.updatedAt|date('d') }}</span>
                                     </div>
-                                    <h6 class="blog-bottom-details">{{ post.title }}</h6>
+                                    <a onclick="locationReload('{{ path('post', {id: post.id}) }}')" href="{{ path('post', {id: post.id}) }}">
+                                        <h6 class="blog-bottom-details">{{ post.title }}</h6>
+                                    </a>
                                     <p>{{ post.leadSentence }}</p>
                                     <div class="detail-footer"> 
                                         <ul class="sociyal-list">
@@ -203,5 +207,8 @@
            window.location = $(this).data("href")
         })
     })
+    function locationReload(url){
+        window.location.href = url
+    }
 </script>
 {% endblock %}

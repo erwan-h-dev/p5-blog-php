@@ -134,17 +134,22 @@ class EntityManager
         $sql = "SELECT * FROM " . lcfirst(str_replace("App\\Entity\\", "", $this->class)) . " WHERE ";
         $values = [];
 
+        $i = 0;
         foreach ($params as $key => $value) {
-            $sql .= " " . $key . " = :" . $key;
-            $values[$key] = $value;
-            if (end($params) != $value) {
+            if ($i > 0) {
                 $sql .= " AND ";
             }
+            $sql .= " " . $key . " = :" . $key;
+            $values[$key] = $value;
+            $i++;
         }
+
         $pdo = $this->entityRepository->getPdo();
         $statement = $pdo->prepare($sql);
         $statement->execute($values);
+        
         $results = $statement->fetchAll(PDO::FETCH_ASSOC);
+
         if ($results) {
             try {
                 $entities = [];

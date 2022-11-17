@@ -31,7 +31,10 @@ class UserController extends Controller
 
         $postRepository = $this->entityManager->getRepository(Post::class);
 
-        $posts = $postRepository->findBy(['authorId' => $user->getId()]);
+        $posts = $postRepository->findBy([
+            'authorId' => $user->getId(),
+            'status' => 1
+        ]);
 
         return $this->render('user/user.html.twig', [
             'location'      => $location,
