@@ -24,9 +24,29 @@
                         <img src="{{ makePath(user.profilePicture) }}" id="output" width="200" />
                     </div>
                     <script>
-                        var loadFile = function (event) {
-                            var image = document.getElementById("output");
-                            image.src = URL.createObjectURL(event.target.files[0]);
+                        const path = "{{ makePath('') }}";
+
+                        function loadFile(event) {
+
+                            var formData = new FormData();
+                            formData.append('file', event.target.files[0]);
+
+                            $.ajax({
+                                url : "{{ path('upload_image') }}",
+                                type : 'POST',
+                                data : formData,
+                                processData: false,  // tell jQuery not to process the data
+                                contentType: false,  // tell jQuery not to set contentType
+                                success : function(pathFile) {
+                                    console.log(path + pathFile.pathFile);
+                                    $('#output').attr('src', path + pathFile.pathFile);
+                                    $('#profilePictrure').attr('src', path + pathFile.pathFile);
+
+                                    $.post("{{ path('edit_user_profilePicture', {id: user.id}) }}", { pathFile: pathFile.pathFile }, function(data) {
+                                        console.log(data);
+                                    });
+                                }
+                            });
                         };
                     </script>
                     <style>
@@ -81,29 +101,69 @@
                     <h5>Change password</h5>
                 </div>
                 <div class="card-body">
-                    <form class="row needs-validation" action="" method="post">           
+                    <form class="needs-validation" novalidate="" id="resetPassword" method="post">           
                         <div class="form-group">
                             <label for="oldPassword">Old password :</label>
                             <input class="form-control" id="oldPassword" name="oldPassword" type="password" required>
-                            <div class="valid-feedback">Looks good!</div>
+                            <div class="invalid-feedback"></div>
                         </div>
                         <div class="form-group">
                             <label for="newPassword">New password :</label>
                             <input class="form-control" id="newPassword"  name="newPassword" type="password" required>
-                            <div class="valid-feedback">Looks good!</div>
+                            <div class="invalid-feedback"></div>
                         </div>
                         <div class="form-group">
-                            <label for="repNewPassword">repeat new password :</label>
-                            <input class="form-control" id="repNewPassword"  name="repNewPassword" type="password" required>
-                            <div class="valid-feedback">Looks good!</div>
+                            <label for="confirmPassword">repeat new password :</label>
+                            <input class="form-control" id="confirmPassword"  name="confirmPassword" type="password" required>
+                            <div class="invalid-feedback"></div>
                         </div>
                     </form>
                 </div>
                 <div class="card-footer">
                     <div class="btn-showcase text-end">
-                        <button class="btn btn-square btn-primary" type="submit">Save</button>
+                        <button class="btn btn-square btn-primary password-submit" type="submit">Save</button>
                     </div>
                 </div>
+                <script>
+                $(document).ready(function() {
+                    $('.password-submit').click(function() {
+                        var data = {};
+                        var post = true;
+                        $('#resetPassword input').each(function() {
+                            if ($(this).val() == '') {
+                                $(this).addClass('is-invalid');
+                                $(this).siblings('.invalid-feedback').text('This field is required');
+                                post = false;
+                            } else {
+                                $(this).removeClass('is-invalid');
+                                data[$(this).attr('name')] = $(this).val();
+                            }
+                        });
+                        if (post) {
+                            $.post("{{ path('edit_user_password', {id: user.id}) }}", data, function(response) {
+
+                                $('#resetPassword input').each(function() {
+                                    console.log(response[$(this).attr('name')]);
+                                    if(response[$(this).attr('name')].length > 0) {
+                                        $(this).addClass('is-invalid');
+                                        $(this).siblings('.invalid-feedback').text(response[$(this).attr('name')]);
+                                    } else {
+                                        $(this).removeClass('is-valid');
+                                        $(this).siblings('.invalid-feedback').text('');
+                                        $(this).val('');
+                                    }
+                                });
+                                if (response.status == 'success') {
+                                    $('#resetPassword').append('<div class="alert alert-success alert-dismissible fade show" role="alert">Password changed successfully<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button></div>');
+                                } else {
+                                    $('#resetPassword').append('<div class="alert alert-danger alert-dismissible fade show" role="alert">Error changing password<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button></div>');
+                                }
+                            });
+                        }
+                        
+                    });
+                });
+                </script>
             </div>
         </div>
         <div class="col-md-8">
@@ -113,49 +173,83 @@
                 </div>
                 <div class="card-body">
 
-                    <form class="row needs-validation" action="" method="post">
+                    <form class="needs-validation" novalidate="" id="editUserData" method="post">
                         <div class="form-group">
                             <label for="userName">UserName :</label>
                             <input class="form-control" id="userName" name="userName" type="text" required value="{{user.userName}}">
-                            <div class="valid-feedback">Looks good!</div>
+                            <div class="invalid-feedback">Looks good!</div>
                         </div>
                         <div class="form-group">
                             <label for="firstName">First Name :</label>
                             <input class="form-control" id="firstName"  name="firstName" type="text" required value="{{user.firstName}}">
-                            <div class="valid-feedback">Looks good!</div>
+                            <div class="invalid-feedback">Looks good!</div>
                         </div>
                         <div class="form-group">
                             <label for="lastName">Last Name :</label>
                             <input class="form-control" id="lastName"  name="lastName" type="text" required value="{{user.lastName}}">
-                            <div class="valid-feedback">Looks good!</div>
+                            <div class="invalid-feedback">Looks good!</div>
                         </div>
                         <div class="form-group">
                             <label for="twitter">Twitter :</label>
-                            <input class="form-control" id="twitter" name="twitter" type="text" required value="{{user.twitter}}">
-                            <div class="valid-feedback">Looks good!</div>
+                            <input class="form-control" id="twitter" name="twitter" type="text" value="{{user.twitter}}">
+                            <div class="invalid-feedback">Looks good!</div>
                         </div>
                         <div class="form-group">
                             <label for="linkedin">linkedin :</label>
-                            <input class="form-control" id="linkedin" name="linkedin" type="text" required value="{{user.linkedin}}">
-                            <div class="valid-feedback">Looks good!</div>
+                            <input class="form-control" id="linkedin" name="linkedin" type="text" value="{{user.linkedin}}">
+                            <div class="invalid-feedback">Looks good!</div>
                         </div>
                         <div class="form-group">
                             <label for="facebook">facebook :</label>
-                            <input class="form-control" id="facebook" name="facebook" type="text" required value="{{user.facebook}}">
-                            <div class="valid-feedback">Looks good!</div>
+                            <input class="form-control" id="facebook" name="facebook" type="text" value="{{user.facebook}}">
+                            <div class="invalid-feedback">Looks good!</div>
                         </div>
                         <div class="form-group">
                             <label for="instagram">instagram :</label>
-                            <input class="form-control" id="instagram" name="instagram" type="text" required value="{{user.instagram}}">
-                            <div class="valid-feedback">Looks good!</div>
+                            <input class="form-control" id="instagram" name="instagram" type="text" value="{{user.instagram}}">
+                            <div class="invalid-feedback">Looks good!</div>
                         </div>
                     </form>
                 </div>
                 <div class="card-footer">
                     <div class="btn-showcase text-end">
-                        <button class="btn btn-square btn-primary" type="submit">Save</button>
+                        <button class="btn btn-square btn-primary user-submit" type="submit">Save</button>
                     </div>
                 </div>
+                <script>
+                $(document).ready(function() {
+                    $('.user-submit').click(function() {
+
+                        var data = {};
+                        var post = true;
+
+                        $('#editUserData input').each(function() {
+                            if ($(this).val() == '' && $(this).attr('required') == 'required') {
+                                $(this).addClass('is-invalid');
+                                $(this).siblings('.invalid-feedback').text('This field is required');
+                                post = false;
+                            } else {
+                                $(this).removeClass('is-invalid');
+                                data[$(this).attr('name')] = $(this).val();
+                            }
+                        });
+                        
+                        if (post) {
+                            $.post("{{ path('edit_user_data', {id: user.id}) }}", data, function(response) {
+                                $('#editUserData input').each(function() {
+                                    $(this).removeClass('is-valid');
+                                    $(this).siblings('.invalid-feedback').text('');
+                                });
+                                if (response.status == 'success') {
+                                    $('#editUserData').append('<div class="alert alert-success alert-dismissible fade show" role="alert">user datas changed successfully<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button></div>');
+                                } else {
+                                    $('#editUserData').append('<div class="alert alert-danger alert-dismissible fade show" role="alert">Error changing user datas<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button></div>');
+                                }
+                            });
+                        }
+                    });
+                });
+                </script>
             </div>
         </div>
     </dif>

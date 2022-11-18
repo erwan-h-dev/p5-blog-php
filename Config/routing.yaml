@@ -39,6 +39,18 @@ routing:
         path: /user/edit/{id}
         controller: UserController/editUser
         roles: [user, admin]
+    edit_user_data: 
+        path: /user/edit/data/{id}
+        controller: UserController/editUserData
+        roles: [user, admin]
+    edit_user_profilePicture:
+        path: /user/edit/profilePicture/{id}
+        controller: UserController/editUserProfilePicture
+        roles: [user, admin]
+    edit_user_password:
+        path: /user/edit/password/{id}
+        controller: UserController/editUserPassword
+        roles: [user, admin]
     posts_user: # liste les articles de l'utilisateur courrant
         path: /user/posts
         controller: PostController/posts

@@ -51,23 +51,96 @@ class UserController extends Controller
         $location = 'Edit User';
 
         $userRepository = $this->entityManager->getRepository(User::class);
-        $user = $userRepository->find($params['id']);
-        
-        $form = new UserForm($user);
 
-        $form->handleRequest(new Request());
-
-        if ($form->isSubmited() && $form->isValid()) {
-            $user = $form->getData();
-
-           var_dump($user);
+        if($this->getUser()->getRole() == 'admin') {
+            $user = $userRepository->find($params['id']);
+        } else {
+            $user = $userRepository->find($this->getUser()->getId());
         }
 
         return $this->render('user/edit-user.html.twig', [
             'location' => $location,
-            'user' => $user,
-            
+            'user' => $user
         ]);
+    }
+
+    public function editUserData($params)
+    {
+        $request = new Request();
+        $userRepository = $this->entityManager->getRepository(User::class);
+        $user = $userRepository->find($params['id']);
+
+        $user->setUserName($request->getRequest('userName'))
+            ->setFirstName($request->getRequest('firstName'))
+            ->setLastName($request->getRequest('lastName'))
+            ->setTwitter($request->getRequest('twitter'))
+            ->setFacebook($request->getRequest('facebook'))
+            ->setInstagram($request->getRequest('instagram'))
+            ->setLinkedin($request->getRequest('linkedin'))
+        ;
+
+        $this->entityManager->update($user);
+
+        return new JsonContent(['status' => 'success']);
+    }
+
+    public function editUserPassword($params){
+
+        $request = new Request();
+
+        $userRepository = $this->entityManager->getRepository(User::class);
+        $user = $userRepository->find($params['id']);
+
+        $oldPassword = $request->getRequest('oldPassword');
+        $newPassword = $request->getRequest('newPassword');
+        $confirmPassword = $request->getRequest('confirmPassword');
+
+        if($newPassword == $confirmPassword){
+            if(password_verify($oldPassword, $user->getPassword())){
+
+                $user->setPassword(password_hash($newPassword, PASSWORD_BCRYPT));
+                
+                $this->entityManager->update($user);
+
+                $response = [
+                    "status" => "success",
+                    'oldPassword' => "",
+                    "newPassword" => "",
+                    "confirmPassword" => "",
+                ];
+            }else{
+                $response = [
+                    "status" => "error",
+                    'oldPassword' => "Wrong password",
+                    "newPassword" => "",
+                    "confirmPassword" => "",
+                ];
+            }
+        }else{
+            $response = [
+                "status" => "error",
+                "newPassword" => "New password and confirm password are not the same",
+                "oldPassword" => "",
+                "confirmPassword" => "",
+            ];
+        }
+
+        return new JsonContent($response);
+    }
+
+    public function editUserProfilePicture($params)
+    {
+        $requete = new Request();
+        
+        $userRepository = $this->entityManager->getRepository(User::class);
+
+        $user = $userRepository->find($params['id']);
+
+        $user->setProfilePicture($requete->getRequest('pathFile'));
+
+        $this->entityManager->update($user);
+
+        return new JsonContent(['status' => 'ok']);
     }
 
     public function followUser($params)
