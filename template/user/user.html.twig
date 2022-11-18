@@ -77,7 +77,7 @@
                                     {% for follower in followers %}    
                                         <div class="media">
                                             <a href="{{ path('user', {id: follower.follower}) }}">
-                                                <img class="img-50 img-fluid m-r-20 rounded-circle" alt="" src="../assets/images/user/2.png">
+                                                <img class="img-50 img-fluid m-r-20 rounded-circle" alt="" src="{{ makePath((getEntity('user', follower.follower).profilePicture)) }}">
                                             </a>
                                             <div class="media-body">
                                                 <a href="{{ path('user', {id: follower.follower}) }}">
@@ -113,7 +113,7 @@
                                     {% for following in followings %}    
                                         <div class="media">
                                             <a href="{{ path('user', {id: following.following}) }}">
-                                                <img class="img-50 img-fluid m-r-20 rounded-circle" alt="" src="../assets/images/user/2.png">
+                                                <img class="img-50 img-fluid m-r-20 rounded-circle" alt="" src="{{ makePath((getEntity('user', following.following).profilePicture)) }}">
                                             </a>
                                             <div class="media-body">
                                                 <a href="{{ path('user', {id: following.following}) }}">
