@@ -1,0 +1,134 @@
+{% extends 'base.html.twig' %}
+
+{% block ariane %}
+<div class="col-sm-6">
+    <h3>{{ location }}</h3>
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="{{ path('home')}}" data-bs-original-title="" title="">Home</a> / <a href="{{ path('posts_user', {id: currentUser.id}) }}" data-bs-original-title="" title="">posts list</a> / {{ location }}</li>
+    </ol>
+</div>
+<div>
+</div>
+{% endblock %}
+
+{% block base %}
+<div class="col-sm-9">
+    <div class="card">
+        <div class="card-body row">
+            <div class="form-group">
+                <label for="content">Content :</label>
+                <textarea id="area1"></textarea>
+            </div>
+            
+        </div>
+    </div>
+</div>
+<div class="col-sm-3">
+    <div class="card">
+        <div class="card-header pb-0">
+            <div class="btn-showcase text-end">
+                <a class="btn btn-square  btn-warning" href="{{ path('posts_user', {id: currentUser.id}) }}" type="reset" >Cancel</a>
+            </div>
+        </div>
+        <form class="row needs-validation" action="" method="post">
+            <div class="card-body add-post">
+                <div class="form-group">
+                    <label for="title">Title :</label>
+                    <input class="form-control" id="title" name="title" type="text" placeholder="Post Title" required>
+                    <div class="valid-feedback">Looks good!</div>
+                </div>
+                <div class="form-group">
+                    <label for="leadSentence">Lead Sentence :</label>
+                    <input class="form-control" id="leadSentence"  name="leadSentence" type="text" placeholder="Lead sentence..." required>
+                    <div class="valid-feedback">Looks good!</div>
+                </div>
+                <div class="form-group m-t-15 m-checkbox-inline custom-radio-ml">
+                    <div class="radio radio-info">
+                        <input id="status1" type="radio" checked name="status" value="0">
+                        <label for="status1"><span class="digits">Brouillon</span></label>
+                    </div>
+                    <div class="radio radio-success">
+                        <input id="status2" type="radio" name="status" value="1">
+                        <label for="status2"><span class="digits">Publié</span></label>
+                    </div>
+                </div>
+            </div>
+            <div class="card-footer">
+                <input type="hidden" id="content" name="content" value="{{ post.content|raw }}">
+                <input type="hidden" id="image" name="image" value="{{ post.image }}">
+                <div class="btn-showcase text-end">
+                    <button class="btn btn-square btn-primary" type="submit">Save</button>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="card">
+        <div class="card-body row">
+            <div class="col-12">
+                <div class="blog-single">
+                    <div class="blog-details blog-box">
+                        <div class="banner-wrraper big-size" id="image-preview">
+                            <img class="img-fluid w-100 bg-img-cover" src="{{ makePath('/assets/images/blog/blog-5.jpg') }}" alt="blog-main">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12">
+                <form class="dropzone digits h-100" id="singleFileUpload" action="{{ path('upload_image') }}">
+                    <div class="dz-message needsclick"><i class="icon-cloud-up"></i>
+                        <h6>Drop files here or click to upload.</h6>
+                        <span class="note needsclick">
+                            (This is just a demo dropzone. Selected files are <strong>not</strong> actually uploaded.)
+                        </span>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block javaScript %}
+<script>
+var STANDAR_CONFIG = {
+    height: 500,
+    preset: 'full',
+    toolbar: [
+        {
+            name: 'basicstyles',
+            groups: ['basicstyles'],
+            items: ['Format', 'Bold', 'Italic', 'Underline']
+        },
+        {
+            name: 'paragraph',
+            groups: ['list', 'indent', 'blocks', 'align', 'bidi'],
+            items: ['NumberedList', 'BulletedList', 'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'Image']
+        },
+        {
+            name: 'links',
+            items: ['Link', 'Unlink']
+        },
+    ],
+    fillEmptyBlocks: false,
+    autoParagraph: false,
+}
+var editor = CKEDITOR.replace( 'area1', STANDAR_CONFIG);
+
+Dropzone.options.singleFileUpload = {
+    paramName: "file",
+    maxFiles: 1,
+    maxFilesize: 5,
+    complete: function(file) {
+       let pathFile = JSON.parse(file.xhr.response);
+        $('#image').val(pathFile.pathFile);
+    },
+};
+
+$(document).ready(function() {
+    editor.on( 'change', function( evt ) {
+        console.log(evt.editor.getData());
+        $('#content').val(evt.editor.getData());
+    });
+});
+</script>
+{% endblock %}

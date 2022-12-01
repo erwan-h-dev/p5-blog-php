@@ -34,9 +34,11 @@
                         <span>Posts</span></a>
                     </li>
                         
-                    <li class="mb-3"><a class="nav-link menu-title {% if currentRoute == "contact" %}active{% endif %}" href="{{ path("contact") }}">
-                        <span>Contact</span></a>
+                    {% if currentUser.role == 'user' or currentUser.role == 'admin' %}    
+                    <li class="mb-3"><a class="nav-link menu-title {% if currentRoute == "posts_user" %}active{% endif %}" href="{{ path("posts_user", {id: currentUser.id}) }}">
+                        <span>My posts</span></a>
                     </li>
+                    {% endif %}
                 </ul>
             </div>
         </div>

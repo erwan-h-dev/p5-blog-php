@@ -16,7 +16,7 @@
     <div class="card">
         <div class="card-header ">
             <div class="setting-list">
-                <a href="{{ path('new_post') }}" class="btn btn-secondary btn-sm mx-2">new post</a>
+                <a href="{{ path('admin_new_post') }}" class="btn btn-secondary btn-sm mx-2">new post</a>
             </div>
         </div>
         <div class="card-body">
@@ -51,8 +51,8 @@
                             {% endif %}
                         </td>
                         <td class="text-end">
-                            <a href="{{ path('edit_post',{id: post.id}) }}" class="btn btn-square btn-primary"><i class="fa fa-edit"></i></a>
-                            <a href="{{ path('remove_post',{id: post.id}) }}" class="btn btn-square btn-danger"><i class="fa fa-trash-o"></i></a>
+                            <a href="{{ path('admin_edit_post',{id: post.id}) }}" class="btn btn-square btn-primary"><i class="fa fa-edit"></i></a>
+                            <a data-href="{{ path('remove_post',{id: post.id}) }}" class="btn btn-square btn-danger remove_post"><i class="fa fa-trash-o"></i></a>
                         </td>
                     </tr>
                     {% endfor %}
@@ -64,6 +64,31 @@
 <script>
     $(document).ready(function() {
         $('.datatable').DataTable();
+
+        $(document).on("click", ".remove_post", function(){
+            var href = $(this).data('href');
+            swal({
+                title: 'Are you sure?',
+                text: "You won't be able to revert this post?",
+                icon: 'warning',
+                buttons: true,
+                dangerMode: true,
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, delete it!'
+            }).then((willDelete) => {
+                if (willDelete) {
+                    $.post($(this).data('href'), function(data){
+                        swal("Poof! Your imaginary file has been deleted!", {
+                            icon: "success",
+                        }).then((result) => {
+                            window.location.reload();
+                        });
+                    });
+                }
+            })
+        })
     });
 </script>
 {% endblock %}
