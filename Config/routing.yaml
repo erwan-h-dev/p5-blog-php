@@ -25,14 +25,14 @@ routing:
         path: /post/{id}
         controller: PostController/post
         roles: [anonymous, user, admin]
-    contact: # Page d'accueil
-        path: /contact
-        controller: HomeController/contact
-        roles: [anonymous, user, admin]
     user: # affiche l'utilisateur
         path: /user/{id}
         controller: UserController/user
         roles: [anonymous, user, admin]
+
+# ----------------------------------------------#
+# ------------ global users routes ------------ #
+# ----------------------------------------------#
 
 # Front office [users, admin]
     edit_user: # modifie l'utilisateur courrant
@@ -51,24 +51,57 @@ routing:
         path: /user/edit/password/{id}
         controller: UserController/editUserPassword
         roles: [user, admin]
+
+# ----------------------------------------------#
+# ------------ global users posts ------------- #
+# ----------------------------------------------#
+
     posts_user: # liste les articles de l'utilisateur courrant
-        path: /user/posts
-        controller: PostController/posts
+        path: /user/posts/{id}
+        controller: PostController/userPosts
         roles: [user, admin]
+    edit_post_user:
+        path: /user/post/edit/{id}
+        controller: PostController/userEditPost
+        roles: [user, admin]
+    new_post_user:
+        path: /user/post/new
+        controller: PostController/userNewPost
+        roles: [user, admin]
+
+# ----------------------------------------------#
+# ---------- global users comments ------------ #
+# ----------------------------------------------#
     new_comment: # créer un commentaire
         path: /user/comment/new
         controller: CommentController/newComment
         roles: [user, admin]
+
+# ----------------------------------------------#
+# ----------- global users divers ------------- #
+# ----------------------------------------------#
     follow_user:
         path: /user/follow/{id}
         controller: UserController/followUser
         roles: [user, admin]
-        
+
+    upload_image: # ajoute une image a l'article
+        path: /user/post/upload/
+        controller: PostController/uploadImage
+        roles: [admin, user]
+
+# ----------------------------------------------#
+# ------------------- ADMIN ------------------- #
+# ----------------------------------------------#
 # Admin office [admin]
     admin: 
         path: /admin
         controller: AdminController/admin
         roles: [admin]
+
+# ----------------------------------------------#
+# -------------- global admin users ----------- #
+# ----------------------------------------------#
     users_admin:
         path: /admin/users
         controller: AdminController/usersAdmin
@@ -85,6 +118,10 @@ routing:
         path: /admin/user/remove/{id}
         controller: AdminController/removeUserAdmin
         roles: [admin]
+
+# ----------------------------------------------#
+# ---------- global admin comments ------------ #
+# ----------------------------------------------#
     comments_admin:
         path: /admin/comments
         controller: AdminController/commentsAdmin
@@ -97,6 +134,10 @@ routing:
         path: /admin/comment/remove/{id}
         controller: CommentController/removeComment
         roles: [admin]
+
+# ----------------------------------------------#
+# ------------ global admin posts ------------- #
+# ----------------------------------------------#
     posts_admin:
         path: /admin/posts
         controller: AdminController/postsAdmin
@@ -105,22 +146,13 @@ routing:
         path: /admin/AdminControlle/toggleStatus/{id}
         controller: PostController/toggleStatus
         roles: [admin]
-    
-    new_post: # création d'un nouvelle article
-        path: /user/post/new
-        controller: PostController/newPost
+    admin_new_post: # création d'un nouvelle article
+        path: /admin/post/new
+        controller: PostController/adminNewPost
         roles: [admin]
-    edit_post: # modification d'un article
-        path: /user/post/edit/{id}
-        controller: PostController/editPost
-        roles: [admin]
-    remove_post: # suppréssion d'un article
-        path: /user/post/remove/{id}
-        controller: PostController/removePost
-        roles: [admin]
-    upload_image: # ajoute une image a l'article
-        path: /user/post/upload/
-        controller: PostController/uploadImage
+    admin_edit_post: # modification d'un article
+        path: /admin/post/edit/{id}
+        controller: PostController/adminEditPost
         roles: [admin]
     edit_user_admin:
         path: /admin/user/edit/{id}
