@@ -17,6 +17,10 @@ routing:
         path: /register
         controller: SecurityController/register
         roles: [anonymous, user, admin]
+    forgotPassword:
+        path: /forgotPassword
+        controller: SecurityController/forgotPassword
+        roles: [anonymous, user, admin]
     posts: # liste des articles publiée
         path: /posts
         controller: PostController/index
