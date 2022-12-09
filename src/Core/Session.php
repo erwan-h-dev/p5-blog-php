@@ -9,6 +9,9 @@ class Session
         if (!isset($_SESSION)) {
             session_start();
         }
+        if($this->getSession('role') == null){
+            $this->setSession('role', 'anonymous');
+        }
     }
 
     public function setSession(string $key, $value)
@@ -18,7 +21,6 @@ class Session
 
     public function getSession(string $key)
     {
-        
         return isset($_SESSION[$key]) ? $_SESSION[$key] : null;
     }
 

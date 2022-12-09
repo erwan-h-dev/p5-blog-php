@@ -4,6 +4,7 @@ namespace App\Core;
 
 use App\Core\Twig;
 use App\Core\Config;
+use App\Entity\User;
 use App\Core\Session;
 use App\Core\EntityManager;
 use App\Core\Routing\Route;
@@ -55,9 +56,10 @@ class Controller
         exit();
     }
 
-    public function setUser(int $userId)
+    public function setUser($userId, string $userRole)
     {
-        $this->session->setSession('user', $userId); 
+        $this->session->setSession('user', $userId);
+        $this->session->setSession('role', $userRole);
     }
 
     public function getUser()
