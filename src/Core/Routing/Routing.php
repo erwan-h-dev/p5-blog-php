@@ -2,14 +2,15 @@
 
 namespace App\Core\Routing;
 
-use App\Core\Routing\Route;
 use LogicException;
 use App\Core\Config;
-use App\Core\Routing\RouteCollection;
-
 use ReflectionClass;
+use App\Core\Session;
+
+use App\Core\Routing\Route;
 use Symfony\Component\Yaml\Yaml;
 use App\Controller\ErrorController;
+use App\Core\Routing\RouteCollection;
  
 class Routing
 {
@@ -22,6 +23,7 @@ class Routing
     {
         $this->config = new Config();
         $this->routeCollection = new RouteCollection();
+        $this->session = new Session();
     }
 
     private function loadRoot()
@@ -47,11 +49,10 @@ class Routing
     public function matchRoute()
     {
         $path = $_GET['RoutePath'];
-
+        
         unset($_GET['RoutePath']);
-
         foreach ($this->routeCollection->getRoutes() as $route) {
-            if ($route->match($path)) {
+            if ($route->match($path, $this->session->getSession('role'))) {
                 return  $route;
             }
         }
@@ -67,7 +68,7 @@ class Routing
 
         if ($route === false) {
             $controller = new ErrorController();
-            $controller->setConfig($this->config, $this->routeCollection->getRouteByName('error'));
+            $controller->setConfig($this->config, $this->routeCollection->getRouteByName('error_404'));
             $controller->error404();
             return;
         }

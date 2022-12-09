@@ -44,15 +44,15 @@ class Route
         return $this->parameters;
     }
 
-    public function match(string $path): bool
+    public function match(string $path, ?string $role): bool
     {
         $match = preg_match('/^' . str_replace('/', '\/', $this->path) . '$/i', '/' . $path, $matches);
 
-        if (isset($matches[1])) {
+        if (isset($matches[1]) && in_array($role, $this->roles)) {
             $this->parameters['id'] = $matches[1];
         }
-
-        return 0 !== $match;
+        
+        return (0 !== $match && in_array($role, $this->roles));
     }
 
     public function getName(): string

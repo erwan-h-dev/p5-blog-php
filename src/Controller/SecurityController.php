@@ -26,6 +26,7 @@ class SecurityController extends Controller
 
         if (!$user ) {
             $error['email'] = 'Email not found';
+            return $this->render('security/login.html.twig', ['error' => $error]);
         }
 
         if(!password_verify($request->getRequest('password'), $user->getPassword())){
@@ -33,17 +34,15 @@ class SecurityController extends Controller
         }
 
         if (!empty($error)) {
-            var_dump($error, $request->request());
             return $this->render('security/login.html.twig', ['error' => $error]);
         }
         
         $date = new \DateTime();
         $user->setLastLogin($date->format('Y-m-d H:i:s'));
         $this->entityManager->update($user);
-        $this->setUser($user->getId());
-        $this->redirectRoute('home');
+        $this->setUser($user->getId(), $user->getRole());
 
-        
+        $this->redirectRoute('home');
     }
 
     public function register()
@@ -72,7 +71,6 @@ class SecurityController extends Controller
         }
 
         if(!empty($error)){
-            var_dump($request->getRequest('password'));
             return $this->render('security/register.html.twig', [
                 'error' => $error,
                 'request' => $request->request()
@@ -134,7 +132,6 @@ class SecurityController extends Controller
 
         
         if(!empty($error)){
-            var_dump($request->request());
             return $this->render('security/forgotPassword.html.twig', [
                 'error' => $error
             ]);
