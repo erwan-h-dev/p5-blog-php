@@ -2,11 +2,11 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col-md-6">
-                <p class="mb-0">Copyright 2021-22 © viho All rights reserved.</p>
+                <p class="mb-0">Ce projet a été élaborée par <a href="#">Erwan H.</a> Pour OpenClassrooms (2022)</p>
             </div>
             <div class="col-md-6 footer-copyright text-end">
-                {% if currentUser %}
-                        <a href="{{ path(currentUser.role) }}" >{{ currentUser.role }}</a>
+                {% if currentUser.role == "admin" %}
+                        <a href="{{ path('admin') }}" >Administrateur</a>
                 {% endif %}
             </div>
         </div>
