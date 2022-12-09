@@ -33,7 +33,7 @@ class UserController extends Controller
 
         $posts = $postRepository->findBy([
             'authorId' => $user->getId(),
-            'status' => 1
+            'status' => 2
         ]);
 
         return $this->render('user/user.html.twig', [
@@ -51,11 +51,12 @@ class UserController extends Controller
         $location = 'Edit User';
 
         $userRepository = $this->entityManager->getRepository(User::class);
+        $user = $userRepository->find($this->getUser()->getId());
 
         if($this->getUser()->getRole() == 'admin') {
             $user = $userRepository->find($params['id']);
-        } else {
-            $user = $userRepository->find($this->getUser()->getId());
+        }else if($this->getUser()->getId() != $params['id']) {
+            $this->redirectRoute('edit_user', ['id' => $this->getUser()->getId()]);
         }
 
         return $this->render('user/edit-user.html.twig', [

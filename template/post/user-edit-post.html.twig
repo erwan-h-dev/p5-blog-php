@@ -45,11 +45,11 @@
                 <div class="form-group m-t-15 m-checkbox-inline custom-radio-ml">
                     <div class="radio radio-info">
                         <input id="status1" type="radio" {% if post.status == 0 %}checked{% endif %} name="status" value="0">
-                        <label for="status1"><span class="digits">Brouillon</span></label>
+                        <label for="status1"><span class="digits">Draft</span></label>
                     </div>
                     <div class="radio radio-success">
                         <input id="status2" type="radio" {% if post.status == 1 %}checked{% endif %} name="status" value="1">
-                        <label for="status2"><span class="digits">Publié</span></label>
+                        <label for="status2"><span class="digits">validated</span></label>
                     </div>
                 </div>
             </div>

@@ -43,11 +43,13 @@
                         <td>{{ post.updatedAt|date('d/m/Y H:i:s') }}</td>
                         <td>{{ getCollection('comment', {'postId': post.id, 'status': 1 })|length }}</td>
                         <td>
-                            {% if post.status == 0 %}
+                            {% if post.status == 1 %}
                                 <a href="{{ path('post_toggle_status',{id: post.id}) }}" 
                                 class="btn btn-square btn-warning" title="enabled comment"><i class="fa fa-minus-square"></i></a>
-                            {% else %}
+                            {% elseif post.status == 2 %}
                                 <a href="{{ path('post_toggle_status',{id: post.id}) }}" class="btn btn-square btn-primary" title="disable comment"><i class="fa fa-check-square"></i></a>
+                            {% else %}
+                               <a  class="btn btn-square btn-info disabled" title="in redaction..."><i class="fa fa-file-text-o"></i></a>
                             {% endif %}
                         </td>
                         <td class="text-end">

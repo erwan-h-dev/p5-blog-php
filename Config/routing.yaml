@@ -33,7 +33,10 @@ routing:
         path: /user/{id}
         controller: UserController/user
         roles: [anonymous, user, admin]
-
+    error_404:
+        path: /404
+        controller: ErrorController/error404
+        roles: [anonymous, user, admin]
 # ----------------------------------------------#
 # ------------ global users routes ------------ #
 # ----------------------------------------------#
@@ -147,16 +150,16 @@ routing:
         controller: AdminController/postsAdmin
         roles: [admin]
     post_toggle_status:
-        path: /admin/AdminControlle/toggleStatus/{id}
-        controller: PostController/toggleStatus
+        path: /admin/post/toggleStatus/{id}
+        controller: AdminController/adminToggleStatus
         roles: [admin]
     admin_new_post: # création d'un nouvelle article
         path: /admin/post/new
-        controller: PostController/adminNewPost
+        controller: AdminController/adminNewPost
         roles: [admin]
     admin_edit_post: # modification d'un article
         path: /admin/post/edit/{id}
-        controller: PostController/adminEditPost
+        controller: AdminController/adminEditPost
         roles: [admin]
     edit_user_admin:
         path: /admin/user/edit/{id}
