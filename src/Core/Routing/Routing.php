@@ -11,7 +11,7 @@ use App\Core\Routing\Route;
 use Symfony\Component\Yaml\Yaml;
 use App\Controller\ErrorController;
 use App\Core\Routing\RouteCollection;
- 
+
 class Routing
 {
     private $root;
@@ -28,7 +28,6 @@ class Routing
 
     private function loadRoot()
     {
-
         $parametersFile = __DIR__ . '/../../../Config/routing.yaml';
 
         if (!file_exists($parametersFile)) {
@@ -48,8 +47,7 @@ class Routing
 
     public function matchRoute()
     {
-        if(isset($_GET['RoutePath'])){
-
+        if (isset($_GET['RoutePath'])) {
             $path = $_GET['RoutePath'];
             unset($_GET['RoutePath']);
 

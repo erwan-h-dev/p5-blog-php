@@ -6,7 +6,7 @@ use App\Core\Config;
 use Twig\Environment;
 use App\Core\EntityManager;
 use App\Core\EntityRepository;
-use \Twig\Loader\FilesystemLoader;
+use Twig\Loader\FilesystemLoader;
 
 class Twig
 {
@@ -25,14 +25,14 @@ class Twig
 
         $twigConfig = [];
 
-        if($this->config->getParameter('env') == 'prod'){
+        if ($this->config->getParameter('env') == 'prod') {
             $twigConfig = [
                 'cache' => $this->config->getParameter()['root'] . 'var/cache'
             ];
         }
 
         $this->twig = new Environment($loader, $twigConfig);
-        
+
         $this->twig->addFunction(new \Twig\TwigFunction('path', [$this, 'generateRoute']));
         $this->twig->addFunction(new \Twig\TwigFunction('getEntity', [$this, 'getEntity']));
         $this->twig->addFunction(new \Twig\TwigFunction('makePath', [$this, 'makePath']));
@@ -55,7 +55,7 @@ class Twig
         return $this->config->getRouteCollection()->generate($routeName, $parmas);
     }
 
-    public function getEntity(String $entityName,int $id)
+    public function getEntity(String $entityName, int $id)
     {
         $entity = $this->entityManager->getRepository("App\Entity\\" . ucfirst($entityName))->find($id);
         return $entity;
@@ -66,7 +66,7 @@ class Twig
         return $_SERVER['REQUEST_SCHEME'] . '://' . $_SERVER['HTTP_HOST'] . $path;
     }
 
-    public function getCollection(String $entityName,Array $relationProperty)
+    public function getCollection(String $entityName, array $relationProperty)
     {
         $comments = $this->entityManager->getRepository("App\Entity\\" . ucfirst($entityName))->findBy($relationProperty);
 

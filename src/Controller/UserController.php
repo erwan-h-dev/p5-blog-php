@@ -13,7 +13,6 @@ use App\Core\JsonContent;
 
 class UserController extends Controller
 {
-
     public function user($params)
     {
         $location = 'User';
@@ -25,7 +24,7 @@ class UserController extends Controller
         $comments = $commentRepository->findBy(['authorId' => $user->getId()]);
 
         $followRepository = $this->entityManager->getRepository(Follow::class);
-        
+
         $followers = $followRepository->findBy(['following' => $user->getId()]);
         $followings = $followRepository->findBy(['follower' => $user->getId()]);
 
@@ -53,9 +52,9 @@ class UserController extends Controller
         $userRepository = $this->entityManager->getRepository(User::class);
         $user = $userRepository->find($this->getUser()->getId());
 
-        if($this->getUser()->getRole() == 'admin') {
+        if ($this->getUser()->getRole() == 'admin') {
             $user = $userRepository->find($params['id']);
-        }else if($this->getUser()->getId() != $params['id']) {
+        } elseif ($this->getUser()->getId() != $params['id']) {
             $this->redirectRoute('edit_user', ['id' => $this->getUser()->getId()]);
         }
 
@@ -85,8 +84,8 @@ class UserController extends Controller
         return new JsonContent(['status' => 'success']);
     }
 
-    public function editUserPassword($params){
-
+    public function editUserPassword($params)
+    {
         $request = new Request();
 
         $userRepository = $this->entityManager->getRepository(User::class);
@@ -96,11 +95,10 @@ class UserController extends Controller
         $newPassword = $request->getRequest('newPassword');
         $confirmPassword = $request->getRequest('confirmPassword');
 
-        if($newPassword == $confirmPassword){
-            if(password_verify($oldPassword, $user->getPassword())){
-
+        if ($newPassword == $confirmPassword) {
+            if (password_verify($oldPassword, $user->getPassword())) {
                 $user->setPassword(password_hash($newPassword, PASSWORD_BCRYPT));
-                
+
                 $this->entityManager->update($user);
 
                 $response = [
@@ -109,7 +107,7 @@ class UserController extends Controller
                     "newPassword" => "",
                     "confirmPassword" => "",
                 ];
-            }else{
+            } else {
                 $response = [
                     "status" => "error",
                     'oldPassword' => "Wrong password",
@@ -117,7 +115,7 @@ class UserController extends Controller
                     "confirmPassword" => "",
                 ];
             }
-        }else{
+        } else {
             $response = [
                 "status" => "error",
                 "newPassword" => "New password and confirm password are not the same",
@@ -132,7 +130,7 @@ class UserController extends Controller
     public function editUserProfilePicture($params)
     {
         $requete = new Request();
-        
+
         $userRepository = $this->entityManager->getRepository(User::class);
 
         $user = $userRepository->find($params['id']);
@@ -149,18 +147,17 @@ class UserController extends Controller
         $followRppository = $this->entityManager->getRepository(Follow::class);
 
         $follow = $followRppository->findBy(['follower' => $this->getUser()->getId(), 'following' => $params['id']]);
-        if(!empty($follow)){
+        if (!empty($follow)) {
             $this->entityManager->remove($follow[0]);
 
             return new JsonContent(['status' => 'unfollow']);
-        }else{
+        } else {
             $follow = new Follow();
             $follow->setFollower($this->GetUser()->getId())
                 ->setFollowing($params['id']);
             $this->entityManager->insert($follow);
-            
+
             return new JsonContent(['status' => 'follow']);
         }
-
     }
 }

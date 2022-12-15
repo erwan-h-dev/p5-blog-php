@@ -9,7 +9,6 @@ use Symfony\Component\Dotenv\Dotenv;
 
 class Config
 {
-
     private $parameters;
     private $routeCollection;
 

@@ -13,7 +13,6 @@ use App\Core\JsonContent;
 
 class AdminController extends Controller
 {
-
     public function admin()
     {
         $location = 'admin';
@@ -43,7 +42,6 @@ class AdminController extends Controller
 
         $form->handleRequest(new Request());
         if ($form->isSubmited() && $form->isValid()) {
-
             $post = $form->getData();
             $dateNow = new DateTime();
 
@@ -67,7 +65,6 @@ class AdminController extends Controller
 
     public function adminEditPost($params)
     {
-
         $location = 'edit post ' . $params['id'];
 
         $post = $this->entityManager->getRepository(Post::class)->find($params['id']);
@@ -75,7 +72,6 @@ class AdminController extends Controller
         $form->handleRequest(new Request());
 
         if ($form->isSubmited() && $form->isValid()) {
-
             $post = $form->getData();
 
             $dateNow = new DateTime();
@@ -153,14 +149,14 @@ class AdminController extends Controller
         $user = $this->entityManager->getRepository(User::class)->find($params['id']);
 
         $user->setRole($request->getRequest('role'));
-        
-        if($this->getUser()->getId() == $user->getId()){
+
+        if ($this->getUser()->getId() == $user->getId()) {
             $this->session->setSession('role', $user->getRole('role'));
         }
 
-        if($request->getRequest('status')){
+        if ($request->getRequest('status')) {
             $user->setStatus(1);
-        }else{
+        } else {
             $user->setStatus(0);
         }
         $now = new \DateTime();
@@ -173,11 +169,10 @@ class AdminController extends Controller
 
     public function removeUserAdmin($params)
     {
-
         $user = $this->entityManager->getRepository(User::class)->find($params['id']);
 
         $this->entityManager->remove($user);
-        
+
         return $this->redirectRoute('users_admin');
     }
 

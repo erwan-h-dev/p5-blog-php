@@ -4,7 +4,7 @@ namespace App\Core;
 
 class Request
 {
-    private array $request   = []; 
+    private array $request   = [];
     private array $query     = [];
     private array $files     = [];
 
@@ -17,7 +17,6 @@ class Request
     {
         $this->request = $_POST;
         $this->query = $_GET;
-        
     }
 
     public function query(): array
@@ -64,10 +63,10 @@ class Request
 
     public function isMethod(string $requestType): bool
     {
-        if(!isset($_SERVER['REQUEST_METHOD'])){
+        if (!isset($_SERVER['REQUEST_METHOD'])) {
             return false;
         }
-        
+
         return $_SERVER['REQUEST_METHOD'] == $requestType;
     }
 }

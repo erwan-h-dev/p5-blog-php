@@ -4,19 +4,18 @@ namespace App\Entity;
 
 class Comment
 {
-
-    private     int     $id;
-    private     string  $authorId;
-    private     string  $content;
-    private     string  $createdAt;
-    private     int     $postId;
-    private     ?int    $commentId;
-    private     int     $status = 0;
-    private     string  $validatedAt;
+    private int     $id;
+    private string  $authorId;
+    private string  $content;
+    private string  $createdAt;
+    private int     $postId;
+    private ?int    $commentId;
+    private int     $status = 0;
+    private string  $validatedAt;
 
     /**
      * Get the value of id
-     */ 
+     */
     public function getId(): int
     {
         return $this->id;
@@ -26,7 +25,7 @@ class Comment
      * Set the value of id
      *
      * @return  self
-     */ 
+     */
     public function setId(int $id): self
     {
         $this->id = $id;
@@ -36,7 +35,7 @@ class Comment
 
     /**
      * Get the value of commentator
-     */ 
+     */
     public function getAuthorId(): int
     {
         return $this->authorId;
@@ -46,7 +45,7 @@ class Comment
      * Set the value of commentator
      *
      * @return  self
-     */ 
+     */
     public function setAuthorId(int $authorId): self
     {
         $this->authorId = $authorId;
@@ -56,7 +55,7 @@ class Comment
 
     /**
      * Get the value of content
-     */ 
+     */
     public function getContent(): string
     {
         return $this->content;
@@ -66,7 +65,7 @@ class Comment
      * Set the value of content
      *
      * @return  self
-     */ 
+     */
     public function setContent(string $content): self
     {
         $this->content = $content;
@@ -76,7 +75,7 @@ class Comment
 
     /**
      * Get the value of createdAt
-     */ 
+     */
     public function getCreatedAt(): string
     {
         return $this->createdAt;
@@ -86,7 +85,7 @@ class Comment
      * Set the value of createdAt
      *
      * @return  self
-     */ 
+     */
     public function setCreatedAt(string $createdAt): self
     {
         $this->createdAt = $createdAt;
@@ -96,7 +95,7 @@ class Comment
 
     /**
      * Get the value of post
-     */ 
+     */
     public function getPostId(): int
     {
         return $this->postId;
@@ -106,7 +105,7 @@ class Comment
      * Set the value of post
      *
      * @return  self
-     */ 
+     */
     public function setPostId(int $postId): self
     {
         $this->postId = $postId;
@@ -116,7 +115,7 @@ class Comment
 
     /**
      * Get the value of comment
-     */ 
+     */
     public function getCommentId(): ?int
     {
         return $this->commentId;
@@ -126,7 +125,7 @@ class Comment
      * Set the value of comment
      *
      * @return  self
-     */ 
+     */
     public function setCommentId(?int $commentId): self
     {
         $this->commentId = $commentId;
@@ -136,7 +135,7 @@ class Comment
 
     /**
      * Get the value of valid
-     */ 
+     */
     public function getStatus(): int
     {
         return $this->status;
@@ -146,7 +145,7 @@ class Comment
      * Set the value of valid
      *
      * @return  self
-     */ 
+     */
     public function setStatus(int $status): self
     {
         $this->status = $status;
@@ -156,7 +155,7 @@ class Comment
 
     /**
      * Get the value of validatedAt
-     */ 
+     */
     public function getValidatedAt(): string
     {
         return $this->validatedAt;
@@ -166,7 +165,7 @@ class Comment
      * Set the value of validatedAt
      *
      * @return  self
-     */ 
+     */
     public function setValidatedAt(string $validatedAt): self
     {
         $this->validatedAt = $validatedAt;

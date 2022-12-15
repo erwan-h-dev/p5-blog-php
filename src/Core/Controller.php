@@ -9,7 +9,6 @@ use App\Core\Session;
 use App\Core\EntityManager;
 use App\Core\Routing\Route;
 
-
 class Controller
 {
     protected $session;
@@ -31,7 +30,7 @@ class Controller
         $this->setConnexion();
         $this->twig = new Twig($config);
 
-        if($this->getUser()){
+        if ($this->getUser()) {
             $this->twig->addGlobal('currentUser', $this->getUser());
         }
 
@@ -64,16 +63,15 @@ class Controller
     public function getUser()
     {
         $userRepository = $this->entityManager->getRepository(User::class);
-        if($this->session->getSession('user')){
+        if ($this->session->getSession('user')) {
             return $userRepository->find($this->session->getSession('user'));
         }
-        
+
         return null;
     }
 
     public function destroySession()
     {
         $this->session->destroySession();
-        
-    } 
+    }
 }

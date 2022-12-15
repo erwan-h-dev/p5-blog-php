@@ -8,7 +8,6 @@ use App\Repository\UserRepository;
 
 class HomeController extends Controller
 {
-
     public function index()
     {
         $location = 'home';

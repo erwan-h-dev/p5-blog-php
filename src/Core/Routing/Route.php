@@ -11,7 +11,7 @@ class Route
     private $roles;
     private $parameters = [];
 
-    public function __construct(string $routeName,array $param)
+    public function __construct(string $routeName, array $param)
     {
         $this->name = $routeName;
         $this->path = str_replace('{id}', '([0-9]+)', $param['path']);
@@ -51,7 +51,7 @@ class Route
         if (isset($matches[1]) && in_array($role, $this->roles)) {
             $this->parameters['id'] = $matches[1];
         }
-        
+
         return (0 !== $match && in_array($role, $this->roles));
     }
 

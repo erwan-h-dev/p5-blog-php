@@ -2,8 +2,8 @@
 
 namespace App\Core;
 
-class Hydratator{
-
+class Hydratator
+{
     public static function hydrate(array $entityArray, $class)
     {
         $entity = new $class();

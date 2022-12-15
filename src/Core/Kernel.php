@@ -8,7 +8,6 @@ use App\Core\Session;
 
 class Kernel
 {
-
     public function __construct()
     {
         ob_start();

@@ -9,7 +9,7 @@ class Session
         if (!isset($_SESSION)) {
             session_start();
         }
-        if($this->getSession('role') == null){
+        if ($this->getSession('role') == null) {
             $this->setSession('role', 'anonymous');
         }
     }

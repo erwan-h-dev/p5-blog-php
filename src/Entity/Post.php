@@ -2,9 +2,8 @@
 
 namespace App\Entity;
 
-class Post 
+class Post
 {
-
     private int $id;
     private string $createdAt;
     private string $updatedAt;
@@ -18,7 +17,7 @@ class Post
 
     /**
      * Get the value of id
-     */ 
+     */
     public function getId(): int
     {
         return $this->id;
@@ -28,7 +27,7 @@ class Post
      * Set the value of id
      *
      * @return  self
-     */ 
+     */
     public function setId(int $id): self
     {
         $this->id = $id;
@@ -38,7 +37,7 @@ class Post
 
     /**
      * Get the value of createdAt
-     */ 
+     */
     public function getCreatedAt(): string
     {
         return $this->createdAt;
@@ -48,7 +47,7 @@ class Post
      * Set the value of createdAt
      *
      * @return  self
-     */ 
+     */
     public function setCreatedAt(string $createdAt): self
     {
         $this->createdAt = $createdAt;
@@ -58,7 +57,7 @@ class Post
 
     /**
      * Get the value of updatedAt
-     */ 
+     */
     public function getUpdatedAt(): string
     {
         return $this->updatedAt;
@@ -68,7 +67,7 @@ class Post
      * Set the value of updatedAt
      *
      * @return  self
-     */ 
+     */
     public function setUpdatedAt(string $updatedAt): self
     {
         $this->updatedAt = $updatedAt;
@@ -78,7 +77,7 @@ class Post
 
     /**
      * Get the value of title
-     */ 
+     */
     public function getTitle(): string
     {
         return $this->title;
@@ -88,7 +87,7 @@ class Post
      * Set the value of title
      *
      * @return  self
-     */ 
+     */
     public function setTitle(string $title): self
     {
         $this->title = $title;
@@ -98,7 +97,7 @@ class Post
 
     /**
      * Get the value of leadSentence
-     */ 
+     */
     public function getLeadSentence(): string
     {
         return $this->leadSentence;
@@ -108,7 +107,7 @@ class Post
      * Set the value of leadSentence
      *
      * @return  self
-     */ 
+     */
     public function setLeadSentence(string $leadSentence): self
     {
         $this->leadSentence = $leadSentence;
@@ -118,7 +117,7 @@ class Post
 
     /*
     * Get the value of content
-    */ 
+    */
     public function getContent(): string
     {
         return $this->content;
@@ -128,14 +127,14 @@ class Post
      * Set the value of content
      *
      * @return  self
-     */ 
+     */
     public function setContent(string $content): self
     {
         $this->content = $content;
 
         return $this;
     }
-    
+
     /**
      * Get the value of status
      */

@@ -7,7 +7,7 @@ use App\Core\Request;
 
 abstract class FormType
 {
-    protected $entity;          
+    protected $entity;
     protected $submited = false;
     protected $fields = [];
     protected $errors = [];
@@ -39,15 +39,15 @@ abstract class FormType
         $data = $request->request();
 
         $cleanData = [];
-        
-        foreach($this->fields as $key => $options) {
+
+        foreach ($this->fields as $key => $options) {
             if (!isset($data[$key])) {
-                $this->errors[$key] = $key.' is not defined in form';  
+                $this->errors[$key] = $key.' is not defined in form';
                 continue;
             }
-            
+
             $value = $data[$key];
-            
+
             if ((empty($value) && $value !== '0') && $options['required']) {
                 $this->errors[$key] = $key . ' is required';
                 continue;
@@ -64,11 +64,12 @@ abstract class FormType
         return $this->entity;
     }
 
-    public function add($field, $options = []) {
+    public function add($field, $options = [])
+    {
         $this->fields[$field] = $options;
-        
+
         return $this;
     }
-    
+
     abstract public function buildForm();
 }

@@ -13,7 +13,6 @@ use App\Core\JsonContent;
 
 class PostController extends Controller
 {
-
     public function index()
     {
         $location = 'posts list';
@@ -37,7 +36,7 @@ class PostController extends Controller
             'postId' => $post->getId(),
             'status' => 1
         ]);
-        
+
         return $this->render('post/show.html.twig', [
             'location' => $location,
             'post' => $post,
@@ -49,7 +48,7 @@ class PostController extends Controller
     {
         $post = $this->entityManager->getRepository(Post::class)->find($params['id']);
 
-        if($post->getAuthorId() == $this->getUser()->getId() || $this->getUser()->getRole() == 'admin') {
+        if ($post->getAuthorId() == $this->getUser()->getId() || $this->getUser()->getRole() == 'admin') {
             $this->entityManager->remove($post);
         } else {
             throw new Error('You are not allowed to delete this post');
@@ -62,7 +61,7 @@ class PostController extends Controller
     {
         $location = 'posts list';
 
-        if($this->getUser()->getRole() == 'admin') {
+        if ($this->getUser()->getRole() == 'admin') {
             $posts = $this->entityManager->getRepository(Post::class)->findBy([
                 'authorId' => $params['id']
             ]);
@@ -86,7 +85,6 @@ class PostController extends Controller
 
         $form->handleRequest(new Request());
         if ($form->isSubmited() && $form->isValid()) {
-
             $post = $form->getData();
             $dateNow = new DateTime();
 
@@ -111,7 +109,6 @@ class PostController extends Controller
 
     public function UserEditPost($params)
     {
-
         $location = 'edit post ' . $params['id'];
 
         $post = $this->entityManager->getRepository(Post::class)->find($params['id']);
@@ -119,7 +116,6 @@ class PostController extends Controller
         $form->handleRequest(new Request());
 
         if ($form->isSubmited() && $form->isValid()) {
-
             $post = $form->getData();
 
             $dateNow = new DateTime();
@@ -128,9 +124,8 @@ class PostController extends Controller
 
             $this->entityManager->update($post);
 
-            
+
             $this->redirectRoute('posts_user', ['id' => $this->getUser()->getId()]);
-            
         }
 
         return $this->render('post/user-edit-post.html.twig', [
@@ -143,10 +138,10 @@ class PostController extends Controller
     {
         $file = new File();
 
-        if($file->isImage()){
+        if ($file->isImage()) {
             $file->uploadFile();
         }
-        
+
         return new JsonContent(['pathFile' => $file->getPathFile()]);
     }
 }

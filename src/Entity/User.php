@@ -2,17 +2,17 @@
 
 namespace App\Entity;
 
-class User 
+class User
 {
     private int $id;
     private string $userName;
     private string $createdAt;  // DateTime
     private string $updatedAt;  // DateTime
     private string $lastLogin;  // DateTime
-    private string $email;     
-    private string $password;  
-    private string $firstName; 
-    private string $lastName;  
+    private string $email;
+    private string $password;
+    private string $firstName;
+    private string $lastName;
     private string $role;
     private int $status             = 0;
     private ?string $profilePicture = '/assets/images/dashboard/1.png';
@@ -21,8 +21,8 @@ class User
     private ?string $facebook       = null;
     private ?string $instagram      = null;
 
-    const ROLE_ADMIN = "admin";
-    const ROLE_USER = "user";
+    public const ROLE_ADMIN = "admin";
+    public const ROLE_USER = "user";
 
     /**
      * Get the value of id
@@ -95,7 +95,6 @@ class User
      */
     public function setUpdatedAt(string $updatedAt)
     {
-
         $this->updatedAt = $updatedAt;
 
         return $this;
@@ -303,7 +302,7 @@ class User
 
     /**
      * Get the value of instagram
-     */ 
+     */
     public function getInstagram()
     {
         return $this->instagram;
@@ -313,7 +312,7 @@ class User
      * Set the value of instagram
      *
      * @return  self
-     */ 
+     */
     public function setInstagram($instagram)
     {
         $this->instagram = $instagram;
@@ -323,7 +322,7 @@ class User
 
     /**
      * Get the value of status
-     */ 
+     */
     public function getStatus(): int
     {
         return $this->status;
@@ -333,7 +332,7 @@ class User
      * Set the value of status
      *
      * @return  self
-     */ 
+     */
     public function setStatus($status)
     {
         $this->status = $status;

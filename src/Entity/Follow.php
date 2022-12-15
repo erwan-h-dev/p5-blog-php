@@ -4,10 +4,9 @@ namespace App\Entity;
 
 class Follow
 {
-
-    private    int     $id;
-    private    int     $follower;
-    private    int     $following;
+    private int     $id;
+    private int     $follower;
+    private int     $following;
 
 
     /**
@@ -32,7 +31,7 @@ class Follow
 
     /**
      * Get the value of follower
-     */ 
+     */
     public function getFollower(): int
     {
         return $this->follower;
@@ -42,7 +41,7 @@ class Follow
      * Set the value of follower
      *
      * @return  self
-     */ 
+     */
     public function setFollower(int $follower)
     {
         $this->follower = $follower;
@@ -52,7 +51,7 @@ class Follow
 
     /**
      * Get the value of following
-     */ 
+     */
     public function getFollowing(): int
     {
         return $this->following;
@@ -62,7 +61,7 @@ class Follow
      * Set the value of following
      *
      * @return  self
-     */ 
+     */
     public function setFollowing(int $following)
     {
         $this->following = $following;

@@ -31,7 +31,7 @@ class JsonContent
     {
         header('Content-Type: application/json');
         echo json_encode($this->content);
-        
+
         return;
     }
 }

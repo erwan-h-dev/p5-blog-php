@@ -5,16 +5,16 @@ namespace App\Controller;
 use App\Entity\User;
 use App\Core\Request;
 use App\Core\Controller;
+
 class SecurityController extends Controller
 {
-
     public function login()
     {
         $userRepository = $this->entityManager->getRepository(User::class);
         $request = new Request();
         $error = [];
 
-        if($this->getUser()){
+        if ($this->getUser()) {
             $this->redirectRoute('home');
         }
 
@@ -24,19 +24,19 @@ class SecurityController extends Controller
 
         $user = $userRepository->findOneBy(['email' => $request->getRequest('email')]);
 
-        if (!$user ) {
+        if (!$user) {
             $error['email'] = 'Email not found';
             return $this->render('security/login.html.twig', ['error' => $error]);
         }
 
-        if(!password_verify($request->getRequest('password'), $user->getPassword())){
+        if (!password_verify($request->getRequest('password'), $user->getPassword())) {
             $error['password'] = 'Password not found';
         }
 
         if (!empty($error)) {
             return $this->render('security/login.html.twig', ['error' => $error]);
         }
-        
+
         $date = new \DateTime();
         $user->setLastLogin($date->format('Y-m-d H:i:s'));
         $this->entityManager->update($user);
@@ -61,8 +61,8 @@ class SecurityController extends Controller
         if ($user) {
             $error['password'] = 'Email already exists';
         }
-        
-        if($request->getRequest('password') !== $request->getRequest('password_confirm')){
+
+        if ($request->getRequest('password') !== $request->getRequest('password_confirm')) {
             $error['password'] = 'Your passwords do not match';
         }
 
@@ -70,7 +70,7 @@ class SecurityController extends Controller
             $error['password'] = 'Your password must be at least 8 characters long or no contain numbers';
         }
 
-        if(!empty($error)){
+        if (!empty($error)) {
             return $this->render('security/register.html.twig', [
                 'error' => $error,
                 'request' => $request->request()
@@ -93,7 +93,7 @@ class SecurityController extends Controller
         ;
 
         $this->entityManager->insert($user);
-        
+
         return $this->render('security/login.html.twig', []);
     }
 
@@ -108,8 +108,8 @@ class SecurityController extends Controller
     {
         $request = new Request();
         $error = [];
-        
-        if(count($request->request()) == 0){
+
+        if (count($request->request()) == 0) {
             return $this->render('security/forgotPassword.html.twig', [
                 'error' => $error
             ]);
@@ -121,7 +121,7 @@ class SecurityController extends Controller
         if (!$user) {
             $error['email'] = 'Email does not exist';
         }
-        
+
         if ($request->getRequest('new-password') !== $request->getRequest('confirm-password')) {
             $error['password'] = 'Your passwords do not match';
         }
@@ -130,8 +130,8 @@ class SecurityController extends Controller
             $error['password'] = 'Your passwords must be at least 8 characters long or no contain numbers';
         }
 
-        
-        if(!empty($error)){
+
+        if (!empty($error)) {
             return $this->render('security/forgotPassword.html.twig', [
                 'error' => $error
             ]);
@@ -141,9 +141,7 @@ class SecurityController extends Controller
 
         $this->entityManager->update($user);
 
-       
+
         $this->redirectRoute('login');
     }
-
-    
 }

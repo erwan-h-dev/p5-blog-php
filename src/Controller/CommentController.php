@@ -23,10 +23,10 @@ class CommentController extends Controller
             ->setCommentId(null)
         ;
 
-        if(!empty($request->getRequest("commentId"))){
+        if (!empty($request->getRequest("commentId"))) {
             $comment->setCommentId($request->getRequest("commentId"));
         }
-        
+
         $this->entityManager->insert($comment);
 
         return new JsonContent(['status' => 'ok']);
@@ -36,12 +36,12 @@ class CommentController extends Controller
     {
         $comment = $this->entityManager->getRepository(Comment::class)->find($params['id']);
 
-        if($comment->getStatus() == 0){
+        if ($comment->getStatus() == 0) {
             $date = new DateTime();
 
             $comment->setStatus(1);
             $comment->setValidatedAt($date->format('Y-m-d H:i:s'));
-        }else{
+        } else {
             $comment->setStatus(0);
         }
 

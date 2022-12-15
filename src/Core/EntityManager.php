@@ -9,7 +9,6 @@ use App\Core\EntityRepository;
 
 class EntityManager
 {
-
     private $entityRepository;
     private $class;
 
@@ -26,12 +25,12 @@ class EntityManager
         $class = 'App\\Repository\\' . $entityName[2] . 'Repository';
 
         return new $class($this->entityRepository);
-    }   
+    }
 
     private function persistEntity(String $sql, array $values): int
     {
         $pdo = $this->entityRepository->getPdo();
-    
+
         $statement = $pdo->prepare($sql);
 
         $sqlResult = $statement->execute($values);
@@ -39,7 +38,8 @@ class EntityManager
         return $pdo->lastInsertId();
     }
 
-    public function insert($entity){
+    public function insert($entity)
+    {
         $sql = "INSERT INTO " . lcfirst(str_replace("App\\Entity\\", "", get_class($entity))) . " (";
         $sql2 = " VALUES (";
 
@@ -56,7 +56,7 @@ class EntityManager
                     $sql .= ", ";
                     $sql2 .= ", ";
                 }
-                
+
                 $values[$parameter->getName()] = $entity->$methode();
             }
         }
@@ -65,7 +65,8 @@ class EntityManager
         $entity->setId($this->persistEntity($sql, $values));
     }
 
-    public function update($entity){
+    public function update($entity)
+    {
         $sql = "UPDATE " . lcfirst(str_replace("App\\Entity\\", "", get_class($entity))) . " SET ";
 
         $parameters = $this->getParameters($entity);
@@ -79,7 +80,7 @@ class EntityManager
                 if (end($parameters) != $parameter) {
                     $sql .= ", ";
                 }
-                
+
                 $values[$parameter->getName()] = $entity->$methode();
             }
         }
@@ -87,10 +88,10 @@ class EntityManager
         $values['id'] = $entity->getId();
 
         $this->persistEntity($sql, $values);
-
     }
 
-    public function remove($entity){
+    public function remove($entity)
+    {
         $sql = "DELETE FROM " . lcfirst(str_replace("App\\Entity\\", "", get_class($entity))) . " WHERE id = :id";
 
         $values = [
@@ -142,18 +143,16 @@ class EntityManager
         $pdo = $this->entityRepository->getPdo();
         $statement = $pdo->prepare($sql);
         $statement->execute($values);
-        
+
         $results = $statement->fetchAll(PDO::FETCH_ASSOC);
 
         if ($results) {
-            
             $entities = [];
             foreach ($results as $key => $result) {
                 $entities[] = Hydratator::hydrate($result, $this->class);
             }
 
             return $entities;
-
         } else {
             return [];
         }
@@ -177,9 +176,9 @@ class EntityManager
         $statement->execute($values);
         $result = $statement->fetch(PDO::FETCH_ASSOC);
 
-        if($result){
+        if ($result) {
             return Hydratator::hydrate($result, $this->class);
-        }else{
+        } else {
             return null;
         }
     }
@@ -198,6 +197,5 @@ class EntityManager
             Hydratator::hydrate($result, $this->class);
         }
         return $entities;
-        
     }
 }
