@@ -33,7 +33,7 @@ class EntityManager
 
         $statement = $pdo->prepare($sql);
 
-        $sqlResult = $statement->execute($values);
+        $statement->execute($values);
 
         return $pdo->lastInsertId();
     }
@@ -148,7 +148,7 @@ class EntityManager
 
         if ($results) {
             $entities = [];
-            foreach ($results as $key => $result) {
+            foreach ($results as $result) {
                 $entities[] = Hydratator::hydrate($result, $this->class);
             }
 

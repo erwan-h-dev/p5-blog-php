@@ -13,6 +13,6 @@ class Kernel
         ob_start();
         $routing = new Routing();
 
-        $controller = $routing->getController();
+        $routing->getController();
     }
 }

@@ -14,8 +14,6 @@ use App\Core\Routing\RouteCollection;
 
 class Routing
 {
-    private $root;
-    private $controller;
     private $routeCollection;
     private $config;
 
@@ -37,7 +35,6 @@ class Routing
         $params = Yaml::parse(file_get_contents($parametersFile));
 
         foreach ($params['routing'] as $routeName => $param) {
-            $root = "";
             $route = new Route($routeName, $param);
             $this->routeCollection->addRoute($route);
         }

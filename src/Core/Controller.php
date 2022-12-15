@@ -12,7 +12,6 @@ use App\Core\Routing\Route;
 class Controller
 {
     protected $session;
-    private $path;
     private $twig;
     public $entityManager;
     private $config;
