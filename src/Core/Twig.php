@@ -23,12 +23,17 @@ class Twig
         $entityRepository->setConnexion($this->config->getParameter('database_dns'), $this->config->getParameter('database_user'), $this->config->getParameter('database_password'));
         $this->entityManager = new EntityManager($entityRepository);
 
-        $this->twig = new Environment($loader, [
-            // 'cache' => $this->config->getParameter()['root'] . 'var/cache'
-        ]);
+        $twigConfig = [];
 
+        if($this->config->getParameter('env') == 'prod'){
+            $twigConfig = [
+                'cache' => $this->config->getParameter()['root'] . 'var/cache'
+            ];
+        }
+
+        $this->twig = new Environment($loader, $twigConfig);
+        
         $this->twig->addFunction(new \Twig\TwigFunction('path', [$this, 'generateRoute']));
-        $this->twig->addFunction(new \Twig\TwigFunction('dump', [$this, 'dump']));
         $this->twig->addFunction(new \Twig\TwigFunction('getEntity', [$this, 'getEntity']));
         $this->twig->addFunction(new \Twig\TwigFunction('makePath', [$this, 'makePath']));
         $this->twig->addFunction(new \Twig\TwigFunction('getCollection', [$this, 'getCollection']));
@@ -50,11 +55,6 @@ class Twig
         return $this->config->getRouteCollection()->generate($routeName, $parmas);
     }
 
-    public function dump($parmas)
-    {
-        return var_dump($parmas);
-    }
-
     public function getEntity(String $entityName,int $id)
     {
         $entity = $this->entityManager->getRepository("App\Entity\\" . ucfirst($entityName))->find($id);
@@ -63,8 +63,7 @@ class Twig
 
     public function makePath(string $path)
     {
-        return $_SERVER['REQUEST_SCHEME'] . '://' . $_SERVER['HTTP_HOST'].$path;
-        // return $this->config->getParameter('root') . $path;
+        return $_SERVER['REQUEST_SCHEME'] . '://' . $_SERVER['HTTP_HOST'] . $path;
     }
 
     public function getCollection(String $entityName,Array $relationProperty)

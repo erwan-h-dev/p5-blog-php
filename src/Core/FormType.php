@@ -25,13 +25,6 @@ abstract class FormType
 
     public function isValid()
     {
-        // si les champs correspondent aux champs de l'entité
-
-        if(0 !== count($this->errors)){
-            var_dump($this->errors);
-            die;
-        }
-
         return (0 === count($this->errors));
     }
 

@@ -64,6 +64,10 @@ class Request
 
     public function isMethod(string $requestType): bool
     {
+        if(!isset($_SERVER['REQUEST_METHOD'])){
+            return false;
+        }
+        
         return $_SERVER['REQUEST_METHOD'] == $requestType;
     }
 }

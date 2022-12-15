@@ -144,11 +144,7 @@ class PostController extends Controller
         $file = new File();
 
         if($file->isImage()){
-            try {
-                $file->uploadFile();
-            } catch(Error $e) {
-               var_dump($e);
-            }
+            $file->uploadFile();
         }
         
         return new JsonContent(['pathFile' => $file->getPathFile()]);

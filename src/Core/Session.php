@@ -24,11 +24,6 @@ class Session
         return isset($_SESSION[$key]) ? $_SESSION[$key] : null;
     }
 
-    public function getSessions()
-    {
-        return $_SESSION;
-    }
-
     public function delete(string $key)
     {
         unset($_SESSION[$key]);

@@ -11,7 +11,9 @@ class File{
 
     public function __construct()
     {
-        $this->file = $_FILES['file'];
+        if(isset($_FILES['file'])){
+            $this->file = $_FILES['file'];
+        }
     }
 
     public function isImage(): bool

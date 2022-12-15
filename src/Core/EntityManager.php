@@ -36,11 +36,6 @@ class EntityManager
 
         $sqlResult = $statement->execute($values);
 
-        if(!$sqlResult){
-            var_dump($statement->errorInfo());
-            die;
-        }
-
         return $pdo->lastInsertId();
     }
 
@@ -151,15 +146,14 @@ class EntityManager
         $results = $statement->fetchAll(PDO::FETCH_ASSOC);
 
         if ($results) {
-            try {
-                $entities = [];
-                foreach ($results as $key => $result) {
-                    $entities[] = Hydratator::hydrate($result, $this->class);
-                }
-                return $entities;
-            } catch (\Exception $e) {
-                echo $e->getMessage();
+            
+            $entities = [];
+            foreach ($results as $key => $result) {
+                $entities[] = Hydratator::hydrate($result, $this->class);
             }
+
+            return $entities;
+
         } else {
             return [];
         }
@@ -196,16 +190,14 @@ class EntityManager
 
         $statement = $pdo->prepare("SELECT * FROM " . lcfirst(str_replace("App\\Entity\\", "", $this->class)));
         $statement->execute();
-        try {
-            $entities = [];
-            $results = $statement->fetchAll(PDO::FETCH_ASSOC);
-            foreach ($results as $key => $result) {
-                $entities[] =
-                Hydratator::hydrate($result, $this->class);
-            }
-            return $entities;
-        } catch (\Exception $e) {
-            echo $e->getMessage();
+
+        $entities = [];
+        $results = $statement->fetchAll(PDO::FETCH_ASSOC);
+        foreach ($results as $key => $result) {
+            $entities[] =
+            Hydratator::hydrate($result, $this->class);
         }
+        return $entities;
+        
     }
 }

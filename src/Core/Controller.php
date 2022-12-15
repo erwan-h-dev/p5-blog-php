@@ -53,7 +53,6 @@ class Controller
     public function redirectRoute(string $routeName, array $params = [])
     {
         header('Location: ' . $this->config->getRouteCollection()->generate($routeName, $params));
-        exit();
     }
 
     public function setUser($userId, string $userRole)
