@@ -197,6 +197,7 @@ class EntityManager
         $statement = $pdo->prepare("SELECT * FROM " . lcfirst(str_replace("App\\Entity\\", "", $this->class)));
         $statement->execute();
         try {
+            $entities = [];
             $results = $statement->fetchAll(PDO::FETCH_ASSOC);
             foreach ($results as $key => $result) {
                 $entities[] =
