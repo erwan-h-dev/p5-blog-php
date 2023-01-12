@@ -13,13 +13,14 @@ class CommentController extends Controller
     public function newComment()
     {
         $request = new Request();
-        $now = new DateTime();
         $comment = new Comment();
 
+        $now = new DateTime();
         $comment->setAuthorId($this->getUser()->getId())
             ->setContent($request->getRequest('content'))
             ->setPostId($request->getRequest('postId'))
             ->setCreatedAt($now->format('Y-m-d H:i:s'))
+            ->setValidatedAt('0000-00-00 00:00:00')
             ->setCommentId(null)
         ;
 

@@ -41,80 +41,86 @@
             <h4>Comment</h4>
             <ul>
                 {% for comment in comments %}
-                {% if not comment.commentId %}
-                {% set subComments = [] %}
-                {% for subComment in comments %}
-                    {% if subComment.commentId == comment.id %}
-                        {% set subComments = subComments|merge([subComment]) %}
-                    {% endif %}
-                {% endfor %}
-                <li class="comment">
-                    <div class="media align-self-center">
-                        <div class="media-body">
-                            <div class="row">
-                                <div class="col-md-4">
-                                    <a href="{{ path('user', {id: comment.authorId}) }}"> 
-                                        <h6 class="mt-0">{{ getEntity("user", comment.authorId).userName }}</h6>
-                                    </a> 
-                                </div>
-                                <div class="col-md-8">
-                                    <ul class="comment-social">
-                                        <li><i class="fa fa-calendar-o"></i>{{ comment.createdAt }}</li>
-                                        <li><i class="fa fa-wechat"></i>{{ subComments|length }} Responses</li>
-                                        {% if currentUser is not null and currentUser.valid %}
-                                            <li><a class="btn btn-primary btn-xs answer" data-id="{{ comment.id}}"><i class="fa fa-wechat"></i> Answer</a></li>
-                                        {% endif %}
-                                    </ul>
-                                </div>
-                            </div>
-                            <p>{{ comment.content|raw }}</p>
-                        </div>
-                    </div>
-                </li>
-                
-                <li class="">
-                    <ul>
-                        {% for subComment in subComments %}
-                        <li>
-                            <div class="media">
-                                <div class="media-body">
-                                    <div class="row">
-                                    <div class="col-xl-12">
-                                    <a href="{{ path('user', {id: comment.authorId}) }}">
-                                        <h6 class="mt-0">{{ getEntity("user", comment.authorId).userName }}</h6>
-                                    </a>
-                                    </div>
-                                </div>
-                                <p>{{ subComment.content|raw }}</p>
-                            </div>
-                            </div>
-                        </li>
+                    {% if not comment.commentId %}
+                        {% set subComments = [] %}
+                        {% for subComment in comments %}
+                            {% if subComment.commentId == comment.id %}
+                                {% set subComments = subComments|merge([subComment]) %}
+                            {% endif %}
                         {% endfor %}
-                        <li class="d-none sub-comment-{{ comment.id}}">
-                            <div class="media align-self-center ">
+                        <li class="comment">
+                            <div class="media align-self-center">
                                 <div class="media-body">
                                     <div class="row">
                                         <div class="col-md-4">
-                                            <h6 class="mt-0">Response :</h6>
+                                            <a href="{{ path('user', {id: comment.authorId}) }}"> 
+                                                <h6 class="mt-0">{{ getEntity("user", comment.authorId).userName }}</h6>
+                                            </a> 
+                                        </div>
+                                        <div class="col-md-8">
+                                            <ul class="comment-social">
+                                                <li><i class="fa fa-calendar-o"></i>{{ comment.createdAt }}</li>
+                                                <li><i class="fa fa-wechat"></i>{{ subComments|length }} Responses</li>
+                                                {% if currentUser is not null and currentUser.status %}
+                                                    <li><a class="btn btn-primary btn-xs answer" data-id="{{ comment.id}}"><i class="fa fa-wechat"></i> Answer</a></li>
+                                                {% endif %}
+                                            </ul>
                                         </div>
                                     </div>
-                                    <div class="card">
-                                        <textarea  class="commentResponse" id="response-{{ comment.id }}" data-id="{{ comment.id }}"></textarea>
-                                        <input type="hidden" id="comment-value-{{ comment.id }}" value="">
-                                        <div class="card-footer">
-                                            <div class="btn-showcase text-end">
-                                                <button class="btn btn-primary btn-xs send-comment" data-id="{{ comment.id }}">Send</button>
-                                            </div>
-                                        </div>
-                                    </div>
+                                    <p>{{ comment.content|raw }}</p>
                                 </div>
                             </div>
                         </li>
-                    </ul>
-                </li>
-                {% endif %}
+                        
+                        <li class="">
+                            <ul>
+                                {% for subComment in subComments %}
+                                <li>
+                                    <div class="media">
+                                        <div class="media-body">
+                                            <div class="row">
+                                                <div class="col-md-10">
+                                                    <a href="{{ path('user', {id: subComment.authorId}) }}">
+                                                        <h6 class="mt-0">{{ getEntity("user", subComment.authorId).userName }}</h6>
+                                                    </a>
+                                                </div>
+                                                <div class="col-md-2">
+                                                    <ul class="comment-social">
+                                                        <li><i class="fa fa-calendar-o"></i>{{ subComment.createdAt }}</li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                            <p>{{ subComment.content|raw }}</p>
+                                        </div>
+                                    </div>
+                                </li>
+                                {% endfor %}
+                                <li class="d-none sub-comment-{{ comment.id}}">
+                                    <div class="media align-self-center ">
+                                        <div class="media-body">
+                                            <div class="row">
+                                                <div class="col-md-4">
+                                                    <h6 class="mt-0">Response :</h6>
+                                                </div>
+                                            </div>
+                                            <div class="card">
+                                                <textarea  class="commentResponse" id="response-{{ comment.id }}" data-id="{{ comment.id }}"></textarea>
+                                                <input type="hidden" id="comment-value-{{ comment.id }}" value="">
+                                                <div class="card-footer">
+                                                    <div class="btn-showcase text-end">
+                                                        <button class="btn btn-primary btn-xs send-comment" data-id="{{ comment.id }}">Send</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </li>
+                            </ul>
+                        </li>
+                    {% endif %}
                 {% endfor %}
-                {% if currentUser is not null and currentUser.valid %}
+                
+                {% if currentUser is not null and currentUser.status %}
                 <li>
                     <div class="media align-self-center">
                         <div class="media-body">
@@ -135,7 +141,7 @@
                         </div>
                     </div>
                 </li>
-                {% endif %}
+            {% endif %}
             </ul>
         </div>
     </div>
@@ -210,7 +216,7 @@ $(document).ready(function() {
             data: {
                 content: content,
                 commentId: commentId,
-                postId: {{ post.id }}
+                postId: {{ post.id }},
             },
             success: function(data){
                 console.log(data);
