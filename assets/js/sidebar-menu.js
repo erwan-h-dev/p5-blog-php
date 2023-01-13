@@ -22,7 +22,7 @@
               jQuery('.submenu-title').find('div').replaceWith('<div class="according-menu"><i class="fa fa-angle-right"></i></div>');
               jQuery('.submenu-content').slideUp('normal');
               if (jQuery(this).next().is(':hidden') == true) {
-                  jQuery(this).addClass('active');
+                //   jQuery(this).addClass('active');
                   jQuery(this).find('div').replaceWith('<div class="according-menu"><i class="fa fa-angle-down"></i></div>');
                   jQuery(this).next().slideDown('normal');
               } else {
@@ -37,7 +37,7 @@
               jQuery('.menu-title').find('div').replaceWith('<div class="according-menu"><i class="fa fa-angle-right"></i></div>');
               jQuery('.menu-content').slideUp('normal');
               if (jQuery(this).next().is(':hidden') == true) {
-                  jQuery(this).addClass('active');
+                //   jQuery(this).addClass('active');
                   jQuery(this).find('div').replaceWith('<div class="according-menu"><i class="fa fa-angle-down"></i></div>');
                   jQuery(this).next().slideDown('normal');
               } else {
@@ -56,7 +56,7 @@
               jQuery('.submenu-title').find('div').replaceWith('<div class="according-menu"><i class="fa fa-angle-right"></i></div>');
               jQuery('.submenu-content').slideUp('normal');
               if (jQuery(this).next().is(':hidden') == true) {
-                  jQuery(this).addClass('active');
+                //   jQuery(this).addClass('active');
                   jQuery(this).find('div').replaceWith('<div class="according-menu"><i class="fa fa-angle-down"></i></div>');
                   jQuery(this).next().slideDown('normal');
               } else {
@@ -71,7 +71,7 @@
               jQuery('.menu-title').find('div').replaceWith('<div class="according-menu"><i class="fa fa-angle-right"></i></div>');
               jQuery('.menu-content').slideUp('normal');
               if (jQuery(this).next().is(':hidden') == true) {
-                  jQuery(this).addClass('active');
+                //   jQuery(this).addClass('active');
                   jQuery(this).find('div').replaceWith('<div class="according-menu"><i class="fa fa-angle-down"></i></div>');
                   jQuery(this).next().slideDown('normal');
               } else {
@@ -202,8 +202,8 @@ $("#left-arrow").click(function () {
 });
 
 // page active
-    $( ".main-navbar" ).find( "a" ).removeClass("active");
-    $( ".main-navbar" ).find( "li" ).removeClass("active");
+//     $( ".main-navbar" ).find( "a" ).removeClass("active");
+//     $( ".main-navbar" ).find( "li" ).removeClass("active");
 
     var current = window.location.pathname
     $(".main-navbar ul>li a").filter(function() {
@@ -211,9 +211,9 @@ $("#left-arrow").click(function () {
         var link = $(this).attr("href");
         if(link){
             if (current.indexOf(link) != -1) {
-                $(this).parents().children('a').addClass('active');
+                // $(this).parents().children('a').addClass('active');
                 $(this).parents().parents().children('ul').css('display', 'block');
-                $(this).addClass('active');
+                // $(this).addClass('active');
                 $(this).parent().parent().parent().children('a').find('div').replaceWith('<div class="according-menu"><i class="fa fa-angle-down"></i></div>');
                 $(this).parent().parent().parent().parent().parent().children('a').find('div').replaceWith('<div class="according-menu"><i class="fa fa-angle-down"></i></div>');
                 return false;
@@ -221,5 +221,5 @@ $("#left-arrow").click(function () {
         }
     });
     $('.custom-scrollbar').animate({
-        scrollTop: $('a.nav-link.menu-title.active').offset().top - 500
+        // scrollTop: $('a.nav-link.menu-title.active').offset().top - 500
     }, 1000);

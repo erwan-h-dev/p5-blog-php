@@ -25,19 +25,23 @@
                     </div>
                 {% endif %}
                 <ul class="nav-menu custom-scrollbar" style="display: block;">
-                    <li class="mb-3"></li>
-                    <li class="mb-3"><a class="nav-link menu-title {% if currentRoute == "home" %}active{% endif %}" href="{{ path("home") }}">
-                        <span>Home</span></a>
+                    <li></li>
+                    <li class="mb-3">
+                        <a href="{{ path("home") }}" class="nav-link {% if currentRoute == "home" %}active{% endif %}" >
+                            <span>Home</span>
+                        </a>
                     </li>
-                        
-                    <li class="mb-3"><a class="nav-link menu-title {% if currentRoute == "posts" %}active{% endif %}" href="{{ path("posts") }}">
-                        <span>Posts</span></a>
+                    <li class="mb-3">
+                        <a href="{{ path("posts") }}" class="nav-link {% if currentRoute == "posts" %}active{% endif %}" >
+                            <span>Posts</span>
+                        </a>
                     </li>
-                        
                     {% if currentUser.role == 'user' or currentUser.role == 'admin' %}    
-                    <li class="mb-3"><a class="nav-link menu-title {% if currentRoute == "posts_user" %}active{% endif %}" href="{{ path("posts_user", {id: currentUser.id}) }}">
-                        <span>My posts</span></a>
-                    </li>
+                        <li class="mb-3">
+                            <a href="{{ path("posts_user", {id: currentUser.id}) }}" class="nav-link {% if currentRoute == "posts_user" %}active{% endif %}" >
+                                <span>My posts</span>
+                            </a>
+                        </li>
                     {% endif %}
                 </ul>
             </div>

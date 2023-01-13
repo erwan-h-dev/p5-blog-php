@@ -192,7 +192,7 @@ class EntityManager
 
         $entities = [];
         $results = $statement->fetchAll(PDO::FETCH_ASSOC);
-        foreach ($results as $key => $result) {
+        foreach ($results as $result) {
             $entities[] =
             Hydratator::hydrate($result, $this->class);
         }
