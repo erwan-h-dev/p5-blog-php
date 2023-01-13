@@ -15,11 +15,7 @@ class AdminController extends Controller
 {
     public function admin()
     {
-        $location = 'admin';
-
-        return $this->render('admin/index.html.twig', [
-            'location' => $location
-        ]);
+        return $this->redirectRoute('posts_admin');
     }
 
     public function postsAdmin()
