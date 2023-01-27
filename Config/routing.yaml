@@ -76,6 +76,10 @@ routing:
         path: /user/post/new
         controller: PostController/userNewPost
         roles: [user, admin]
+    remove_post_user:
+        path: /user/post/remove/{id}
+        controller: PostController/removePost
+        roles: [user, admin]
 
 # ----------------------------------------------#
 # ---------- global users comments ------------ #

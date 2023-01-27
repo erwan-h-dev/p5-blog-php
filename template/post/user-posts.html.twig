@@ -41,7 +41,7 @@
                         <td>{{ getCollection('comment', {'postId': post.id, 'status': 1 })|length }}</td>
                         <td class="text-end">
                             <a href="{{ path('edit_post_user',{id: post.id}) }}" class="btn btn-square btn-primary"><i class="fa fa-edit"></i></a>
-                            <a data-href="{{ path('remove_post',{id: post.id}) }}" class="btn btn-square btn-danger remove_post"><i class="fa fa-trash-o"></i></a>
+                            <a data-href="{{ path('remove_post_user',{id: post.id}) }}" class="btn btn-square btn-danger remove_post"><i class="fa fa-trash-o"></i></a>
                         </td>
                     </tr>
                     {% endfor %}
