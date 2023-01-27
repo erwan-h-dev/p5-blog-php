@@ -6,13 +6,13 @@
     });
    
 
-    $(".page-wrapper").attr("class", "page-wrapper "+localStorage.getItem("page-wrapper"));
-    $(".page-body-wrapper").attr("class", "page-body-wrapper "+localStorage.getItem("page-body-wrapper"));
+    // $(".page-wrapper").attr("class", "page-wrapper "+localStorage.getItem("page-wrapper"));
+    // $(".page-body-wrapper").attr("class", "page-body-wrapper "+localStorage.getItem("page-body-wrapper"));
 
 
-    if (localStorage.getItem("page-wrapper") === null) {
-        $(".page-wrapper").addClass("compact-wrapper compact-sidebar");
-    }   
+    // if (localStorage.getItem("page-wrapper") === null) {
+    //     $(".page-wrapper").addClass("compact-wrapper compact-sidebar");
+    // }   
 
   // left sidebar and horizotal menu
     if($('#pageWrapper').hasClass('compact-wrapper')){
