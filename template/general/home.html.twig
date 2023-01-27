@@ -22,7 +22,7 @@
                     <li><div class="setting-primary"><a target="_blank" href="https://twitter.com/dev_erwan"><i class="fa fa-twitter"></i></a></div></li>
                 </ul>
                 <ul class="list-unstyled setting-option">
-                    <li><div class="setting-primary"><a target="_blank" href="https://www.instagram.com/hoeltzenerwan/"><i class="fa fa-instagram"></i></a></div></li>
+                    <li><div class="setting-primary"><a target="_blank" href="https://www.instagram.com/erwanHDev/"><i class="fa fa-instagram"></i></a></div></li>
                 </ul>
                 <ul class="list-unstyled setting-option">
                     <li><div class="setting-primary"><a target="_blank" href="https://github.com/erwan-h-dev/"><i class="fa fa-github"></i></a></div></li>
@@ -54,37 +54,45 @@
         <div class="card-header pb-0">
             <h5>Contact</h5>
         </div>
-
+        {% if result %}
+        <script>
+            $(function(){
+                {% if result == 1 %}
+                swal("Email sent!", "Your email has been sent successfully.", "success");
+                {% else %}
+                swal("Email not sent!", "Your email has not been sent.", "error");
+                {% endif %}
+            })
+        </script>
+        {% endif %}
         <div class="form theme-form">
             <div class="card-body">
-                {# split first name and last name in two colomns #}
-                <label class="form-label" for="email">E-mail</label>
-                <input type="email" class="form-control" id="email" name="email" placeholder="E-mail">
-                <div class="row">
-                    <div class="col-sm-6">
-                        <label class="form-label" for="firstname">First Name</label>
-                        <input type="text" class="form-control" id="firstname" name="firstname" placeholder="First Name">
+                <form id="contact_form" action="{{ path('home') }}" method="post">
+                    <label class="form-label" for="email">E-mail</label>
+                    <input type="email" class="form-control" id="email" name="email" placeholder="E-mail" required>
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <label class="form-label" for="firstname">First Name</label>
+                            <input type="text" class="form-control" id="firstname" name="firstname" placeholder="First Name" required>
+                        </div>
+                        <div class="col-sm-6">
+                            <label class="form-label" for="lastname">Last Name</label>
+                            <input type="text" class="form-control" id="lastname" name="lastname" placeholder="Last Name" required>
+                        </div>
                     </div>
-                    <div class="col-sm-6">
-                        <label class="form-label" for="lastname">Last Name</label>
-                        <input type="text" class="form-control" id="lastname" name="lastname" placeholder="Last Name">
+                    <label class="form-label" for="object">Object</label>
+                    <input type="text" class="form-control" id="object" name="object" placeholder="Object" required>
+    
+                    <label class="form-label" for="message">Content Message</label>
+                    <textarea class="form-control" id="message" name="message" rows="3"></textarea>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" required>
+                        <label class="form-label" for="flexCheckDefault">Je ne suis pas un robot</label>
+                    </div>  
+                    <div class="text-end">
+                        <button type="submit" class="btn btn-primary">Submit</button>
                     </div>
-                </div>
-                <label class="form-label" for="object">Object</label>
-                <input type="text" class="form-control" id="object" name="object" placeholder="Object">
-
-                <label class="form-label" for="message">Content Message</label>
-                <textarea class="form-control" id="message" name="message" rows="3"></textarea>
-
-                <div class="form-check">
-                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
-                    <label class="form-check label" for="flexCheckDefault">
-                        Je ne suis pas un robot
-                    </label>
-                </div>  
-                <div class="text-end">
-                    <button type="submit" class="btn btn-primary">Submit</button>
-                </div>
+                </form>
             </div>  
         </div>
     </div>

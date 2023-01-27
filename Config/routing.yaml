@@ -37,6 +37,7 @@ routing:
         path: /404
         controller: ErrorController/error404
         roles: [anonymous, user, admin]
+        
 # ----------------------------------------------#
 # ------------ global users routes ------------ #
 # ----------------------------------------------#
