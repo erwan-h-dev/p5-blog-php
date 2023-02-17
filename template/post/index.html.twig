@@ -30,15 +30,17 @@
                             <span class="blg-date">{{ post.updatedAt|date('d') }}</span>
                         </div>
                         <a onclick="locationReload('{{ path('post', {id: post.id}) }}')" href="{{ path('post', {id: post.id}) }}">
-                            <h6 class="blog-bottom-details">{{ post.title }}</h6>
+                            <h6 class="blog-bottom-details title-post" data-id="{{ post.id}}"></h6>
                         </a>
-                        <p>{{ post.leadSentence }}</p>
+                        <p class="leadSentence-post" data-id="{{ post.id}}"></p>
                         <div class="detail-footer"> 
                             <ul class="sociyal-list">
                                 <li><a onclick="locationReload('{{ path('user', {id: post.authorId}) }}')"  href="{{ path('user', {id: post.authorId}) }}"><i class="fa fa-user-o"></i>{{ getEntity("user", post.authorId).userName }}</a></li>
                                 <li><i class="fa fa-comments-o"></i>{{ getCollection('comment',{'postId': post.id,'status': 1})|length }}</li>
                             </ul>
                         </div>
+                        <input type="hidden" class="title" value="{{ post.title|raw }}" data-id="{{ post.id}}">
+                        <input type="hidden" class="leadSentence" value="{{ post.leadSentence|raw }}" data-id="{{ post.id}}">
                     </div>
                 </div>
             </div>
@@ -51,6 +53,18 @@
     $(document).ready(function() {
         $('.grid').isotope({
             itemSelector: '.post-item',
+        });
+
+        $('.title').each(function(){
+            var id = $(this).attr('data-id');
+            var title = $(this).val();
+            $(".title-post[data-id='"+id+"']").html(title);
+        });
+
+        $('.leadSentence').each(function(){
+            var id = $(this).attr('data-id');
+            var leadSentence = $(this).val();
+            $(".leadSentence-post[data-id='"+id+"']").html(leadSentence);
         });
     });
 
