@@ -16,6 +16,7 @@ class Routing
 {
     private $routeCollection;
     private $config;
+    private $session;
 
     public function __construct()
     {
