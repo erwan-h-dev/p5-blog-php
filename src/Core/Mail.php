@@ -3,8 +3,6 @@
 
 namespace App\Core;
 
-require_once '/var/www/html/vendor/autoload.php';
-
 use Swift_Message;
 use Swift_SmtpTransport;
 use Swift_Mailer;

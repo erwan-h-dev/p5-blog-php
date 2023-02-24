@@ -5509,7 +5509,8 @@ table tbody .border-bottom-warning td {
     padding: 30px;
     background-color: rgba(36, 105, 92, 0.15);
     height: 100vh;
-    overflow: hidden; }
+    /* overflow: hidden;  */
+  }
     .page-wrapper.modern-sidebar .page-main-header {
       top: 30px;
       width: calc(100% - 60px);
@@ -5686,7 +5687,8 @@ table tbody .border-bottom-warning td {
     margin-left: unset; }
   .page-wrapper.modern-sidebar {
     padding: unset;
-    height: auto; }
+    /* height: auto;  */
+  }
     .page-wrapper.modern-sidebar .page-main-header {
       top: 0;
       border-radius: unset;
@@ -5718,7 +5720,7 @@ table tbody .border-bottom-warning td {
         .page-wrapper.modern-sidebar.compact-wrapper .page-body-wrapper .page-body::-webkit-scrollbar-thumb {
           display: none; }
     .page-wrapper.modern-sidebar.compact-wrapper footer {
-      position: unset;
+      /* position: unset; */
       width: auto;
       border-radius: unset;
       margin-left: 275px;

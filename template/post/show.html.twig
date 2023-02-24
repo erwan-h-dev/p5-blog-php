@@ -26,9 +26,8 @@
                         <li><a onclick="window.location.href = '{{ path('user', {id: post.authorId}) }}'"  href="{{ path('user', {id: post.authorId}) }}"><i class="icofont icofont-user"></i>{{ getEntity("user", post.authorId).userName }}</a></li>
                         <li><i class="fa fa-wechat"></i>{{ comments|length }} Comments</li>
                     </ul>
-                    <h4>
-                        {{ post.title }}
-                    </h4>
+                    <h4 id="title-post"></h4>
+                    <input type="hidden" id="title" value="{{ post.title|raw }}">
                     <input type="hidden" id="content" value="{{ post.content|raw }}">
                     <div id="content-post" class="single-blog-content-top"></div>
                 </div>
@@ -193,11 +192,11 @@ $(document).ready(function() {
         var id = $(this).attr('id').split('-')[1];
         $('#comment-value-'+id).val(commentResponse[id].getData());
     })
-    console.log($('#content').val());
+    
+    $("#title-post").html($("#title").val());
     $("#content-post").html($("#content").val());
 
     $(document).on("click", ".answer", function(){
-        console.log($(".sub-comment-"+$(this).data('id')))
         $(".sub-comment-"+$(this).data('id')).removeClass("d-none");
     })
 
@@ -219,7 +218,6 @@ $(document).ready(function() {
                 postId: {{ post.id }},
             },
             success: function(data){
-                console.log(data);
                 location.reload();
             }
         })

@@ -1518,7 +1518,8 @@
     height: 80px;
     font-size: 26px; }
   footer {
-    bottom: -20px; }
+    /* bottom: -20px;  */
+  }
   .calendar-wrap .basic-calendar .external-events .fc-event + .fc-event {
     margin-top: 10px; }
   .owl-theme .owl-nav.disabled + .owl-dots {
