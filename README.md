@@ -33,7 +33,12 @@ The website must be accessible from a web browser.
 git clone https://github.com/erwan-h-dev/p5-blog-php.git
 ```
 
+<!-- nginx configuration -->
 ### 2. Set the basic config
+
+Use the `server-config/nginx.conf` file as a template to configure your web server.
+
+### 3. Set the basic config
 
 ```shell
 cp .env.example .env
@@ -41,12 +46,12 @@ cp .env.example .env
 
 Edit the `.env` file and set the `database` and `smtp` configs.
 
-### 3. Install the extended package dependency.
+### 4. Install the extended package dependency.
 
 ```shell
 composer install
 ```
 
-### 4. Import database files
+### 5. Import database files
 
 To generate an empty database, you need to import the `p5-blog-php.sql` file into your DBMS.
